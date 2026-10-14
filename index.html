@@ -3,104 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<meta name="theme-color" content="#6366f1">
-<title>⚡ Perfect Site Builder v8.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<title>⚡ Perfect Site Builder v9.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   :root{
     --bg:#0a0e1a;--panel:#111827;--panel2:#1a2332;--panel3:#0d1420;
     --border:#1f2937;--text:#e5e7eb;--muted:#94a3b8;
     --primary:#6366f1;--primary2:#8b5cf6;--accent:#ec4899;
     --success:#10b981;--danger:#ef4444;--warning:#f59e0b;
-    --topbar-h:56px;--tabs-h:48px;
     --safe-top:env(safe-area-inset-top,0px);
     --safe-bottom:env(safe-area-inset-bottom,0px);
   }
   body{
     background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;
-    height:100vh;height:100dvh;overflow:hidden;
-    display:flex;flex-direction:column;
+    height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;
     padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
-    -webkit-font-smoothing:antialiased;
   }
-  body.preview-locked{position:fixed;width:100%;height:100%}
-
   .topbar{
-    height:var(--topbar-h);flex-shrink:0;
-    background:linear-gradient(90deg,#0f172a,#1e1b4b,#4c1d95);
+    height:56px;background:linear-gradient(90deg,#0f172a,#1e1b4b,#4c1d95);
     border-bottom:1px solid var(--border);
     display:flex;align-items:center;justify-content:space-between;
-    padding:0 10px;gap:6px;z-index:100;position:relative;overflow:hidden;
+    padding:0 10px;gap:6px;z-index:100;flex-shrink:0;
   }
-  .topbar::before{
-    content:'';position:absolute;inset:0;
-    background:radial-gradient(circle at 20% 50%,rgba(99,102,241,.3),transparent 50%),
-               radial-gradient(circle at 80% 50%,rgba(236,72,153,.3),transparent 50%);
-    pointer-events:none;
-  }
-  .brand{display:flex;align-items:center;gap:8px;position:relative;z-index:1;min-width:0}
+  .brand{display:flex;align-items:center;gap:8px;min-width:0}
   .brand-logo{
-    width:36px;height:36px;border-radius:10px;flex-shrink:0;
+    width:36px;height:36px;border-radius:10px;
     background:linear-gradient(135deg,var(--primary),var(--accent));
     display:flex;align-items:center;justify-content:center;font-size:1.2rem;
     box-shadow:0 0 20px rgba(99,102,241,.6);
-    animation:pulse-logo 3s ease-in-out infinite;
   }
-  @keyframes pulse-logo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-  .brand-text{min-width:0;overflow:hidden}
   .brand-text .title{
-    font-size:.9rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    font-size:.9rem;font-weight:800;
     background:linear-gradient(135deg,#a5b4fc,#f0abfc);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   }
-  .brand-text .sub{font-size:.62rem;color:var(--muted);white-space:nowrap}
-  .top-actions{display:flex;gap:4px;align-items:center;position:relative;z-index:1;flex-shrink:0}
-
+  .brand-text .sub{font-size:.62rem;color:var(--muted)}
+  .top-actions{display:flex;gap:4px}
   .btn{
-    min-height:36px;min-width:36px;padding:8px 12px;border:none;border-radius:9px;
-    font-size:.82rem;font-weight:700;font-family:'Cairo',sans-serif;
-    cursor:pointer;transition:transform .15s,box-shadow .2s,background .2s;
+    min-height:36px;padding:8px 12px;border:none;border-radius:9px;
+    font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
-    white-space:nowrap;touch-action:manipulation;user-select:none;
+    transition:transform .15s;white-space:nowrap;
   }
   .btn:active{transform:scale(.95)}
-  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 4px 15px rgba(99,102,241,.4)}
-  .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,.4)}
-  .btn-publish{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;box-shadow:0 4px 15px rgba(245,158,11,.5);font-weight:800}
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
+  .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+  .btn-publish{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-weight:800}
   .btn-ghost{background:rgba(255,255,255,.08);color:var(--muted);border:1px solid var(--border)}
   .btn-icon{padding:8px;width:38px;height:38px}
 
   .main{flex:1;display:flex;overflow:hidden;position:relative;min-height:0}
   .panel{
     display:flex;flex-direction:column;overflow:hidden;
-    background:var(--panel);width:100%;height:100%;min-height:0;
+    background:var(--panel);width:100%;height:100%;
   }
   .preview-area{
     display:none;background:var(--panel2);flex-direction:column;overflow:hidden;
-    width:100%;height:100%;min-height:0;
+    width:100%;height:100%;
   }
-
   .tabs{
-    display:flex;overflow-x:auto;overflow-y:hidden;
-    background:var(--panel3);border-bottom:1px solid var(--border);
-    flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
-    height:var(--tabs-h);
+    display:flex;overflow-x:auto;background:var(--panel3);
+    border-bottom:1px solid var(--border);flex-shrink:0;
+    scrollbar-width:none;height:48px;
   }
   .tabs::-webkit-scrollbar{display:none}
   .tab{
     padding:0 14px;font-size:.78rem;font-weight:700;color:var(--muted);
     cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;
     white-space:nowrap;display:flex;align-items:center;gap:5px;
-    min-height:var(--tabs-h);user-select:none;touch-action:manipulation;
+    min-height:48px;user-select:none;
   }
   .tab.active{color:#fff;border-bottom-color:var(--primary);background:var(--panel2)}
-
-  .tab-contents{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:0}
+  .tab-contents{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0}
   .tab-content{display:none;padding:14px}
-  .tab-content.active{display:block;animation:fadeIn .25s ease}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .tab-content.active{display:block}
 
   .section-block{
     background:var(--panel2);border-radius:12px;padding:14px;margin-bottom:12px;
@@ -110,130 +87,55 @@
     font-size:.86rem;margin-bottom:12px;display:flex;align-items:center;
     gap:8px;color:#fff;justify-content:space-between;flex-wrap:wrap;
   }
-  .section-block h3 span:first-child{display:flex;align-items:center;gap:6px}
-
   .form-group{margin-bottom:11px}
-  label{
-    display:block;margin-bottom:5px;font-size:.76rem;font-weight:600;
-    color:var(--muted);user-select:none;
-  }
+  label{display:block;margin-bottom:5px;font-size:.76rem;font-weight:600;color:var(--muted)}
   input,textarea,select{
     width:100%;padding:11px 12px;background:#0a0e1a;
     border:1.5px solid var(--border);border-radius:9px;color:var(--text);
-    font-size:16px;font-family:'Cairo',sans-serif;transition:all .2s;
-    -webkit-appearance:none;appearance:none;
+    font-size:16px;font-family:inherit;
   }
   input:focus,textarea:focus,select:focus{
     outline:none;border-color:var(--primary);
     box-shadow:0 0 0 3px rgba(99,102,241,.15);
   }
-  textarea{resize:vertical;min-height:70px;line-height:1.5}
+  textarea{resize:vertical;min-height:70px}
   select{
     background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat:no-repeat;background-position:left 12px center;background-size:16px;
     padding-left:36px;
   }
-  input[type=range]{padding:0;height:36px;background:transparent;border:none;-webkit-appearance:none;appearance:none}
-  input[type=range]::-webkit-slider-runnable-track{height:6px;background:var(--border);border-radius:6px}
-  input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none;appearance:none;
-    width:22px;height:22px;background:linear-gradient(135deg,var(--primary),var(--accent));
-    border-radius:50%;margin-top:-8px;cursor:pointer;box-shadow:0 3px 10px rgba(99,102,241,.5);
-  }
-
-  .row-2,.row-3{display:grid;gap:8px}
-  .row-2{grid-template-columns:1fr 1fr}
-  .row-3{grid-template-columns:1fr 1fr}
-  @media(min-width:480px){.row-3{grid-template-columns:1fr 1fr 1fr}}
-
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .item-card{
     background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
-    padding:12px;margin-bottom:10px;animation:slideIn .25s ease;
+    padding:12px;margin-bottom:10px;
   }
-  @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
   .item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
-  .item-title{
-    font-weight:700;font-size:.84rem;color:var(--primary);
-    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;
-  }
-  .item-actions{display:flex;gap:5px;flex-shrink:0}
+  .item-title{font-weight:700;font-size:.84rem;color:var(--primary);flex:1}
   .item-actions button{
-    width:32px;height:32px;border-radius:8px;border:none;cursor:pointer;
-    background:var(--panel2);color:var(--muted);font-size:.85rem;
-    transition:all .2s;display:flex;align-items:center;justify-content:center;
+    width:32px;height:32px;border-radius:8px;border:none;
+    background:var(--panel2);color:var(--muted);cursor:pointer;
   }
-  .item-actions button:active{background:var(--danger);color:#fff}
-
-  .color-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-  @media(min-width:480px){.color-grid{grid-template-columns:repeat(4,1fr)}}
-  .color-item{text-align:center}
-  .color-item label{font-size:.7rem;margin-bottom:4px}
-  .color-item input[type=color]{width:100%;height:44px;padding:3px;cursor:pointer;border-radius:10px;border:2px solid var(--border)}
-
+  .add-btn{
+    width:100%;padding:12px;border:2px dashed var(--border);border-radius:10px;
+    background:transparent;color:var(--muted);cursor:pointer;
+    font-family:inherit;font-weight:700;font-size:.82rem;
+  }
   .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  @media(min-width:600px){.theme-grid{grid-template-columns:repeat(4,1fr)}}
   .theme-thumb{
-    height:66px;border-radius:10px;cursor:pointer;
-    border:3px solid transparent;transition:all .25s;
-    position:relative;overflow:hidden;
+    height:60px;border-radius:10px;cursor:pointer;
+    border:3px solid transparent;transition:all .25s;position:relative;
   }
   .theme-thumb.active{border-color:#fff;box-shadow:0 0 0 3px var(--primary)}
   .theme-thumb span{
-    position:absolute;bottom:4px;right:5px;font-size:.65rem;color:#fff;
-    font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.9);
+    position:absolute;bottom:4px;right:5px;font-size:.62rem;
+    color:#fff;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.9);
   }
-
-  .font-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-  @media(min-width:480px){.font-grid{grid-template-columns:repeat(3,1fr)}}
-  .font-opt{
-    padding:12px 8px;background:#0a0e1a;border:2px solid var(--border);
-    border-radius:10px;cursor:pointer;text-align:center;font-size:.8rem;
-    font-weight:600;transition:all .2s;
+  .color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .color-item label{font-size:.7rem}
+  .color-item input[type=color]{
+    width:100%;height:40px;padding:3px;cursor:pointer;border-radius:8px;
+    border:2px solid var(--border);
   }
-  .font-opt.active{border-color:var(--primary);background:rgba(99,102,241,.15);color:#fff}
-
-  .sections-list{display:flex;flex-direction:column;gap:8px}
-  .section-item{
-    display:flex;align-items:center;gap:8px;padding:10px;
-    background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
-  }
-  .section-item .drag-icon{color:var(--muted);font-size:1rem;flex-shrink:0}
-  .section-item .sec-name{flex:1;font-weight:600;font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .section-item .move-btns{display:flex;gap:3px;flex-shrink:0}
-  .section-item .move-btns button{
-    width:28px;height:28px;border-radius:7px;border:none;
-    background:var(--panel2);color:var(--muted);cursor:pointer;font-size:.82rem;
-  }
-  .section-item .move-btns button:disabled{opacity:.3}
-
-  .toggle{
-    width:44px;height:26px;background:var(--border);border-radius:20px;
-    position:relative;cursor:pointer;transition:all .25s;flex-shrink:0;
-  }
-  .toggle::after{
-    content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;
-    background:#fff;border-radius:50%;transition:all .25s;
-  }
-  .toggle.on{background:var(--success)}
-  .toggle.on::after{right:calc(100% - 23px)}
-
-  .switch-row{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:12px 0;gap:12px;border-bottom:1px solid var(--border);
-  }
-  .switch-row:last-child{border-bottom:none}
-  .switch-row label{margin:0;color:var(--text);font-weight:600;font-size:.84rem;flex:1}
-  .switch{
-    width:48px;height:28px;background:var(--border);border-radius:20px;
-    position:relative;cursor:pointer;transition:all .25s;flex-shrink:0;
-  }
-  .switch::after{
-    content:'';position:absolute;top:3px;right:3px;width:22px;height:22px;
-    background:#fff;border-radius:50%;transition:all .25s;
-  }
-  .switch.on{background:var(--success)}
-  .switch.on::after{right:calc(100% - 25px)}
-
   .bottom-nav{
     display:flex;background:var(--panel3);border-top:1px solid var(--border);
     flex-shrink:0;height:56px;padding-bottom:var(--safe-bottom);
@@ -242,12 +144,12 @@
   .bn-item{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:2px;cursor:pointer;color:var(--muted);font-size:.65rem;font-weight:700;
-    transition:all .2s;position:relative;
+    position:relative;
   }
   .bn-item.active{color:var(--primary)}
   .bn-item.active::before{
     content:'';position:absolute;top:0;left:20%;right:20%;height:3px;
-    background:var(--primary);border-radius:0 0 3px 3px;
+    background:var(--primary);
   }
   .bn-item .ic{font-size:1.2rem;line-height:1}
 
@@ -255,99 +157,48 @@
     .main{display:grid;grid-template-columns:460px 1fr}
     .panel{width:auto}
     .preview-area{display:flex}
-    .bottom-nav{display:none}
-    .preview-fab{display:none}
   }
-
   .preview-toolbar{
     height:52px;background:var(--panel3);border-bottom:1px solid var(--border);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 12px;flex-shrink:0;gap:8px;
+    display:flex;align-items:center;justify-content:space-between;padding:0 12px;
   }
-  .device-btns{display:flex;gap:5px}
-  .device-btn{
-    width:40px;height:40px;background:transparent;border:1px solid var(--border);
-    border-radius:9px;color:var(--muted);cursor:pointer;font-size:.95rem;
-    transition:all .2s;display:flex;align-items:center;justify-content:center;
-  }
-  .device-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
-
-  .preview-container{
-    flex:1;overflow:auto;padding:10px;display:flex;justify-content:center;
-    background:#080c16;-webkit-overflow-scrolling:touch;min-height:0;
-  }
+  .preview-container{flex:1;overflow:auto;padding:10px;display:flex;justify-content:center;background:#080c16}
   .preview-frame-wrap{
     width:100%;max-width:100%;height:100%;background:#fff;
     border-radius:12px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.5);
-    transition:max-width .4s ease;position:relative;
   }
-  .preview-frame-wrap.tablet{max-width:768px}
-  .preview-frame-wrap.mobile{max-width:390px}
-  #previewFrame{width:100%;height:100%;border:none;background:#fff;display:block}
+  #previewFrame{width:100%;height:100%;border:none;background:#fff}
 
   .mobile-preview{
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    background:var(--panel2);z-index:9000;display:none;flex-direction:column;
-    width:100vw;height:100vh;height:100dvh;overflow:hidden;
-    padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
+    position:fixed;inset:0;background:var(--panel2);z-index:9000;
+    display:none;flex-direction:column;
   }
-  .mobile-preview.show{display:flex;animation:mobilePreviewIn .28s cubic-bezier(.4,0,.2,1)}
-  @keyframes mobilePreviewIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-  .mobile-preview .preview-toolbar{
-    flex:0 0 auto;background:linear-gradient(90deg,#0f172a,#1e1b4b);
-    height:52px;display:flex;align-items:center;justify-content:space-between;
-    padding:0 12px;gap:8px;border-bottom:1px solid var(--border);
-  }
-  .mobile-preview-body{flex:1 1 auto;position:relative;overflow:hidden;background:#080c16;min-height:0}
-  .mobile-preview-body .preview-frame-wrap{
-    position:absolute;top:0;left:0;right:0;bottom:0;
-    width:100%;height:100%;max-width:100%;border-radius:0;
-    box-shadow:none;overflow:hidden;background:#fff;margin:0 auto;
-  }
-  .mobile-preview-body .preview-frame-wrap.mobile{max-width:420px}
-  .mobile-preview-body .preview-frame-wrap.desktop{max-width:100%}
-  .mobile-preview-body .preview-frame-wrap iframe{width:100%;height:100%;border:none;display:block;background:#fff}
-
-  .preview-fab{
-    position:fixed;bottom:calc(76px + var(--safe-bottom));left:16px;
-    width:56px;height:56px;border-radius:50%;
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    color:#fff;border:none;font-size:1.5rem;cursor:pointer;
-    box-shadow:0 12px 32px rgba(99,102,241,.6);z-index:85;
-    display:flex;align-items:center;justify-content:center;
-    transition:all .3s;touch-action:manipulation;
-  }
-  .preview-fab.hidden{opacity:0;pointer-events:none;transform:scale(.8)}
-  @media(min-width:1024px){.preview-fab{display:none}}
+  .mobile-preview.show{display:flex}
+  .mobile-preview-body{flex:1;position:relative;overflow:hidden;background:#080c16}
+  .mobile-preview-body iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 
   .modal{
     position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
     align-items:flex-end;justify-content:center;z-index:9998;
-    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);
   }
   .modal.show{display:flex}
   @media(min-width:600px){.modal{align-items:center}}
   .modal-box{
     background:var(--panel);border-radius:20px 20px 0 0;padding:22px;
-    width:100%;max-width:560px;border:1px solid var(--border);
-    box-shadow:0 -20px 60px rgba(0,0,0,.7);
+    width:100%;max-width:600px;border:1px solid var(--border);
     max-height:90vh;overflow-y:auto;
     padding-bottom:calc(22px + var(--safe-bottom));
-    animation:slideUp .3s ease;
   }
-  @media(min-width:600px){.modal-box{border-radius:20px;animation:scaleIn .3s ease}}
-  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-  @keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+  @media(min-width:600px){.modal-box{border-radius:20px}}
+  .modal-box h3{margin-bottom:14px;color:#fff;font-size:1.1rem}
   .modal-handle{
     width:40px;height:4px;background:var(--border);border-radius:4px;
     margin:0 auto 14px;display:block;
   }
-  @media(min-width:600px){.modal-handle{display:none}}
-  .modal-box h3{margin-bottom:14px;color:#fff;font-size:1.1rem}
 
   .toast{
-    position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
-    transform:translateX(-50%) translateY(120px);
+    position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120px);
     background:linear-gradient(135deg,#10b981,#059669);color:#fff;
     padding:12px 22px;border-radius:12px;font-weight:700;font-size:.85rem;
     box-shadow:0 15px 45px rgba(0,0,0,.6);transition:transform .4s;
@@ -356,343 +207,180 @@
   .toast.show{transform:translateX(-50%) translateY(0)}
   .toast.error{background:linear-gradient(135deg,#ef4444,#b91c1c)}
 
-  .publish-loading-icon{
-    font-size:3rem;margin-bottom:16px;display:inline-block;
-    animation:spin 1s linear infinite;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
   .publish-url-box{
     background:#0a0e1a;border:2px solid var(--primary);border-radius:12px;
     padding:14px;margin:16px 0;
   }
-  .publish-url-box .label{
-    font-size:.7rem;color:var(--muted);margin-bottom:6px;
-  }
+  .publish-url-box .label{font-size:.7rem;color:var(--muted);margin-bottom:6px}
   .publish-url-box .url{
-    font-family:monospace;font-size:.78rem;color:var(--primary);
+    font-family:monospace;font-size:.72rem;color:var(--primary);
     word-break:break-all;direction:ltr;text-align:left;font-weight:700;line-height:1.5;
   }
-  .progress-bar-pub{
-    height:6px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:16px;
-  }
-  .progress-bar-pub .fill{
-    height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));
-    width:0%;transition:width .3s ease;border-radius:6px;
-  }
-
-  .hint{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.5}
   .empty{
     text-align:center;padding:26px 12px;color:var(--muted);font-size:.82rem;
     border:2px dashed var(--border);border-radius:10px;
   }
-  .badge{
-    background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;
-    border-radius:20px;font-weight:700;
-  }
-  .img-preview{
-    width:64px;height:64px;border-radius:12px;object-fit:cover;
-    border:2px solid var(--border);background:#0a0e1a;flex-shrink:0;
-  }
-  .img-upload-row{display:flex;gap:10px;align-items:flex-start}
-  .img-upload-row > div{flex:1;min-width:0}
-  .add-btn{
-    width:100%;padding:12px;border:2px dashed var(--border);border-radius:10px;
-    background:transparent;color:var(--muted);cursor:pointer;
-    font-family:inherit;font-weight:700;font-size:.82rem;transition:all .2s;
-  }
-  .add-btn:active{background:var(--panel2);border-color:var(--primary);color:#fff}
+  .badge{background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;border-radius:20px;font-weight:700}
 </style>
 </head>
 <body>
 
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand">
     <div class="brand-logo">⚡</div>
     <div class="brand-text">
       <div class="title">Perfect Builder</div>
-      <div class="sub">v8.0 — رابط صحيح</div>
+      <div class="sub">v9.0 — رابط فوري</div>
     </div>
   </div>
   <div class="top-actions">
-    <button class="btn btn-ghost btn-icon" onclick="openModal('importModal')" title="استيراد">📥</button>
-    <button class="btn btn-ghost btn-icon" onclick="exportJSON()" title="تصدير">📤</button>
     <button class="btn btn-ghost btn-icon" onclick="resetAll()" title="جديد">🔄</button>
     <button class="btn btn-ghost btn-icon" onclick="downloadSite()" title="تحميل">⬇️</button>
-    <button class="btn btn-publish" onclick="publishAndShare()" title="احصل على رابط">🚀 انشر</button>
+    <button class="btn btn-publish" onclick="generateLink()" title="احصل على رابط">🔗 رابط</button>
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
   <div class="panel">
-    <div class="tabs" id="tabs">
+    <div class="tabs">
       <div class="tab active" data-tab="basic">👤 أساسي</div>
       <div class="tab" data-tab="about">📖 عني</div>
-      <div class="tab" data-tab="stats">📊 إحصائيات</div>
       <div class="tab" data-tab="skills">💡 مهارات</div>
       <div class="tab" data-tab="services">🛠️ خدمات</div>
       <div class="tab" data-tab="projects">📁 أعمال</div>
-      <div class="tab" data-tab="gallery">🖼️ معرض</div>
       <div class="tab" data-tab="experience">💼 خبرات</div>
       <div class="tab" data-tab="education">🎓 تعليم</div>
-      <div class="tab" data-tab="certs">🏆 شهادات</div>
       <div class="tab" data-tab="testimonials">💬 آراء</div>
-      <div class="tab" data-tab="pricing">💰 أسعار</div>
-      <div class="tab" data-tab="faq">❓ أسئلة</div>
       <div class="tab" data-tab="contact">📞 تواصل</div>
-      <div class="tab" data-tab="advanced">⚙️ متقدم</div>
       <div class="tab" data-tab="design">🎨 تصميم</div>
-      <div class="tab" data-tab="sections">📋 أقسام</div>
     </div>
 
-    <div class="tab-contents" id="tabContents">
+    <div class="tab-contents">
+      <!-- BASIC -->
       <div class="tab-content active" data-tab="basic">
         <div class="section-block">
           <h3><span>👤 المعلومات الأساسية</span></h3>
           <div class="form-group"><label>الاسم الكامل *</label><input type="text" id="fullName" value="أحمد محمد"></div>
-          <div class="form-group"><label>المسمى الوظيفي *</label><input type="text" id="jobTitle" value="مطور ويب ومصمم UI/UX"></div>
-          <div class="form-group"><label>الشعار (Tagline)</label><input type="text" id="tagline" value="أبني تجارب رقمية استثنائية"></div>
+          <div class="form-group"><label>المسمى الوظيفي</label><input type="text" id="jobTitle" value="مطور ويب ومصمم UI/UX"></div>
           <div class="form-group"><label>نبذة Hero</label><textarea id="heroBio" rows="3">مطور ويب شغوف بخبرة 5 سنوات في بناء تطبيقات ويب حديثة.</textarea></div>
         </div>
         <div class="section-block">
           <h3><span>⌨️ الكتابة المتحركة</span></h3>
-          <div class="form-group"><label>عبارات (سطر لكل عبارة)</label><textarea id="typewriterText" rows="4">مطور ويب محترف
+          <div class="form-group"><label>عبارات (سطر لكل عبارة)</label><textarea id="typewriterText" rows="3">مطور ويب محترف
 مصمم UI/UX
-خبير React & Node.js</textarea></div>
+خبير React</textarea></div>
         </div>
         <div class="section-block">
-          <h3><span>🖼️ الصورة الشخصية</span></h3>
-          <div class="img-upload-row">
-            <img id="avatarPreview" class="img-preview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect fill='%236366f1' width='64' height='64'/%3E%3Ctext x='50%25' y='50%25' fill='white' font-size='26' text-anchor='middle' dy='.35em' font-family='sans-serif' font-weight='bold'%3EA%3C/text%3E%3C/svg%3E">
-            <div>
-              <input type="file" id="avatarFile" accept="image/*" style="display:none">
-              <button class="btn btn-ghost" onclick="document.getElementById('avatarFile').click()" style="width:100%">📁 رفع صورة</button>
-              <input type="text" id="avatarUrl" placeholder="أو رابط صورة" style="margin-top:8px">
-            </div>
-          </div>
+          <h3><span>🖼️ الصورة الشخصية (رابط)</span></h3>
+          <div class="form-group"><input type="text" id="avatarUrl" placeholder="https://example.com/photo.jpg"></div>
         </div>
         <div class="section-block">
           <h3><span>🔘 أزرار Hero</span></h3>
           <div class="row-2">
-            <div class="form-group"><label>زر 1 نص</label><input type="text" id="btn1Text" value="تواصل"></div>
+            <div class="form-group"><label>زر 1</label><input type="text" id="btn1Text" value="تواصل"></div>
             <div class="form-group"><label>رابط</label><input type="text" id="btn1Link" value="#contact"></div>
           </div>
           <div class="row-2">
-            <div class="form-group"><label>زر 2 نص</label><input type="text" id="btn2Text" value="أعمالي"></div>
+            <div class="form-group"><label>زر 2</label><input type="text" id="btn2Text" value="أعمالي"></div>
             <div class="form-group"><label>رابط</label><input type="text" id="btn2Link" value="#projects"></div>
           </div>
         </div>
       </div>
 
+      <!-- ABOUT -->
       <div class="tab-content" data-tab="about">
         <div class="section-block">
           <h3><span>📖 قسم عني</span></h3>
           <div class="form-group"><label>العنوان</label><input type="text" id="aboutTitle" value="مطور شغوف بصناعة الويب"></div>
-          <div class="form-group"><label>النص</label><textarea id="aboutText" rows="5">مطور ويب محترف بخبرة تفوق 5 سنوات في تصميم وتطوير تطبيقات الويب الحديثة.</textarea></div>
+          <div class="form-group"><label>النص</label><textarea id="aboutText" rows="4">مطور ويب محترف بخبرة تفوق 5 سنوات في تصميم وتطوير تطبيقات الويب الحديثة.</textarea></div>
         </div>
         <div class="section-block">
           <h3><span>✅ النقاط المميزة</span><span class="badge" id="highlightCount">0</span></h3>
           <div id="highlightsList"></div>
-          <button class="add-btn" onclick="addHighlight()">➕ إضافة نقطة</button>
+          <button class="add-btn" onclick="addHighlight()">➕ إضافة</button>
         </div>
       </div>
 
-      <div class="tab-content" data-tab="stats">
-        <div class="section-block">
-          <h3><span>📊 إحصائيات</span><span class="badge" id="statCount">0</span></h3>
-          <div id="statsList"></div>
-          <button class="add-btn" onclick="addStat()">➕ إضافة إحصائية</button>
-        </div>
-      </div>
-
+      <!-- SKILLS -->
       <div class="tab-content" data-tab="skills">
         <div class="section-block">
           <h3><span>💡 المهارات</span><span class="badge" id="skillCount">0</span></h3>
           <div id="skillsList"></div>
           <button class="add-btn" onclick="addSkill()">➕ إضافة مهارة</button>
         </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="skillsTitle" value="مهاراتي الاحترافية"></div>
-          <div class="form-group"><label>الوصف</label><input type="text" id="skillsSubtitle" value="التقنيات والأدوات التي أتقنها"></div>
-        </div>
       </div>
 
+      <!-- SERVICES -->
       <div class="tab-content" data-tab="services">
         <div class="section-block">
           <h3><span>🛠️ الخدمات</span><span class="badge" id="serviceCount">0</span></h3>
           <div id="servicesList"></div>
-          <button class="add-btn" onclick="addService()">➕ إضافة خدمة</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="servicesTitle" value="خدماتي المميزة"></div>
-          <div class="form-group"><label>الوصف</label><input type="text" id="servicesSubtitle" value="ما يمكنني تقديمه لك"></div>
+          <button class="add-btn" onclick="addService()">➕ إضافة</button>
         </div>
       </div>
 
+      <!-- PROJECTS -->
       <div class="tab-content" data-tab="projects">
         <div class="section-block">
           <h3><span>📁 الأعمال</span><span class="badge" id="projectCount">0</span></h3>
           <div id="projectsList"></div>
-          <button class="add-btn" onclick="addProject()">➕ إضافة مشروع</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="projectsTitle" value="أعمالي الأخيرة"></div>
-          <div class="form-group"><label>الوصف</label><input type="text" id="projectsSubtitle" value="مشاريع مختارة بعناية"></div>
+          <button class="add-btn" onclick="addProject()">➕ إضافة</button>
         </div>
       </div>
 
-      <div class="tab-content" data-tab="gallery">
-        <div class="section-block">
-          <h3><span>🖼️ معرض الصور</span><span class="badge" id="galleryCount">0</span></h3>
-          <div id="galleryList"></div>
-          <button class="add-btn" onclick="addGallery()">➕ إضافة صورة</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="galleryTitle" value="معرض أعمالي"></div>
-          <div class="form-group"><label>الوصف</label><input type="text" id="gallerySubtitle" value="لقطات من مشاريعي"></div>
-        </div>
-      </div>
-
+      <!-- EXPERIENCE -->
       <div class="tab-content" data-tab="experience">
         <div class="section-block">
           <h3><span>💼 الخبرات</span><span class="badge" id="expCount">0</span></h3>
           <div id="experienceList"></div>
-          <button class="add-btn" onclick="addExperience()">➕ إضافة خبرة</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="expTitle" value="مسيرتي المهنية"></div>
+          <button class="add-btn" onclick="addExperience()">➕ إضافة</button>
         </div>
       </div>
 
+      <!-- EDUCATION -->
       <div class="tab-content" data-tab="education">
         <div class="section-block">
           <h3><span>🎓 التعليم</span><span class="badge" id="eduCount">0</span></h3>
           <div id="educationList"></div>
-          <button class="add-btn" onclick="addEducation()">➕ إضافة مؤهل</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="eduTitle" value="المؤهلات العلمية"></div>
+          <button class="add-btn" onclick="addEducation()">➕ إضافة</button>
         </div>
       </div>
 
-      <div class="tab-content" data-tab="certs">
-        <div class="section-block">
-          <h3><span>🏆 الشهادات</span><span class="badge" id="certCount">0</span></h3>
-          <div id="certsList"></div>
-          <button class="add-btn" onclick="addCert()">➕ إضافة شهادة</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="certsTitle" value="الشهادات والجوائز"></div>
-        </div>
-      </div>
-
+      <!-- TESTIMONIALS -->
       <div class="tab-content" data-tab="testimonials">
         <div class="section-block">
           <h3><span>💬 آراء العملاء</span><span class="badge" id="testCount">0</span></h3>
           <div id="testimonialsList"></div>
-          <button class="add-btn" onclick="addTestimonial()">➕ إضافة رأي</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="testTitle" value="ماذا يقول العملاء"></div>
+          <button class="add-btn" onclick="addTestimonial()">➕ إضافة</button>
         </div>
       </div>
 
-      <div class="tab-content" data-tab="pricing">
-        <div class="section-block">
-          <h3><span>💰 خطط الأسعار</span><span class="badge" id="priceCount">0</span></h3>
-          <div id="pricingList"></div>
-          <button class="add-btn" onclick="addPricing()">➕ إضافة خطة</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="pricingTitle" value="خطط الأسعار"></div>
-          <div class="form-group"><label>الوصف</label><input type="text" id="pricingSubtitle" value="اختر الخطة المناسبة"></div>
-        </div>
-      </div>
-
-      <div class="tab-content" data-tab="faq">
-        <div class="section-block">
-          <h3><span>❓ الأسئلة</span><span class="badge" id="faqCount">0</span></h3>
-          <div id="faqList"></div>
-          <button class="add-btn" onclick="addFaq()">➕ إضافة سؤال</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>العنوان</label><input type="text" id="faqTitle" value="الأسئلة الشائعة"></div>
-        </div>
-      </div>
-
+      <!-- CONTACT -->
       <div class="tab-content" data-tab="contact">
         <div class="section-block">
-          <h3><span>📞 معلومات التواصل</span></h3>
+          <h3><span>📞 تواصل</span></h3>
           <div class="form-group"><label>البريد</label><input type="email" id="email" value="ahmed@example.com"></div>
           <div class="form-group"><label>الهاتف</label><input type="tel" id="phone" value="+966 555 123 456"></div>
+          <div class="form-group"><label>الموقع</label><input type="text" id="location" value="الرياض"></div>
           <div class="form-group"><label>WhatsApp</label><input type="text" id="whatsapp" placeholder="966555123456"></div>
-          <div class="form-group"><label>الموقع</label><input type="text" id="location" value="الرياض، السعودية"></div>
-        </div>
-        <div class="section-block">
-          <h3><span>📧 نموذج التواصل</span></h3>
-          <div class="form-group"><label>Formspree Endpoint</label><input type="text" id="formEndpoint" placeholder="https://formspree.io/f/xxx"></div>
-        </div>
-        <div class="section-block">
-          <h3><span>📅 حجز المواعيد</span></h3>
-          <div class="form-group"><label>رابط Calendly</label><input type="text" id="calendlyUrl" placeholder="https://calendly.com/xxx"></div>
         </div>
         <div class="section-block">
           <h3><span>🔗 روابط التواصل</span><span class="badge" id="socialCount">0</span></h3>
           <div id="socialsList"></div>
-          <button class="add-btn" onclick="addSocial()">➕ إضافة رابط</button>
-        </div>
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات</span></h3>
-          <div class="form-group"><label>عنوان القسم</label><input type="text" id="contactTitle" value="لنعمل معاً"></div>
-          <div class="form-group"><label>الوصف</label><textarea id="contactSubtitle" rows="2">تواصل معي وسأرد عليك في أقرب وقت</textarea></div>
-          <div class="form-group"><label>نص الفوتر</label><input type="text" id="footerText" value="جميع الحقوق محفوظة"></div>
+          <button class="add-btn" onclick="addSocial()">➕ إضافة</button>
         </div>
       </div>
 
-      <div class="tab-content" data-tab="advanced">
-        <div class="section-block">
-          <h3><span>🎨 الخلفية المتحركة</span></h3>
-          <div class="form-group"><label>نوع الخلفية</label>
-            <select id="bgAnimation">
-              <option value="none">بدون</option>
-              <option value="particles" selected>جزيئات</option>
-              <option value="gradient">تدرج</option>
-              <option value="grid">شبكة</option>
-            </select>
-          </div>
-        </div>
-        <div class="section-block">
-          <h3><span>🎭 التأثيرات</span></h3>
-          <div class="switch-row"><label>مؤشر القراءة</label><div class="switch on" id="progressToggle" onclick="toggleSwitch(this,'readingProgress')"></div></div>
-          <div class="switch-row"><label>زر العودة للأعلى</label><div class="switch on" id="topToggle" onclick="toggleSwitch(this,'backToTop')"></div></div>
-        </div>
-        <div class="section-block">
-          <h3><span>🌐 اللغة</span></h3>
-          <div class="form-group"><label>اللغة الافتراضية</label>
-            <select id="defaultLang">
-              <option value="ar" selected>العربية</option>
-              <option value="en">English</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
+      <!-- DESIGN -->
       <div class="tab-content" data-tab="design">
         <div class="section-block">
           <h3><span>🎨 الثيمات</span></h3>
           <div class="theme-grid" id="themeGrid"></div>
         </div>
         <div class="section-block">
-          <h3><span>🎯 ألوان مخصصة</span></h3>
+          <h3><span>🎯 الألوان</span></h3>
           <div class="color-grid">
             <div class="color-item"><label>Primary</label><input type="color" id="cPrimary" value="#6366f1"></div>
             <div class="color-item"><label>Secondary</label><input type="color" id="cSecondary" value="#8b5cf6"></div>
@@ -700,47 +388,13 @@
             <div class="color-item"><label>Background</label><input type="color" id="cBg" value="#0f172a"></div>
           </div>
         </div>
-        <div class="section-block">
-          <h3><span>🔤 الخط</span></h3>
-          <div class="font-grid" id="fontGrid"></div>
-        </div>
-        <div class="section-block">
-          <h3><span>🎭 النمط</span></h3>
-          <div class="form-group"><label>حجم الخط</label>
-            <select id="fontSize">
-              <option value="15px">صغير</option>
-              <option value="16px" selected>متوسط</option>
-              <option value="17px">كبير</option>
-            </select>
-          </div>
-          <div class="form-group"><label>الحواف</label>
-            <select id="radius">
-              <option value="8px">خفيفة</option>
-              <option value="16px" selected>متوسطة</option>
-              <option value="24px">دائرية</option>
-            </select>
-          </div>
-          <div class="form-group"><label>الوضع</label>
-            <select id="mode">
-              <option value="dark" selected>داكن</option>
-              <option value="light">فاتح</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-content" data-tab="sections">
-        <div class="section-block">
-          <h3><span>📋 ترتيب الأقسام</span></h3>
-          <div class="sections-list" id="sectionsOrderList"></div>
-        </div>
       </div>
     </div>
 
     <div class="bottom-nav">
-      <div class="bn-item active" onclick="switchPanelTab('basic')"><div class="ic">👤</div><div>أساسي</div></div>
-      <div class="bn-item" onclick="switchPanelTab('design')"><div class="ic">🎨</div><div>تصميم</div></div>
-      <div class="bn-item" onclick="publishAndShare()"><div class="ic">🚀</div><div>انشر</div></div>
+      <div class="bn-item active" onclick="switchTab('basic')"><div class="ic">👤</div><div>أساسي</div></div>
+      <div class="bn-item" onclick="switchTab('design')"><div class="ic">🎨</div><div>تصميم</div></div>
+      <div class="bn-item" onclick="generateLink()"><div class="ic">🔗</div><div>رابط</div></div>
       <div class="bn-item" onclick="openMobilePreview()"><div class="ic">👁️</div><div>معاينة</div></div>
       <div class="bn-item" onclick="downloadSite()"><div class="ic">⬇️</div><div>تحميل</div></div>
     </div>
@@ -752,93 +406,53 @@
         <span style="font-size:.85rem;font-weight:700">👁️ معاينة</span>
         <span class="badge" id="statusBadge">جاهز</span>
       </div>
-      <div class="device-btns">
-        <button class="device-btn active" data-device="desktop">🖥️</button>
-        <button class="device-btn" data-device="tablet">📱</button>
-        <button class="device-btn" data-device="mobile">📲</button>
-      </div>
     </div>
     <div class="preview-container">
-      <div class="preview-frame-wrap" id="previewWrap">
-        <iframe id="previewFrame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+      <div class="preview-frame-wrap">
+        <iframe id="previewFrame"></iframe>
       </div>
     </div>
   </div>
 </div>
 
+<!-- MOBILE PREVIEW -->
 <div class="mobile-preview" id="mobilePreview">
   <div class="preview-toolbar">
-    <button class="btn btn-ghost btn-icon" onclick="closeMobilePreview()" style="font-size:1.15rem">✕</button>
-    <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center">
-      <span style="font-size:.8rem;font-weight:700;color:var(--muted)">👁️ معاينة</span>
-    </div>
-    <div class="device-btns">
-      <button class="device-btn active" data-device="mobile" onclick="setMobileDevice('mobile',this)">📲</button>
-      <button class="device-btn" data-device="desktop" onclick="setMobileDevice('desktop',this)">🖥️</button>
-    </div>
+    <button class="btn btn-ghost btn-icon" onclick="closeMobilePreview()">✕</button>
+    <span style="font-size:.85rem;font-weight:700">👁️ معاينة</span>
+    <div></div>
   </div>
   <div class="mobile-preview-body">
-    <div class="preview-frame-wrap mobile" id="mobilePreviewWrap">
-      <iframe id="mobilePreviewFrame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
-    </div>
+    <iframe id="mobilePreviewFrame"></iframe>
   </div>
 </div>
 
-<button class="preview-fab" id="previewFab" onclick="openMobilePreview()">👁️</button>
-
-<div class="modal" id="importModal" onclick="if(event.target===this)closeModal('importModal')">
-  <div class="modal-box">
-    <span class="modal-handle"></span>
-    <h3>📥 استيراد JSON</h3>
-    <textarea id="importText" rows="8" style="font-family:monospace;font-size:.78rem" placeholder="الصق محتوى JSON هنا..."></textarea>
-    <button class="btn btn-primary" onclick="importJSON()" style="width:100%;margin-top:12px">استيراد</button>
-  </div>
-</div>
-
-<!-- PUBLISH MODAL - مبسط ويعرض الرابط الصحيح فقط -->
-<div class="modal" id="publishModal">
+<!-- LINK MODAL -->
+<div class="modal" id="linkModal">
   <div class="modal-box" style="text-align:center">
     <span class="modal-handle"></span>
     
-    <div id="publishLoading">
-      <div class="publish-loading-icon">⏳</div>
-      <h3 style="color:#fff;margin-bottom:8px">جاري نشر موقعك...</h3>
-      <p style="color:var(--muted);font-size:.85rem;margin-bottom:8px" id="publishStep">تجهيز الملفات</p>
-      <div class="progress-bar-pub"><div class="fill" id="publishProgressFill"></div></div>
+    <div style="font-size:3.5rem;margin-bottom:12px">🎉</div>
+    <h3 style="color:#fff;margin-bottom:8px">الرابط جاهز!</h3>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:16px">
+      شارك هذا الرابط — أي شخص يفتحه سيرى موقعك
+    </p>
+    
+    <div class="publish-url-box">
+      <div class="label">🔗 الرابط:</div>
+      <div class="url" id="generatedUrl"></div>
     </div>
     
-    <div id="publishSuccess" style="display:none">
-      <div style="font-size:4rem;margin-bottom:12px">🎉</div>
-      <h3 style="color:#fff;margin-bottom:6px">موقعك جاهز!</h3>
-      
-      <div class="publish-url-box">
-        <div class="label">🌐 الرابط:</div>
-        <div class="url" id="publishedUrl"></div>
-      </div>
-      
-      <p style="color:var(--warning);font-size:.76rem;margin-bottom:12px;line-height:1.6">
-        ⏱️ انتظر 30 ثانية قبل فتح الرابط
-      </p>
-      
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-        <button class="btn btn-primary" onclick="copyPublishedUrl()">📋 نسخ</button>
-        <button class="btn btn-success" onclick="sharePublishedUrl()">📤 مشاركة</button>
-      </div>
-      
-      <a id="openPublishedUrl" href="#" target="_blank" class="btn btn-ghost" style="width:100%;text-decoration:none;display:flex;margin-bottom:8px">
-        🌐 فتح الموقع
-      </a>
-      
-      <button class="btn btn-ghost" style="width:100%" onclick="closeModal('publishModal')">إغلاق</button>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <button class="btn btn-primary" onclick="copyLink()" style="padding:14px">📋 نسخ الرابط</button>
+      <button class="btn btn-success" onclick="shareLink()" style="padding:14px">📤 مشاركة</button>
     </div>
     
-    <div id="publishError" style="display:none">
-      <div style="font-size:3rem;margin-bottom:12px">⚠️</div>
-      <h3 style="color:#fff;margin-bottom:8px">تعذّر النشر</h3>
-      <p id="publishErrorMsg" style="color:var(--muted);font-size:.85rem;margin-bottom:16px;line-height:1.6"></p>
-      <button class="btn btn-primary" style="width:100%;margin-bottom:8px" onclick="publishAndShare()">🔄 المحاولة</button>
-      <button class="btn btn-ghost" style="width:100%" onclick="closeModal('publishModal')">إغلاق</button>
-    </div>
+    <a id="openLink" href="#" target="_blank" class="btn btn-ghost" style="width:100%;text-decoration:none;display:flex;margin-bottom:8px;padding:14px">
+      🌐 فتح الموقع
+    </a>
+    
+    <button class="btn btn-ghost" style="width:100%" onclick="closeModal()">إغلاق</button>
   </div>
 </div>
 
@@ -846,115 +460,56 @@
 
 <script>
 /* ============================================================
-   إعداد السيرفر
-   ============================================================ */
-const PUBLISH_API = 'https://bahaa.bahaa90231.workers.dev';
-
-/* ============================================================
    STATE
    ============================================================ */
 const defaultState = {
   fullName:'أحمد محمد', jobTitle:'مطور ويب ومصمم UI/UX',
-  tagline:'أبني تجارب رقمية استثنائية',
   heroBio:'مطور ويب شغوف بخبرة 5 سنوات في بناء تطبيقات ويب حديثة.',
-  typewriterText:'مطور ويب محترف\nمصمم UI/UX\nخبير React & Node.js',
-  avatarUrl:'', avatarData:'',
+  typewriterText:'مطور ويب محترف\nمصمم UI/UX\nخبير React',
+  avatarUrl:'',
   btn1Text:'تواصل', btn1Link:'#contact',
   btn2Text:'أعمالي', btn2Link:'#projects',
   aboutTitle:'مطور شغوف بصناعة الويب',
-  aboutText:'مطور ويب محترف بخبرة تفوق 5 سنوات في تصميم وتطوير تطبيقات الويب الحديثة.',
+  aboutText:'مطور ويب محترف بخبرة تفوق 5 سنوات.',
   highlights:[
-    {icon:'⚡', text:'أداء فائق السرعة'},
+    {icon:'⚡', text:'أداء فائق'},
     {icon:'🎨', text:'تصميم عصري'},
     {icon:'🔒', text:'أمان متقدم'}
   ],
-  stats:[
-    {num:5, suffix:'+', label:'سنوات خبرة'},
-    {num:80, suffix:'+', label:'مشروع'},
-    {num:50, suffix:'+', label:'عميل'},
-    {num:12, suffix:'', label:'جائزة'}
-  ],
-  skillsTitle:'مهاراتي الاحترافية', skillsSubtitle:'التقنيات التي أتقنها',
   skills:[
     {name:'HTML5', level:95, icon:'🌐'},
     {name:'CSS3', level:92, icon:'🎨'},
     {name:'JavaScript', level:90, icon:'⚡'},
-    {name:'React', level:88, icon:'⚛️'},
-    {name:'Node.js', level:85, icon:'🟢'},
-    {name:'UI/UX', level:87, icon:'✨'}
+    {name:'React', level:88, icon:'⚛️'}
   ],
-  servicesTitle:'خدماتي المميزة', servicesSubtitle:'ما يمكنني تقديمه',
   services:[
     {icon:'💻', title:'تطوير المواقع', desc:'مواقع احترافية متجاوبة.'},
-    {icon:'🎨', title:'تصميم UI/UX', desc:'واجهات عصرية جذابة.'},
-    {icon:'⚡', title:'تحسين الأداء', desc:'سرعة وكفاءة عالية.'}
+    {icon:'🎨', title:'تصميم UI/UX', desc:'واجهات عصرية.'}
   ],
-  projectsTitle:'أعمالي الأخيرة', projectsSubtitle:'مشاريع مختارة',
   projects:[
-    {title:'متجر إلكتروني', category:'ويب', desc:'متجر متكامل.', img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600', link:''},
-    {title:'منصة تعليمية', category:'ويب', desc:'منصة تعليم عن بعد.', img:'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600', link:''}
+    {title:'متجر إلكتروني', category:'ويب', desc:'متجر متكامل.', img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'},
+    {title:'منصة تعليمية', category:'ويب', desc:'منصة تعليم عن بعد.', img:'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600'}
   ],
-  galleryTitle:'معرض أعمالي', gallerySubtitle:'لقطات من مشاريعي',
-  gallery:[
-    {img:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600', caption:'تصميم واجهة'},
-    {img:'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600', caption:'تطبيق جوال'}
-  ],
-  expTitle:'مسيرتي المهنية',
   experience:[
     {role:'مطور ويب أول', company:'شركة التقنية', period:'2022 - الآن', desc:'قيادة فريق التطوير.'}
   ],
-  eduTitle:'المؤهلات العلمية',
   education:[
     {degree:'بكالوريوس علوم الحاسب', school:'جامعة الملك سعود', period:'2016 - 2020', desc:'تخرجت بمرتبة الشرف.'}
   ],
-  certsTitle:'الشهادات والجوائز',
-  certs:[
-    {icon:'🏆', title:'أفضل مطور', issuer:'نقابة المبرمجين', year:'2024'}
-  ],
-  testTitle:'ماذا يقول العملاء',
   testimonials:[
-    {name:'محمد العلي', role:'مدير تنفيذي', text:'عمل احترافي ومتميز.', avatar:'https://i.pravatar.cc/100?img=12'}
-  ],
-  pricingTitle:'خطط الأسعار', pricingSubtitle:'اختر الخطة المناسبة',
-  pricing:[
-    {name:'احترافية', price:'1200', currency:'$', period:'مشروع', features:'5 صفحات\nتصميم مخصص\nSEO', popular:true}
-  ],
-  faqTitle:'الأسئلة الشائعة',
-  faq:[
-    {q:'كم يستغرق التنفيذ؟', a:'من 7 إلى 14 يوم.'}
+    {name:'محمد العلي', role:'مدير تنفيذي', text:'عمل احترافي ومتميز.'}
   ],
   email:'ahmed@example.com', phone:'+966 555 123 456',
-  whatsapp:'966555123456', location:'الرياض',
-  contactTitle:'لنعمل معاً',
-  contactSubtitle:'تواصل معي وسأرد في أقرب وقت',
-  footerText:'جميع الحقوق محفوظة',
-  formEndpoint:'', calendlyUrl:'',
+  whatsapp:'', location:'الرياض',
   socials:[
     {icon:'🐙', name:'GitHub', url:'https://github.com'},
     {icon:'💼', name:'LinkedIn', url:'https://linkedin.com'}
   ],
   theme:'indigo',
-  colors:{primary:'#6366f1', secondary:'#8b5cf6', accent:'#ec4899', bg:'#0f172a'},
-  font:'Cairo', fontSize:'16px', radius:'16px', mode:'dark', 
-  bgAnimation:'particles', readingProgress:true, backToTop:true,
-  defaultLang:'ar',
-  sectionsOrder:['hero','about','stats','skills','services','projects','gallery','experience','education','certs','testimonials','pricing','faq','contact'],
-  sectionsVisible:{
-    hero:true, about:true, stats:true, skills:true, services:true,
-    projects:true, gallery:true, experience:true, education:true,
-    certs:true, testimonials:true, pricing:true, faq:true, contact:true
-  }
+  colors:{primary:'#6366f1', secondary:'#8b5cf6', accent:'#ec4899', bg:'#0f172a'}
 };
 
 let state = JSON.parse(JSON.stringify(defaultState));
-
-const sectionNames = {
-  hero:'🏠 الرئيسية', about:'📖 عني', stats:'📊 إحصائيات',
-  skills:'💡 مهارات', services:'🛠️ خدمات', projects:'📁 أعمال',
-  gallery:'🖼️ معرض', experience:'💼 خبرات', education:'🎓 تعليم',
-  certs:'🏆 شهادات', testimonials:'💬 آراء',
-  pricing:'💰 أسعار', faq:'❓ أسئلة', contact:'📞 تواصل'
-};
 
 const themes = {
   indigo:{name:'بنفسجي', c:{primary:'#6366f1',secondary:'#8b5cf6',accent:'#ec4899',bg:'#0f172a'}},
@@ -965,26 +520,18 @@ const themes = {
   slate:{name:'رمادي', c:{primary:'#64748b',secondary:'#475569',accent:'#94a3b8',bg:'#0f172a'}},
   violet:{name:'بنفسجي غامق', c:{primary:'#8b5cf6',secondary:'#7c3aed',accent:'#a78bfa',bg:'#1e1b4b'}},
   orange:{name:'برتقالي', c:{primary:'#f97316',secondary:'#ea580c',accent:'#fb923c',bg:'#431407'}},
-  lime:{name:'ليموني', c:{primary:'#84cc16',secondary:'#65a30d',accent:'#a3e635',bg:'#1a2e05'}},
   blue:{name:'أزرق', c:{primary:'#3b82f6',secondary:'#2563eb',accent:'#60a5fa',bg:'#0c1e3e'}}
 };
-
-const fonts = {Cairo:'القاهرة', Tajawal:'تجوال', 'IBM Plex Sans Arabic':'IBM', Almarai:'المراعي'};
 
 /* ============================================================
    STORAGE
    ============================================================ */
-function saveToStorage(showMsg){
-  try{
-    localStorage.setItem('perfectSiteBuilder_v8', JSON.stringify(state));
-    if(showMsg) showToast('💾 تم الحفظ');
-  }catch(e){ showToast('فشل الحفظ', true); }
+function saveToStorage(){
+  try{ localStorage.setItem('builder_v9', JSON.stringify(state)); }catch(e){}
 }
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('perfectSiteBuilder_v8')
-           || localStorage.getItem('perfectSiteBuilder_v7')
-           || localStorage.getItem('perfectSiteBuilder_v6');
+    const s = localStorage.getItem('builder_v9');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -994,134 +541,19 @@ function loadFromStorage(){
         }
       });
     }
-  }catch(e){ console.error(e); }
-}
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'builder-backup.json'; a.click();
-  URL.revokeObjectURL(url);
-  showToast('📤 تم التصدير');
-}
-function importJSON(){
-  try{
-    state = {...defaultState, ...JSON.parse(document.getElementById('importText').value)};
-    saveToStorage(); location.reload();
-  }catch(e){ showToast('JSON غير صالح', true); }
-}
-function openModal(id){ document.getElementById(id).classList.add('show'); }
-function closeModal(id){ document.getElementById(id).classList.remove('show'); }
-function resetAll(){
-  if(!confirm('إعادة التعيين؟')) return;
-  localStorage.removeItem('perfectSiteBuilder_v8'); location.reload();
+  }catch(e){}
 }
 
 /* ============================================================
    TABS
    ============================================================ */
-function switchPanelTab(tabName){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === tabName));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active', c.dataset.tab === tabName));
-  document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
-  const tc = document.getElementById('tabContents');
-  if(tc) tc.scrollTop = 0;
-  const tab = document.querySelector(`.tab[data-tab="${tabName}"]`);
-  if(tab) tab.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active', c.dataset.tab === name));
 }
-document.querySelectorAll('.tab').forEach(t => {
-  t.addEventListener('click', () => switchPanelTab(t.dataset.tab));
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>switchTab(t.dataset.tab));
 });
-document.querySelectorAll('.preview-area .device-btn').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.preview-area .device-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    const wrap = document.getElementById('previewWrap');
-    wrap.classList.remove('desktop','tablet','mobile');
-    wrap.classList.add(b.dataset.device);
-  });
-});
-
-/* ============================================================
-   MOBILE PREVIEW
-   ============================================================ */
-let previewOpen = false;
-function openMobilePreview(){
-  if(previewOpen) return;
-  previewOpen = true;
-  const fab = document.getElementById('previewFab');
-  if(fab) fab.classList.add('hidden');
-  const overlay = document.getElementById('mobilePreview');
-  overlay.classList.add('show');
-  document.body.classList.add('preview-locked');
-  document.body.style.overflow = 'hidden';
-  requestAnimationFrame(()=>{
-    const frame = document.getElementById('mobilePreviewFrame');
-    if(frame) setIframeContent(frame, buildHTML(), false);
-  });
-}
-function closeMobilePreview(){
-  if(!previewOpen) return;
-  previewOpen = false;
-  const overlay = document.getElementById('mobilePreview');
-  overlay.classList.remove('show');
-  document.body.classList.remove('preview-locked');
-  document.body.style.overflow = '';
-  const fab = document.getElementById('previewFab');
-  if(fab) fab.classList.remove('hidden');
-}
-function setMobileDevice(device, btn){
-  document.querySelectorAll('.mobile-preview .device-btn').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  const wrap = document.getElementById('mobilePreviewWrap');
-  wrap.classList.remove('mobile','tablet','desktop');
-  wrap.classList.add(device);
-}
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape' && previewOpen) closeMobilePreview();
-});
-
-/* ============================================================
-   REFRESH
-   ============================================================ */
-let previewTimer = null;
-function refresh(){
-  if(previewTimer) clearTimeout(previewTimer);
-  previewTimer = setTimeout(doRefresh, 400);
-}
-function doRefresh(){
-  previewTimer = null;
-  try{
-    const html = buildHTML();
-    if(window.innerWidth >= 1024){
-      const frame = document.getElementById('previewFrame');
-      if(frame) setIframeContent(frame, html, false);
-    }
-    if(previewOpen){
-      const frame = document.getElementById('mobilePreviewFrame');
-      if(frame) setIframeContent(frame, html, true);
-    }
-    const sb = document.getElementById('statusBadge');
-    if(sb){
-      sb.textContent = '✅ محدّث';
-      clearTimeout(sb._timer);
-      sb._timer = setTimeout(()=>sb.textContent='جاهز', 700);
-    }
-  }catch(e){ console.error('Refresh error:', e); }
-}
-function setIframeContent(frame, html, preserveScroll){
-  let prevScroll = 0;
-  if(preserveScroll){
-    try{ prevScroll = frame.contentWindow?.scrollY || 0; }catch(e){}
-  }
-  frame.srcdoc = html;
-  if(preserveScroll && prevScroll > 100){
-    frame.onload = () => {
-      try{ if(frame.contentWindow) frame.contentWindow.scrollTo(0, prevScroll); }catch(e){}
-      frame.onload = null;
-    };
-  }
-}
 
 /* ============================================================
    LIST HELPERS
@@ -1133,7 +565,7 @@ function renderList(containerId, badgeId, arr, templateFn, emptyMsg){
     const b = document.getElementById(badgeId);
     if(b) b.textContent = arr.length;
   }
-  if(!arr.length){ c.innerHTML = `<div class="empty">${emptyMsg||'لا توجد عناصر'}</div>`; return; }
+  if(!arr.length){ c.innerHTML = `<div class="empty">${emptyMsg}</div>`; return; }
   c.innerHTML = arr.map((item,i)=>templateFn(item,i)).join('');
 }
 function updateItem(arr, idx, key, val, rerender){
@@ -1151,12 +583,9 @@ function removeItem(arr, idx){
   refresh();
 }
 function getRendererFor(arr){
-  return {
-    highlights:renderHighlights, stats:renderStats, skills:renderSkills, services:renderServices,
-    projects:renderProjects, gallery:renderGallery, experience:renderExperience,
-    education:renderEducation, certs:renderCerts, testimonials:renderTestimonials,
-    pricing:renderPricing, faq:renderFaq, socials:renderSocials
-  }[arr];
+  return {highlights:renderHighlights,skills:renderSkills,services:renderServices,
+    projects:renderProjects,experience:renderExperience,education:renderEducation,
+    testimonials:renderTestimonials,socials:renderSocials}[arr];
 }
 
 /* ============================================================
@@ -1167,7 +596,7 @@ function renderHighlights(){
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">نقطة ${i+1}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('highlights',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('highlights',${i})">🗑️</button></div>
       </div>
       <div class="row-2">
         <input type="text" value="${h.icon}" onchange="updateItem('highlights',${i},'icon',this.value)" placeholder="أيقونة">
@@ -1175,32 +604,18 @@ function renderHighlights(){
       </div>
     </div>`, 'لا توجد نقاط');
 }
-function renderStats(){
-  renderList('statsList','statCount', state.stats, (s,i)=>`
-    <div class="item-card">
-      <div class="item-head">
-        <span class="item-title">إحصائية ${i+1}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('stats',${i})">🗑️</button></div>
-      </div>
-      <div class="row-3">
-        <input type="number" value="${s.num}" onchange="updateItem('stats',${i},'num',+this.value)" placeholder="رقم">
-        <input type="text" value="${s.suffix}" onchange="updateItem('stats',${i},'suffix',this.value)" placeholder="لاحقة">
-        <input type="text" value="${s.label}" onchange="updateItem('stats',${i},'label',this.value)" placeholder="وصف">
-      </div>
-    </div>`, 'لا توجد إحصائيات');
-}
 function renderSkills(){
   renderList('skillsList','skillCount', state.skills, (s,i)=>`
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${s.icon} ${s.name}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('skills',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('skills',${i})">🗑️</button></div>
       </div>
       <div class="row-2">
         <input type="text" value="${s.icon}" onchange="updateItem('skills',${i},'icon',this.value,1)" placeholder="أيقونة">
         <input type="text" value="${s.name}" onchange="updateItem('skills',${i},'name',this.value,1)" placeholder="اسم">
       </div>
-      <div class="form-group" style="margin-top:8px">
+      <div style="margin-top:8px">
         <label>المستوى: ${s.level}%</label>
         <input type="range" min="0" max="100" value="${s.level}" oninput="updateItem('skills',${i},'level',+this.value)">
       </div>
@@ -1211,7 +626,7 @@ function renderServices(){
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${s.icon} ${s.title}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('services',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('services',${i})">🗑️</button></div>
       </div>
       <div class="form-group"><input type="text" value="${s.icon}" onchange="updateItem('services',${i},'icon',this.value,1)" placeholder="أيقونة"></div>
       <div class="form-group"><input type="text" value="${s.title}" onchange="updateItem('services',${i},'title',this.value,1)" placeholder="العنوان"></div>
@@ -1223,30 +638,19 @@ function renderProjects(){
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${p.title}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('projects',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('projects',${i})">🗑️</button></div>
       </div>
       <div class="form-group"><input type="text" value="${p.title}" onchange="updateItem('projects',${i},'title',this.value,1)" placeholder="العنوان"></div>
       <div class="form-group"><input type="text" value="${p.img}" onchange="updateItem('projects',${i},'img',this.value)" placeholder="رابط صورة"></div>
       <div class="form-group"><textarea onchange="updateItem('projects',${i},'desc',this.value)" placeholder="الوصف" rows="2">${p.desc}</textarea></div>
     </div>`, 'لا توجد مشاريع');
 }
-function renderGallery(){
-  renderList('galleryList','galleryCount', state.gallery, (g,i)=>`
-    <div class="item-card">
-      <div class="item-head">
-        <span class="item-title">صورة ${i+1}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('gallery',${i})">🗑️</button></div>
-      </div>
-      <div class="form-group"><input type="text" value="${g.img}" onchange="updateItem('gallery',${i},'img',this.value)" placeholder="رابط الصورة"></div>
-      <div class="form-group"><input type="text" value="${g.caption}" onchange="updateItem('gallery',${i},'caption',this.value)" placeholder="الوصف"></div>
-    </div>`, 'لا توجد صور');
-}
 function renderExperience(){
   renderList('experienceList','expCount', state.experience, (e,i)=>`
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${e.role}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('experience',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('experience',${i})">🗑️</button></div>
       </div>
       <div class="form-group"><input type="text" value="${e.role}" onchange="updateItem('experience',${i},'role',this.value,1)" placeholder="المسمى"></div>
       <div class="row-2">
@@ -1261,72 +665,35 @@ function renderEducation(){
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${e.degree}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('education',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('education',${i})">🗑️</button></div>
       </div>
       <div class="form-group"><input type="text" value="${e.degree}" onchange="updateItem('education',${i},'degree',this.value,1)" placeholder="المؤهل"></div>
       <div class="row-2">
         <input type="text" value="${e.school}" onchange="updateItem('education',${i},'school',this.value)" placeholder="المؤسسة">
         <input type="text" value="${e.period}" onchange="updateItem('education',${i},'period',this.value)" placeholder="الفترة">
       </div>
-      <div class="form-group" style="margin-top:8px"><textarea onchange="updateItem('education',${i},'desc',this.value)" placeholder="الوصف" rows="2">${e.desc}</textarea></div>
     </div>`, 'لا توجد مؤهلات');
-}
-function renderCerts(){
-  renderList('certsList','certCount', state.certs, (c,i)=>`
-    <div class="item-card">
-      <div class="item-head">
-        <span class="item-title">${c.icon} ${c.title}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('certs',${i})">🗑️</button></div>
-      </div>
-      <div class="form-group"><input type="text" value="${c.title}" onchange="updateItem('certs',${i},'title',this.value,1)" placeholder="العنوان"></div>
-      <div class="form-group"><input type="text" value="${c.issuer}" onchange="updateItem('certs',${i},'issuer',this.value)" placeholder="الجهة"></div>
-    </div>`, 'لا توجد شهادات');
 }
 function renderTestimonials(){
   renderList('testimonialsList','testCount', state.testimonials, (t,i)=>`
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${t.name}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('testimonials',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('testimonials',${i})">🗑️</button></div>
       </div>
       <div class="row-2">
         <input type="text" value="${t.name}" onchange="updateItem('testimonials',${i},'name',this.value,1)" placeholder="الاسم">
         <input type="text" value="${t.role}" onchange="updateItem('testimonials',${i},'role',this.value)" placeholder="الوظيفة">
       </div>
-      <div class="form-group"><textarea onchange="updateItem('testimonials',${i},'text',this.value)" placeholder="الرأي" rows="2">${t.text}</textarea></div>
+      <div class="form-group" style="margin-top:8px"><textarea onchange="updateItem('testimonials',${i},'text',this.value)" placeholder="الرأي" rows="2">${t.text}</textarea></div>
     </div>`, 'لا توجد آراء');
-}
-function renderPricing(){
-  renderList('pricingList','priceCount', state.pricing, (p,i)=>`
-    <div class="item-card">
-      <div class="item-head">
-        <span class="item-title">${p.name}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('pricing',${i})">🗑️</button></div>
-      </div>
-      <div class="row-2">
-        <input type="text" value="${p.name}" onchange="updateItem('pricing',${i},'name',this.value,1)" placeholder="الاسم">
-        <input type="text" value="${p.price}" onchange="updateItem('pricing',${i},'price',this.value)" placeholder="السعر">
-      </div>
-      <div class="form-group" style="margin-top:8px"><textarea onchange="updateItem('pricing',${i},'features',this.value)" placeholder="المزايا" rows="3">${p.features}</textarea></div>
-    </div>`, 'لا توجد خطط');
-}
-function renderFaq(){
-  renderList('faqList','faqCount', state.faq, (f,i)=>`
-    <div class="item-card">
-      <div class="item-head">
-        <span class="item-title">سؤال ${i+1}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('faq',${i})">🗑️</button></div>
-      </div>
-      <div class="form-group"><input type="text" value="${f.q}" onchange="updateItem('faq',${i},'q',this.value)" placeholder="السؤال"></div>
-      <div class="form-group"><textarea onchange="updateItem('faq',${i},'a',this.value)" placeholder="الجواب" rows="2">${f.a}</textarea></div>
-    </div>`, 'لا توجد أسئلة');
 }
 function renderSocials(){
   renderList('socialsList','socialCount', state.socials, (s,i)=>`
     <div class="item-card">
       <div class="item-head">
         <span class="item-title">${s.icon} ${s.name}</span>
-        <div class="item-actions"><button class="del" onclick="removeItem('socials',${i})">🗑️</button></div>
+        <div class="item-actions"><button onclick="removeItem('socials',${i})">🗑️</button></div>
       </div>
       <div class="row-2">
         <input type="text" value="${s.icon}" onchange="updateItem('socials',${i},'icon',this.value,1)" placeholder="أيقونة">
@@ -1337,17 +704,12 @@ function renderSocials(){
 }
 
 function addHighlight(){ state.highlights.push({icon:'✅',text:'نقطة'}); renderHighlights(); refresh(); }
-function addStat(){ state.stats.push({num:100,suffix:'+',label:'وصف'}); renderStats(); refresh(); }
 function addSkill(){ state.skills.push({name:'مهارة',level:80,icon:'⭐'}); renderSkills(); refresh(); }
 function addService(){ state.services.push({icon:'✨',title:'خدمة',desc:'وصف'}); renderServices(); refresh(); }
-function addProject(){ state.projects.push({title:'مشروع',category:'عام',desc:'وصف',img:'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600',link:''}); renderProjects(); refresh(); }
-function addGallery(){ state.gallery.push({img:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600',caption:'صورة'}); renderGallery(); refresh(); }
+function addProject(){ state.projects.push({title:'مشروع',category:'عام',desc:'وصف',img:'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600'}); renderProjects(); refresh(); }
 function addExperience(){ state.experience.push({role:'مسمى',company:'شركة',period:'2020 - 2022',desc:'وصف'}); renderExperience(); refresh(); }
 function addEducation(){ state.education.push({degree:'مؤهل',school:'جامعة',period:'2016 - 2020',desc:'وصف'}); renderEducation(); refresh(); }
-function addCert(){ state.certs.push({icon:'🏆',title:'شهادة',issuer:'جهة',year:'2024'}); renderCerts(); refresh(); }
-function addTestimonial(){ state.testimonials.push({name:'عميل',role:'وظيفة',text:'رأي',avatar:'https://i.pravatar.cc/100'}); renderTestimonials(); refresh(); }
-function addPricing(){ state.pricing.push({name:'خطة',price:'999',currency:'$',period:'مشروع',features:'ميزة 1\nميزة 2',popular:false}); renderPricing(); refresh(); }
-function addFaq(){ state.faq.push({q:'سؤال؟',a:'الجواب.'}); renderFaq(); refresh(); }
+function addTestimonial(){ state.testimonials.push({name:'عميل',role:'وظيفة',text:'رأي'}); renderTestimonials(); refresh(); }
 function addSocial(){ state.socials.push({icon:'🔗',name:'رابط',url:'https://'}); renderSocials(); refresh(); }
 
 function renderThemes(){
@@ -1368,65 +730,16 @@ function applyTheme(k){
   });
   renderThemes(); refresh();
 }
-function renderFonts(){
-  const g = document.getElementById('fontGrid');
-  if(!g) return;
-  g.innerHTML = Object.entries(fonts).map(([k,name])=>`
-    <div class="font-opt ${state.font===k?'active':''}" onclick="applyFont('${k}')" style="font-family:'${k}',sans-serif">${name}</div>
-  `).join('');
-}
-function applyFont(f){ state.font = f; renderFonts(); refresh(); }
-
-function renderSectionsOrder(){
-  const c = document.getElementById('sectionsOrderList');
-  if(!c) return;
-  c.innerHTML = state.sectionsOrder.map((k,i)=>`
-    <div class="section-item" data-key="${k}">
-      <span class="drag-icon">☰</span>
-      <span class="sec-name">${sectionNames[k]}</span>
-      <div class="move-btns">
-        <button onclick="moveSection(${i},-1)" ${i===0?'disabled':''}>↑</button>
-        <button onclick="moveSection(${i},1)" ${i===state.sectionsOrder.length-1?'disabled':''}>↓</button>
-      </div>
-      <div class="toggle ${state.sectionsVisible[k]?'on':''}" onclick="toggleSection('${k}')"></div>
-    </div>
-  `).join('');
-}
-function moveSection(i, dir){
-  const ni = i + dir;
-  if(ni < 0 || ni >= state.sectionsOrder.length) return;
-  [state.sectionsOrder[i], state.sectionsOrder[ni]] = [state.sectionsOrder[ni], state.sectionsOrder[i]];
-  renderSectionsOrder(); refresh();
-}
-function toggleSection(k){
-  state.sectionsVisible[k] = !state.sectionsVisible[k];
-  renderSectionsOrder(); refresh();
-}
-function toggleSwitch(el, key){
-  el.classList.toggle('on');
-  state[key] = el.classList.contains('on');
-  refresh();
-}
 
 /* ============================================================
    INPUT BINDINGS
    ============================================================ */
 const bindings = {
-  fullName:'fullName', jobTitle:'jobTitle', tagline:'tagline', heroBio:'heroBio',
-  typewriterText:'typewriterText',
+  fullName:'fullName', jobTitle:'jobTitle', heroBio:'heroBio',
+  typewriterText:'typewriterText', avatarUrl:'avatarUrl',
   btn1Text:'btn1Text', btn1Link:'btn1Link', btn2Text:'btn2Text', btn2Link:'btn2Link',
   aboutTitle:'aboutTitle', aboutText:'aboutText',
-  skillsTitle:'skillsTitle', skillsSubtitle:'skillsSubtitle',
-  servicesTitle:'servicesTitle', servicesSubtitle:'servicesSubtitle',
-  projectsTitle:'projectsTitle', projectsSubtitle:'projectsSubtitle',
-  galleryTitle:'galleryTitle', gallerySubtitle:'gallerySubtitle',
-  expTitle:'expTitle', eduTitle:'eduTitle', certsTitle:'certsTitle',
-  testTitle:'testTitle', pricingTitle:'pricingTitle', pricingSubtitle:'pricingSubtitle',
-  faqTitle:'faqTitle',
-  email:'email', phone:'phone', whatsapp:'whatsapp', location:'location',
-  contactTitle:'contactTitle', contactSubtitle:'contactSubtitle', footerText:'footerText',
-  formEndpoint:'formEndpoint', calendlyUrl:'calendlyUrl',
-  avatarUrl:'avatarUrl'
+  email:'email', phone:'phone', whatsapp:'whatsapp', location:'location'
 };
 Object.keys(bindings).forEach(id => {
   const el = document.getElementById(id);
@@ -1440,47 +753,175 @@ Object.keys(bindings).forEach(id => {
   const el = document.getElementById(id);
   if(el) el.addEventListener('input', e => {
     state.colors[id.replace('c','').toLowerCase()] = e.target.value;
-    state.theme = 'custom'; refresh();
-  });
-});
-['fontSize','radius','mode','bgAnimation','defaultLang'].forEach(id => {
-  const el = document.getElementById(id);
-  if(el) el.addEventListener('change', e => {
-    state[id] = e.target.value; refresh();
-  });
-});
-document.getElementById('avatarFile').addEventListener('change', e => {
-  const f = e.target.files[0]; if(!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    state.avatarData = ev.target.result;
-    document.getElementById('avatarPreview').src = ev.target.result;
     refresh();
-  };
-  r.readAsDataURL(f);
-});
-document.getElementById('avatarUrl').addEventListener('input', e => {
-  const url = e.target.value.trim();
-  state.avatarUrl = url;
-  if(url) document.getElementById('avatarPreview').src = url;
-  refresh();
+  });
 });
 
 /* ============================================================
-   BUILD HTML - مبسط
+   BUILD HTML
    ============================================================ */
-function renderHero(c, avatarSrc){
-  const avatarHTML = avatarSrc
-    ? `<img src="${avatarSrc}" alt="${state.fullName}">`
-    : `<div class="avatar-initial">${state.fullName.charAt(0)}</div>`;
-  const typeLines = (state.typewriterText||'').split('\n').filter(l=>l.trim());
-  return `
-<section id="hero" class="hero">
+function buildHTML(){
+  const c = state.colors;
+  const dir = 'rtl';
+  const avatarSrc = state.avatarUrl || '';
+
+  return `<!DOCTYPE html>
+<html lang="ar" dir="${dir}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${state.fullName} — ${state.jobTitle}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
+  html{scroll-behavior:smooth}
+  body{background:${c.bg};color:#e5e7eb;line-height:1.7}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .container{max-width:1100px;margin:0 auto;padding:0 20px}
+  
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:${c.bg}dd;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff10;padding:12px 20px}
+  .nav-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+  .nav-brand{font-weight:900;display:flex;align-items:center;gap:10px}
+  .nav-brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 0 15px ${c.primary}}
+  .nav-links{display:flex;gap:20px;list-style:none}
+  .nav-links a{font-size:.85rem;opacity:.75;transition:all .2s}
+  .nav-links a:hover{opacity:1;color:${c.accent}}
+  @media(max-width:768px){.nav-links{display:none}}
+  
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;background:radial-gradient(circle at 20% 30%,${c.primary}22 0%,transparent 45%),radial-gradient(circle at 80% 70%,${c.accent}22 0%,transparent 45%)}
+  .hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center;max-width:1100px;width:100%}
+  @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;gap:30px}}
+  .hero-text h2{font-size:1.1rem;color:${c.accent};font-weight:700;margin-bottom:10px}
+  .hero-text h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .typewriter{font-size:clamp(1rem,2.5vw,1.3rem);color:${c.accent};font-weight:700;margin-bottom:14px;min-height:1.6em}
+  .bio{color:#94a3b8;margin-bottom:28px}
+  @media(max-width:900px){.bio{margin:0 auto 28px}}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+  @media(max-width:900px){.hero-btns{justify-content:center}}
+  .btn{padding:14px 28px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .3s;cursor:pointer;border:2px solid transparent}
+  .btn-primary{background:linear-gradient(135deg,${c.primary},${c.secondary});color:#fff;box-shadow:0 10px 28px ${c.primary}55}
+  .btn-primary:hover{transform:translateY(-3px)}
+  .btn-outline{border-color:${c.primary};color:${c.primary}}
+  .btn-outline:hover{background:${c.primary};color:#fff}
+  .hero-visual{display:flex;justify-content:center}
+  .avatar{width:min(300px,70vw);aspect-ratio:1;border-radius:50%;padding:6px;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 30px 80px ${c.primary}55;animation:float 4s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+  .avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:${c.bg};display:flex;align-items:center;justify-content:center}
+  .avatar-inner img{width:100%;height:100%;object-fit:cover}
+  .avatar-initial{font-size:clamp(4rem,10vw,7rem);font-weight:900;color:${c.primary}}
+  
+  /* SECTIONS */
+  section{padding:90px 0;position:relative}
+  .section-head{text-align:center;margin-bottom:60px}
+  .section-head h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;margin-bottom:12px}
+  .section-head h2 span{background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .line{width:60px;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});margin:14px auto;border-radius:4px}
+  
+  .card{background:${c.bg}88;border:1px solid #ffffff10;border-radius:18px;padding:28px;backdrop-filter:blur(10px);transition:all .3s}
+  .card:hover{transform:translateY(-8px);border-color:${c.primary}66}
+  
+  /* ABOUT */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  @media(max-width:900px){.about-grid{grid-template-columns:1fr}}
+  .about-text h3{font-size:1.5rem;margin-bottom:16px;color:${c.accent}}
+  .about-text p{color:#94a3b8;margin-bottom:24px}
+  .highlights{display:grid;gap:12px}
+  .highlight{display:flex;gap:12px;align-items:center;padding:14px 16px;background:#ffffff08;border:1px solid #ffffff10;border-radius:14px}
+  .highlight .ic{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,${c.primary},${c.secondary});display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .highlight span{font-weight:600}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center}
+  .stat-num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+  .stat-label{color:#94a3b8;font-weight:600;font-size:.9rem}
+  
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+  .skill-item{background:#ffffff08;border:1px solid #ffffff10;border-radius:14px;padding:20px}
+  .skill-head{display:flex;justify-content:space-between;margin-bottom:14px}
+  .skill-name{display:flex;align-items:center;gap:10px;font-weight:700}
+  .skill-pct{color:${c.accent};font-weight:800}
+  .skill-bar{height:8px;background:#1e293b;border-radius:8px;overflow:hidden}
+  .skill-fill{height:100%;background:linear-gradient(90deg,${c.primary},${c.accent});border-radius:8px;transition:width 1.5s}
+  
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .service-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;padding:32px;position:relative;overflow:hidden;transition:all .3s}
+  .service-card::before{content:'';position:absolute;top:0;right:0;width:100%;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});transform:scaleX(0);transition:transform .4s}
+  .service-card:hover::before{transform:scaleX(1)}
+  .service-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px ${c.primary}33}
+  .service-icon{width:64px;height:64px;border-radius:16px;font-size:1.8rem;background:linear-gradient(135deg,${c.primary},${c.accent});display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 10px 30px ${c.primary}55}
+  .service-card h3{font-size:1.2rem;margin-bottom:10px}
+  .service-card p{color:#94a3b8;font-size:.95rem}
+  
+  /* PROJECTS */
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px}
+  .project-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;overflow:hidden;transition:all .3s}
+  .project-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px ${c.primary}33}
+  .project-img{height:220px;background-size:cover;background-position:center;position:relative}
+  .project-cat{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:700}
+  .project-body{padding:24px}
+  .project-body h3{font-size:1.15rem;margin-bottom:8px}
+  .project-body p{color:#94a3b8;font-size:.92rem}
+  
+  /* TIMELINE */
+  .timeline{position:relative;max-width:820px;margin:0 auto;padding-right:32px}
+  .timeline::before{content:'';position:absolute;top:0;bottom:0;right:10px;width:2px;background:linear-gradient(180deg,${c.primary},${c.accent})}
+  .tl-item{position:relative;margin-bottom:38px}
+  .tl-item::before{content:'';position:absolute;right:-28px;top:6px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});border:4px solid ${c.bg}}
+  .tl-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;padding:26px}
+  .tl-period{color:${c.accent};font-weight:700;font-size:.88rem;margin-bottom:6px}
+  .tl-card h4{color:#94a3b8;margin:6px 0 10px;font-size:.95rem}
+  .tl-card p{color:#94a3b8;font-size:.92rem}
+  
+  /* TESTIMONIALS */
+  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+  .testi-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;padding:30px;position:relative}
+  .testi-card::before{content:'"';position:absolute;top:10px;left:20px;font-size:5rem;line-height:1;color:${c.primary}44;font-family:serif}
+  .testi-text{color:#94a3b8;margin-bottom:20px;position:relative;z-index:1}
+  .testi-user h4{font-size:1rem}
+  .testi-user span{color:#94a3b8;font-size:.85rem}
+  
+  /* CONTACT */
+  .contact-box{background:linear-gradient(135deg,${c.primary}22,${c.accent}22);border:1px solid ${c.primary}44;border-radius:24px;padding:60px 40px;text-align:center}
+  .contact-box h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:12px}
+  .contact-box h2 span{color:${c.accent}}
+  .contact-box > p{color:#94a3b8;margin-bottom:32px}
+  .contact-info{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+  .contact-chip{padding:12px 22px;background:#ffffff0d;border:1px solid #ffffff15;border-radius:50px;font-weight:600}
+  .socials{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+  .social-link{width:52px;height:52px;border-radius:50%;background:#ffffff0d;border:1px solid #ffffff15;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:all .3s}
+  .social-link:hover{background:linear-gradient(135deg,${c.primary},${c.accent});transform:translateY(-6px)}
+  
+  /* WHATSAPP */
+  .whatsapp{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;font-size:1.7rem;color:#fff;box-shadow:0 12px 32px rgba(37,211,102,.5);z-index:100;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 12px 32px rgba(37,211,102,.5)}50%{box-shadow:0 12px 45px rgba(37,211,102,.85)}}
+  
+  footer{padding:30px;text-align:center;color:#64748b;border-top:1px solid #ffffff10}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="dot"></span>${state.fullName}</div>
+    <ul class="nav-links">
+      <li><a href="#about">عني</a></li>
+      <li><a href="#skills">مهارات</a></li>
+      <li><a href="#services">خدمات</a></li>
+      <li><a href="#projects">أعمال</a></li>
+      <li><a href="#contact">تواصل</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
       <h2>👋 مرحباً، أنا</h2>
       <h1>${state.fullName}</h1>
-      <div class="typewriter-wrap"><span class="typewriter" data-lines='${JSON.stringify(typeLines)}'></span><span class="cursor-blink">|</span></div>
+      <div class="typewriter" id="tw"></div>
       <p class="bio">${state.heroBio}</p>
       <div class="hero-btns">
         ${state.btn1Text?`<a href="${state.btn1Link}" class="btn btn-primary">${state.btn1Text}</a>`:''}
@@ -1488,13 +929,15 @@ function renderHero(c, avatarSrc){
       </div>
     </div>
     <div class="hero-visual">
-      <div class="avatar-box"><div class="avatar-inner">${avatarHTML}</div></div>
+      <div class="avatar">
+        <div class="avatar-inner">
+          ${avatarSrc?`<img src="${avatarSrc}" alt="${state.fullName}">`:`<div class="avatar-initial">${state.fullName.charAt(0)}</div>`}
+        </div>
+      </div>
     </div>
   </div>
-</section>`;
-}
-function renderAbout(c){
-  return `
+</section>
+
 <section id="about">
   <div class="container">
     <div class="section-head"><h2>عن <span>نفسي</span></h2><div class="line"></div></div>
@@ -1506,29 +949,26 @@ function renderAbout(c){
           ${state.highlights.map(h=>`<div class="highlight"><div class="ic">${h.icon}</div><span>${h.text}</span></div>`).join('')}
         </div>
       </div>
-      <div>
-        <div class="card" style="padding:28px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center">
-            ${state.stats.slice(0,4).map(s=>`<div><div class="stat-num">${s.num}${s.suffix}</div><div class="stat-label">${s.label}</div></div>`).join('')}
-          </div>
+      <div class="card">
+        <div class="stats">
+          <div><div class="stat-num">5+</div><div class="stat-label">سنوات خبرة</div></div>
+          <div><div class="stat-num">80+</div><div class="stat-label">مشروع</div></div>
+          <div><div class="stat-num">50+</div><div class="stat-label">عميل</div></div>
+          <div><div class="stat-num">12</div><div class="stat-label">جائزة</div></div>
         </div>
       </div>
     </div>
   </div>
-</section>`;
-}
-function renderSkillsSection(c){
-  if(!state.skills.length) return '';
-  const words = state.skillsTitle.split(' ');const last = words.pop();
-  return `
-<section id="skills">
+</section>
+
+<section id="skills" style="background:#ffffff05">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><p>${state.skillsSubtitle}</p><div class="line"></div></div>
+    <div class="section-head"><h2>مهاراتي <span>الاحترافية</span></h2><div class="line"></div></div>
     <div class="skills-grid">
       ${state.skills.map(s=>`
         <div class="skill-item">
           <div class="skill-head">
-            <div class="skill-name"><span class="ic">${s.icon}</span>${s.name}</div>
+            <div class="skill-name"><span>${s.icon}</span>${s.name}</div>
             <div class="skill-pct">${s.level}%</div>
           </div>
           <div class="skill-bar"><div class="skill-fill" style="width:${s.level}%"></div></div>
@@ -1536,15 +976,11 @@ function renderSkillsSection(c){
       `).join('')}
     </div>
   </div>
-</section>`;
-}
-function renderServicesSection(c){
-  if(!state.services.length) return '';
-  const words = state.servicesTitle.split(' ');const last = words.pop();
-  return `
-<section id="services" class="alt-bg">
+</section>
+
+<section id="services">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><p>${state.servicesSubtitle}</p><div class="line"></div></div>
+    <div class="section-head"><h2>خدماتي <span>المميزة</span></h2><div class="line"></div></div>
     <div class="services-grid">
       ${state.services.map(s=>`
         <div class="service-card">
@@ -1555,15 +991,11 @@ function renderServicesSection(c){
       `).join('')}
     </div>
   </div>
-</section>`;
-}
-function renderProjectsSection(c){
-  if(!state.projects.length) return '';
-  const words = state.projectsTitle.split(' ');const last = words.pop();
-  return `
-<section id="projects">
+</section>
+
+<section id="projects" style="background:#ffffff05">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><p>${state.projectsSubtitle}</p><div class="line"></div></div>
+    <div class="section-head"><h2>أعمالي <span>الأخيرة</span></h2><div class="line"></div></div>
     <div class="projects-grid">
       ${state.projects.map(p=>`
         <div class="project-card">
@@ -1573,33 +1005,11 @@ function renderProjectsSection(c){
       `).join('')}
     </div>
   </div>
-</section>`;
-}
-function renderGallerySection(c){
-  if(!state.gallery.length) return '';
-  const words = state.galleryTitle.split(' ');const last = words.pop();
-  return `
-<section id="gallery" class="alt-bg">
-  <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><p>${state.gallerySubtitle}</p><div class="line"></div></div>
-    <div class="gallery-grid">
-      ${state.gallery.map(g=>`
-        <div class="gallery-item">
-          <img src="${g.img}" alt="${g.caption}" loading="lazy">
-          <div class="gallery-overlay"><span>${g.caption}</span></div>
-        </div>
-      `).join('')}
-    </div>
-  </div>
-</section>`;
-}
-function renderExperienceSection(c){
-  if(!state.experience.length) return '';
-  const words = state.expTitle.split(' ');const last = words.pop();
-  return `
+</section>
+
 <section id="experience">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
+    <div class="section-head"><h2>مسيرتي <span>المهنية</span></h2><div class="line"></div></div>
     <div class="timeline">
       ${state.experience.map(e=>`
         <div class="tl-item">
@@ -1613,15 +1023,11 @@ function renderExperienceSection(c){
       `).join('')}
     </div>
   </div>
-</section>`;
-}
-function renderEducationSection(c){
-  if(!state.education.length) return '';
-  const words = state.eduTitle.split(' ');const last = words.pop();
-  return `
-<section id="education" class="alt-bg">
+</section>
+
+<section id="education" style="background:#ffffff05">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
+    <div class="section-head"><h2>المؤهلات <span>العلمية</span></h2><div class="line"></div></div>
     <div class="timeline">
       ${state.education.map(e=>`
         <div class="tl-item">
@@ -1635,306 +1041,60 @@ function renderEducationSection(c){
       `).join('')}
     </div>
   </div>
-</section>`;
-}
-function renderCertsSection(c){
-  if(!state.certs.length) return '';
-  const words = state.certsTitle.split(' ');const last = words.pop();
-  return `
-<section id="certs">
+</section>
+
+<section id="testimonials">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
-    <div class="certs-grid">
-      ${state.certs.map(cert=>`
-        <div class="cert-card">
-          <div class="cert-icon">${cert.icon}</div>
-          <h3>${cert.title}</h3>
-          <p>${cert.issuer} • ${cert.year}</p>
-        </div>
-      `).join('')}
-    </div>
-  </div>
-</section>`;
-}
-function renderTestimonialsSection(c){
-  if(!state.testimonials.length) return '';
-  const words = state.testTitle.split(' ');const last = words.pop();
-  return `
-<section id="testimonials" class="alt-bg">
-  <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
+    <div class="section-head"><h2>ماذا يقول <span>العملاء</span></h2><div class="line"></div></div>
     <div class="testi-grid">
       ${state.testimonials.map(t=>`
         <div class="testi-card">
           <p class="testi-text">${t.text}</p>
-          <div class="testi-user">
-            <div class="testi-avatar"><img src="${t.avatar}" alt="${t.name}"></div>
-            <div><h4>${t.name}</h4><span>${t.role}</span></div>
-          </div>
+          <div class="testi-user"><h4>${t.name}</h4><span>${t.role}</span></div>
         </div>
       `).join('')}
     </div>
   </div>
-</section>`;
-}
-function renderPricingSection(c){
-  if(!state.pricing.length) return '';
-  const words = state.pricingTitle.split(' ');const last = words.pop();
-  return `
-<section id="pricing">
-  <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><p>${state.pricingSubtitle}</p><div class="line"></div></div>
-    <div class="pricing-grid">
-      ${state.pricing.map(p=>`
-        <div class="price-card ${p.popular?'popular':''}">
-          ${p.popular?'<div class="popular-badge">⭐ الأكثر طلباً</div>':''}
-          <h3>${p.name}</h3>
-          <div class="price-tag"><span class="currency">${p.currency}</span><span class="amount">${p.price}</span><span class="period">/${p.period}</span></div>
-          <ul class="price-features">${p.features.split('\n').map(f=>`<li>✓ ${f}</li>`).join('')}</ul>
-          <a href="#contact" class="btn ${p.popular?'btn-primary':'btn-outline'}">اطلب الآن</a>
-        </div>
-      `).join('')}
-    </div>
-  </div>
-</section>`;
-}
-function renderFaqSection(c){
-  if(!state.faq.length) return '';
-  const words = state.faqTitle.split(' ');const last = words.pop();
-  return `
-<section id="faq" class="alt-bg">
-  <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
-    <div class="faq-list">
-      ${state.faq.map(f=>`
-        <div class="faq-item" onclick="this.classList.toggle('open')">
-          <div class="faq-q"><span>${f.q}</span><span class="faq-icon">+</span></div>
-          <div class="faq-a"><p>${f.a}</p></div>
-        </div>
-      `).join('')}
-    </div>
-  </div>
-</section>`;
-}
-function renderContactSection(c){
-  const words = state.contactTitle.split(' ');const last = words.pop();
-  return `
-<section id="contact">
+</section>
+
+<section id="contact" style="background:#ffffff05">
   <div class="container">
     <div class="contact-box">
-      <h2>${words.join(' ')} <span>${last}</span></h2>
-      <p>${state.contactSubtitle}</p>
+      <h2>لنعمل <span>معاً</span></h2>
+      <p>تواصل معي وسأرد في أقرب وقت</p>
       <div class="contact-info">
         ${state.email?`<div class="contact-chip">📧 ${state.email}</div>`:''}
         ${state.phone?`<div class="contact-chip">📱 ${state.phone}</div>`:''}
         ${state.location?`<div class="contact-chip">📍 ${state.location}</div>`:''}
       </div>
       <div class="socials">
-        ${state.socials.map(s=>`<a href="${s.url}" target="_blank" class="social-link" title="${s.name}">${s.icon}</a>`).join('')}
+        ${state.socials.map(s=>`<a href="${s.url}" target="_blank" class="social-link">${s.icon}</a>`).join('')}
       </div>
     </div>
   </div>
-</section>`;
-}
+</section>
 
-function buildHTML(){
-  const c = state.colors;
-  const isDark = state.mode === 'dark';
-  const bg = isDark ? c.bg : '#f8fafc';
-  const text = isDark ? '#e5e7eb' : '#1e293b';
-  const cardBg = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.7)';
-  const cardBorder = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
-  const muted = isDark ? '#94a3b8' : '#64748b';
-  const avatarSrc = state.avatarData || state.avatarUrl || '';
-  const dir = state.defaultLang === 'ar' ? 'rtl' : 'ltr';
-  const lang = state.defaultLang;
+<footer>© ${new Date().getFullYear()} ${state.fullName} — جميع الحقوق محفوظة</footer>
 
-  const renderers = {
-    hero: ()=>renderHero(c,avatarSrc),
-    about: ()=>renderAbout(c),
-    skills: ()=>renderSkillsSection(c),
-    services: ()=>renderServicesSection(c),
-    projects: ()=>renderProjectsSection(c),
-    gallery: ()=>renderGallerySection(c),
-    experience: ()=>renderExperienceSection(c),
-    education: ()=>renderEducationSection(c),
-    certs: ()=>renderCertsSection(c),
-    testimonials: ()=>renderTestimonialsSection(c),
-    pricing: ()=>renderPricingSection(c),
-    faq: ()=>renderFaqSection(c),
-    contact: ()=>renderContactSection(c)
-  };
-  const sectionsHTML = state.sectionsOrder
-    .filter(k=>state.sectionsVisible[k])
-    .map(k => renderers[k] ? renderers[k]() : '')
-    .join('\n');
+${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" class="whatsapp">💬</a>`:''}
 
-  return `<!DOCTYPE html>
-<html lang="${lang}" dir="${dir}">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>${state.fullName} — ${state.jobTitle}</title>
-<meta name="description" content="${state.heroBio}">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'${state.font}',sans-serif}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  body{background:${bg};color:${text};font-size:${state.fontSize};line-height:1.7;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block;height:auto}
-  .container{max-width:1200px;margin:0 auto;padding:0 20px}
-  .nav{position:fixed;top:0;left:0;right:0;z-index:1000;
-    background:${isDark?'rgba(15,23,42,0.85)':'rgba(255,255,255,0.9)'};
-    backdrop-filter:blur(16px);border-bottom:1px solid ${cardBorder};padding:12px 0}
-  .nav-inner{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .nav-brand{font-weight:900;font-size:1rem;display:flex;align-items:center;gap:8px}
-  .nav-brand .dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 0 12px ${c.primary}}
-  .nav-links{display:flex;gap:18px;list-style:none}
-  .nav-links a{font-size:.85rem;font-weight:600;opacity:.75;transition:all .2s}
-  .nav-links a:hover{opacity:1;color:${c.accent}}
-  @media(max-width:900px){.nav-links{display:none}}
-  .hero{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;position:relative;overflow:hidden;
-    background:radial-gradient(circle at 20% 30%,${c.primary}22 0%,transparent 45%),radial-gradient(circle at 80% 70%,${c.accent}22 0%,transparent 45%)}
-  .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;max-width:1200px;width:100%}
-  @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;gap:30px}}
-  .hero-text h2{font-size:1.15rem;color:${c.accent};font-weight:700;margin-bottom:10px}
-  .hero-text h1{font-size:clamp(1.8rem,6vw,3.6rem);font-weight:900;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .typewriter-wrap{font-size:clamp(1rem,2.5vw,1.3rem);color:${c.accent};font-weight:700;margin-bottom:12px;min-height:1.6em}
-  .cursor-blink{animation:blink 1s infinite}
-  @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
-  .hero-text .bio{color:${muted};margin-bottom:26px;max-width:560px}
-  @media(max-width:900px){.hero-text .bio{margin:0 auto 26px}}
-  .hero-btns{display:flex;gap:10px;flex-wrap:wrap}
-  @media(max-width:900px){.hero-btns{justify-content:center}}
-  .btn{padding:12px 24px;border-radius:${state.radius};font-weight:700;font-size:.92rem;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:2px solid transparent;font-family:inherit;transition:all .3s}
-  .btn-primary{background:linear-gradient(135deg,${c.primary},${c.secondary});color:#fff;box-shadow:0 10px 28px ${c.primary}55}
-  .btn-outline{border-color:${c.primary};color:${c.primary};background:transparent}
-  .hero-visual{display:flex;justify-content:center}
-  .avatar-box{width:min(300px,70vw);aspect-ratio:1;border-radius:50%;padding:6px;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 30px 80px ${c.primary}55}
-  .avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:${bg};display:flex;align-items:center;justify-content:center}
-  .avatar-inner img{width:100%;height:100%;object-fit:cover}
-  .avatar-initial{font-size:clamp(3.5rem,10vw,6.5rem);font-weight:900;color:${c.primary}}
-  section{padding:80px 0;position:relative}
-  .alt-bg{background:${isDark?'rgba(255,255,255,.015)':'rgba(0,0,0,.02)'}}
-  .section-head{text-align:center;margin-bottom:50px}
-  .section-head h2{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;margin-bottom:10px}
-  .section-head h2 span{background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .section-head p{color:${muted};font-size:.98rem}
-  .section-head .line{width:54px;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});border-radius:4px;margin:14px auto 0}
-  .card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius}}
-  .about-grid{display:grid;grid-template-columns:1fr;gap:30px}
-  @media(min-width:900px){.about-grid{grid-template-columns:1.1fr 1fr;gap:50px;align-items:center}}
-  .about-text h3{font-size:1.35rem;margin-bottom:14px;color:${c.accent}}
-  .about-text p{color:${muted};margin-bottom:20px}
-  .highlights{display:grid;gap:10px}
-  .highlight{display:flex;gap:10px;align-items:center;padding:12px 14px;background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius}}
-  .highlight .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${c.primary},${c.secondary});font-size:1rem;flex-shrink:0}
-  .highlight span{font-weight:600;font-size:.92rem}
-  .stat-num{font-size:2rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .stat-label{color:${muted};font-weight:600;font-size:.85rem}
-  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
-  .skill-item{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:18px}
-  .skill-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-  .skill-name{display:flex;align-items:center;gap:8px;font-weight:700}
-  .skill-pct{color:${c.accent};font-weight:800}
-  .skill-bar{height:7px;background:${isDark?'#1e293b':'#e2e8f0'};border-radius:8px;overflow:hidden}
-  .skill-fill{height:100%;background:linear-gradient(90deg,${c.primary},${c.accent})}
-  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-  .service-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:26px}
-  .service-icon{width:56px;height:56px;border-radius:14px;font-size:1.5rem;background:linear-gradient(135deg,${c.primary},${c.accent});display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-  .service-card h3{font-size:1.1rem;margin-bottom:8px}
-  .service-card p{color:${muted};font-size:.9rem}
-  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-  .project-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};overflow:hidden}
-  .project-img{height:200px;background-size:cover;background-position:center;position:relative}
-  .project-cat{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700}
-  .project-body{padding:18px}
-  .project-body h3{margin-bottom:6px}
-  .project-body p{color:${muted};font-size:.88rem}
-  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .gallery-item{position:relative;border-radius:${state.radius};overflow:hidden;aspect-ratio:1}
-  .gallery-item img{width:100%;height:100%;object-fit:cover}
-  .gallery-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.85));display:flex;align-items:flex-end;padding:12px;color:#fff}
-  .gallery-overlay span{font-weight:700;font-size:.85rem}
-  .timeline{position:relative;max-width:820px;margin:0 auto;padding-${dir==='rtl'?'right':'left'}:28px}
-  .timeline::before{content:'';position:absolute;top:0;bottom:0;${dir==='rtl'?'right':'left'}:8px;width:2px;background:linear-gradient(180deg,${c.primary},${c.accent})}
-  .tl-item{position:relative;margin-bottom:26px}
-  .tl-item::before{content:'';position:absolute;${dir==='rtl'?'right':'left'}:-26px;top:6px;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});border:3px solid ${bg}}
-  .tl-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:20px}
-  .tl-period{color:${c.accent};font-weight:700;font-size:.8rem;margin-bottom:5px}
-  .tl-card h4{color:${muted};font-weight:600;font-size:.88rem;margin-bottom:8px}
-  .tl-card p{color:${muted};font-size:.86rem}
-  .certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-  .cert-card{text-align:center;padding:24px 16px;background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius}}
-  .cert-icon{font-size:2.4rem;margin-bottom:10px}
-  .cert-card p{color:${muted};font-size:.8rem}
-  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
-  .testi-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:24px}
-  .testi-text{color:${muted};margin-bottom:18px}
-  .testi-user{display:flex;gap:12px;align-items:center}
-  .testi-avatar{width:48px;height:48px;border-radius:50%;overflow:hidden;border:2px solid ${c.primary}}
-  .testi-user span{color:${muted};font-size:.78rem}
-  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-  .price-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:30px 22px;position:relative;display:flex;flex-direction:column}
-  .price-card.popular{border:2px solid ${c.primary}}
-  .popular-badge{position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;padding:4px 14px;border-radius:20px;font-size:.72rem;font-weight:700}
-  .price-card h3{margin-bottom:16px;text-align:center}
-  .price-tag{display:flex;align-items:baseline;justify-content:center;gap:3px;margin-bottom:20px}
-  .amount{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .price-features{list-style:none;margin-bottom:22px;flex:1}
-  .price-features li{padding:7px 0;border-bottom:1px solid ${cardBorder};color:${muted}}
-  .faq-list{max-width:780px;margin:0 auto;display:grid;gap:12px}
-  .faq-item{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};overflow:hidden;cursor:pointer}
-  .faq-q{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;font-weight:700}
-  .faq-icon{font-size:1.3rem;color:${c.accent};transition:transform .3s}
-  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s;padding:0 18px}
-  .faq-a p{color:${muted};padding-bottom:16px}
-  .faq-item.open .faq-a{max-height:400px}
-  .faq-item.open .faq-icon{transform:rotate(45deg)}
-  .contact-box{background:linear-gradient(135deg,${c.primary}22,${c.accent}22);border:1px solid ${c.primary}44;border-radius:${state.radius};padding:56px 36px;text-align:center}
-  .contact-box h2 span{color:${c.accent}}
-  .contact-box > p{color:${muted};margin:10px 0 24px}
-  .contact-info{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
-  .contact-chip{padding:8px 16px;background:${cardBg};border:1px solid ${cardBorder};border-radius:50px;font-weight:600;font-size:.84rem}
-  .socials{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  .social-link{width:46px;height:46px;border-radius:50%;background:${cardBg};border:1px solid ${cardBorder};display:flex;align-items:center;justify-content:center;font-size:1.15rem}
-  footer{padding:24px 20px;text-align:center;color:${muted};font-size:.82rem;border-top:1px solid ${cardBorder}}
-</style>
-</head>
-<body>
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-brand"><span class="dot"></span><span>${state.fullName}</span></div>
-    <ul class="nav-links">
-      ${state.sectionsOrder.filter(k=>state.sectionsVisible[k]).slice(0,8).map(k=>{
-        const links = {hero:'الرئيسية',about:'عني',skills:'مهارات',services:'خدمات',projects:'أعمال',gallery:'معرض',experience:'خبرات',education:'تعليم',certs:'شهادات',testimonials:'آراء',pricing:'أسعار',faq:'أسئلة',contact:'تواصل'};
-        return `<li><a href="#${k}">${links[k]||k}</a></li>`;
-      }).join('')}
-    </ul>
-  </div>
-</nav>
-${sectionsHTML}
-<footer>© ${new Date().getFullYear()} ${state.fullName} — ${state.footerText}</footer>
 <script>
-  const tw = document.querySelector('.typewriter');
-  if(tw){
-    const lines = JSON.parse(tw.dataset.lines || '[]');
-    if(lines.length){
-      let li = 0, ci = 0, deleting = false;
-      const tick = ()=>{
-        const line = lines[li];
-        if(!deleting){
-          tw.textContent = line.substring(0, ++ci);
-          if(ci === line.length){ deleting = true; setTimeout(tick, 1600); return; }
-        } else {
-          tw.textContent = line.substring(0, --ci);
-          if(ci === 0){ deleting = false; li = (li+1)%lines.length; }
-        }
-        setTimeout(tick, deleting?40:80);
-      };
-      tick();
-    }
+  const tw = document.getElementById('tw');
+  const lines = ${JSON.stringify((state.typewriterText||'').split('\n').filter(l=>l.trim()))};
+  if(tw && lines.length){
+    let li = 0, ci = 0, del = false;
+    const tick = () => {
+      const line = lines[li];
+      if(!del){
+        tw.textContent = line.substring(0, ++ci);
+        if(ci === line.length){ del = true; setTimeout(tick, 1600); return; }
+      } else {
+        tw.textContent = line.substring(0, --ci);
+        if(ci === 0){ del = false; li = (li+1)%lines.length; }
+      }
+      setTimeout(tick, del?40:80);
+    };
+    tick();
   }
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', e=>{
@@ -1948,123 +1108,47 @@ ${sectionsHTML}
 }
 
 /* ============================================================
-   DOWNLOAD
+   🔗 توليد الرابط — الطريقة الجديدة
    ============================================================ */
-function downloadSite(){
+function generateLink(){
   try{
-    const html = buildHTML();
-    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${state.fullName.replace(/\s+/g,'-')}-website.html`;
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    setTimeout(()=>URL.revokeObjectURL(url), 1000);
-    showToast('⬇️ تم التحميل!');
-  }catch(e){ console.error(e); showToast('فشل التحميل', true); }
-}
-
-/* ============================================================
-   🚀 PUBLISH — نسخة مبسطة تعرض الرابط الصحيح فقط
-   ============================================================ */
-const PUBLISH_API_URL = 'https://bahaa.bahaa90231.workers.dev';
-
-let _publishDone = false;
-
-function updateProgress(percent, step){
-  const fill = document.getElementById('publishProgressFill');
-  const stepEl = document.getElementById('publishStep');
-  if(fill) fill.style.width = percent + '%';
-  if(stepEl) stepEl.textContent = step;
-}
-
-async function publishAndShare(){
-  _publishDone = false;
-  document.getElementById('publishLoading').style.display = 'block';
-  document.getElementById('publishSuccess').style.display = 'none';
-  document.getElementById('publishError').style.display = 'none';
-  updateProgress(0, 'تجهيز الملفات...');
-  openModal('publishModal');
-
-  try{
-    updateProgress(15, 'بناء الموقع...');
+    // 1. بناء HTML
     const html = buildHTML();
     
-    const name = (state.fullName || 'my-site')
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, '-')
-      .replace(/-+/g, '-')
-      .substring(0, 20) || 'my-site';
-
-    updateProgress(40, 'إرسال الموقع...');
-
-    const res = await fetch(PUBLISH_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ html, name })
-    });
-
-    updateProgress(75, 'نشر الموقع...');
-
-    const data = await res.json();
-
-    if(!data.success){
-      throw new Error(data.error || 'فشل النشر');
-    }
-
-    // ✅ استخدام الرابط من Worker مباشرة
-    let finalUrl = data.url;
+    // 2. ضغط البيانات
+    const encoded = btoa(unescape(encodeURIComponent(html)))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '');
     
-    if(!finalUrl){
-      throw new Error('Worker لم يرجع رابطاً');
-    }
+    // 3. الرابط = رابط الأداتك + البيانات
+    const baseUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${baseUrl}#site=${encoded}`;
     
-    // تنظيف الرابط
-    finalUrl = finalUrl.replace(/^http:/, 'https:');
+    // 4. عرض النافذة
+    document.getElementById('generatedUrl').textContent = shareUrl;
+    document.getElementById('openLink').href = shareUrl;
+    window._generatedLink = shareUrl;
+    openModal('linkModal');
     
-    // رفض الروابط الخاطئة
-    if(finalUrl.includes('app.netlify.com') || finalUrl.includes('netlify.com/edge')){
-      throw new Error('رابط خاطئ من Worker: ' + finalUrl);
-    }
-
-    updateProgress(100, 'تم بنجاح!');
-    setTimeout(()=>showPublishedUrl(finalUrl), 400);
-
   }catch(e){
-    console.error('Publish error:', e);
-    _publishDone = true;
-    showPublishError(e.message || 'حدث خطأ');
+    console.error(e);
+    showToast('فشل التوليد: ' + e.message, true);
   }
 }
 
-function showPublishedUrl(url){
-  _publishDone = true;
-  document.getElementById('publishLoading').style.display = 'none';
-  document.getElementById('publishSuccess').style.display = 'block';
-  document.getElementById('publishedUrl').textContent = url;
-  document.getElementById('openPublishedUrl').href = url;
-  window._publishedUrl = url;
-}
-
-function showPublishError(msg){
-  _publishDone = true;
-  document.getElementById('publishLoading').style.display = 'none';
-  document.getElementById('publishError').style.display = 'block';
-  document.getElementById('publishErrorMsg').textContent = msg || 'حدث خطأ';
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(){
+  document.getElementById('linkModal').classList.remove('show');
 }
 
 /* ============================================================
-   📋 نسخ — يعمل 100% على الجوال
+   📋 نسخ الرابط
    ============================================================ */
-async function copyPublishedUrl(){
-  const url = window._publishedUrl;
+async function copyLink(){
+  const url = window._generatedLink;
+  if(!url){ showToast('لا يوجد رابط', true); return; }
   
-  if(!url){
-    showToast('لا يوجد رابط', true);
-    return;
-  }
-  
-  // محاولة 1: API الحديث
   try{
     if(navigator.clipboard && window.isSecureContext){
       await navigator.clipboard.writeText(url);
@@ -2073,42 +1157,29 @@ async function copyPublishedUrl(){
     }
   }catch(e){}
   
-  // محاولة 2: textarea (يعمل على الجوال)
+  // Fallback للجوال
   try{
     const ta = document.createElement('textarea');
     ta.value = url;
-    ta.setAttribute('readonly', '');
+    ta.setAttribute('readonly','');
     ta.style.position = 'absolute';
     ta.style.left = '-9999px';
     document.body.appendChild(ta);
-    
     ta.select();
     ta.setSelectionRange(0, 99999);
-    
     const ok = document.execCommand('copy');
     document.body.removeChild(ta);
-    
-    if(ok){
-      showToast('✅ تم النسخ!');
-    } else {
-      // محاولة 3: عرض الرابط
-      prompt('انسخ الرابط:', url);
-    }
-  }catch(e){
-    prompt('انسخ الرابط:', url);
-  }
+    if(ok) showToast('✅ تم النسخ!');
+    else prompt('انسخ الرابط:', url);
+  }catch(e){ prompt('انسخ الرابط:', url); }
 }
 
 /* ============================================================
-   📤 مشاركة
+   📤 مشاركة الرابط
    ============================================================ */
-async function sharePublishedUrl(){
-  const url = window._publishedUrl;
-  
-  if(!url){
-    showToast('لا يوجد رابط', true);
-    return;
-  }
+async function shareLink(){
+  const url = window._generatedLink;
+  if(!url){ showToast('لا يوجد رابط', true); return; }
   
   if(navigator.share){
     try{
@@ -2118,14 +1189,71 @@ async function sharePublishedUrl(){
         url: url
       });
       return;
-    }catch(e){
-      if(e.name === 'AbortError') return;
-    }
+    }catch(e){ if(e.name === 'AbortError') return; }
   }
-  
-  await copyPublishedUrl();
+  await copyLink();
 }
 
+/* ============================================================
+   ⬇️ تحميل
+   ============================================================ */
+function downloadSite(){
+  const html = buildHTML();
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${state.fullName.replace(/\s+/g,'-')}-website.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('⬇️ تم التحميل!');
+}
+
+/* ============================================================
+   👁️ معاينة
+   ============================================================ */
+function openMobilePreview(){
+  const overlay = document.getElementById('mobilePreview');
+  overlay.classList.add('show');
+  const frame = document.getElementById('mobilePreviewFrame');
+  frame.srcdoc = buildHTML();
+}
+function closeMobilePreview(){
+  document.getElementById('mobilePreview').classList.remove('show');
+}
+
+/* ============================================================
+   REFRESH
+   ============================================================ */
+let timer = null;
+function refresh(){
+  saveToStorage();
+  if(timer) clearTimeout(timer);
+  timer = setTimeout(()=>{
+    if(window.innerWidth >= 1024){
+      const f = document.getElementById('previewFrame');
+      if(f) f.srcdoc = buildHTML();
+    }
+    const sb = document.getElementById('statusBadge');
+    if(sb){
+      sb.textContent = '✅ محدّث';
+      setTimeout(()=>sb.textContent='جاهز', 700);
+    }
+  }, 400);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+function resetAll(){
+  if(!confirm('إعادة التعيين؟')) return;
+  localStorage.removeItem('builder_v9');
+  location.reload();
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
 function showToast(msg, isError){
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -2136,14 +1264,44 @@ function showToast(msg, isError){
 }
 
 /* ============================================================
+   🎯 CHECK FOR #site= IN URL — عرض الموقع المنشور
+   ============================================================ */
+function checkForPublishedSite(){
+  const hash = window.location.hash;
+  if(hash && hash.startsWith('#site=')){
+    try{
+      // فك الضغط
+      let encoded = hash.substring(6).replace(/-/g,'+').replace(/_/g,'/');
+      while(encoded.length % 4) encoded += '=';
+      const html = decodeURIComponent(escape(atob(encoded)));
+      
+      // استبدل الصفحة بالموقع
+      document.open();
+      document.write(html);
+      document.close();
+      return true;
+    }catch(e){
+      console.error('Failed to decode site:', e);
+    }
+  }
+  return false;
+}
+
+/* ============================================================
    INIT
    ============================================================ */
 function init(){
+  // تحقق أولاً من وجود #site= في الرابط
+  if(checkForPublishedSite()){
+    return; // عرضنا الموقع مباشرة
+  }
+  
+  // الأداتك العادية
   loadFromStorage();
 
   Object.keys(bindings).forEach(id => {
     const el = document.getElementById(id);
-    if(el && state[bindings[id]] !== undefined && el.type !== 'file'){
+    if(el && state[bindings[id]] !== undefined){
       el.value = state[bindings[id]];
     }
   });
@@ -2152,22 +1310,14 @@ function init(){
     const el = document.getElementById('c'+p);
     if(el) el.value = state.colors[p.toLowerCase()];
   });
-  ['fontSize','radius','mode','bgAnimation','defaultLang'].forEach(id=>{
-    const el = document.getElementById(id);
-    if(el) el.value = state[id];
-  });
 
-  if(state.avatarData) document.getElementById('avatarPreview').src = state.avatarData;
-  else if(state.avatarUrl) document.getElementById('avatarPreview').src = state.avatarUrl;
-
-  renderHighlights(); renderStats(); renderSkills(); renderServices(); renderProjects();
-  renderGallery(); renderExperience(); renderEducation(); renderCerts();
-  renderTestimonials(); renderPricing(); renderFaq(); renderSocials();
-  renderThemes(); renderFonts(); renderSectionsOrder();
+  renderHighlights(); renderSkills(); renderServices(); renderProjects();
+  renderExperience(); renderEducation(); renderTestimonials(); renderSocials();
+  renderThemes();
 
   if(window.innerWidth >= 1024){
-    const frame = document.getElementById('previewFrame');
-    if(frame) frame.srcdoc = buildHTML();
+    const f = document.getElementById('previewFrame');
+    if(f) f.srcdoc = buildHTML();
   }
 }
 init();
