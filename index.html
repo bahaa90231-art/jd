@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<title>⚡ Perfect Site Builder v13.0</title>
+<meta name="theme-color" content="#6366f1">
+<title>⚡ Perfect Site Builder v14.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -26,6 +27,7 @@
   }
   body.preview-locked{position:fixed;width:100%;height:100%}
 
+  /* TOPBAR */
   .topbar{
     height:var(--topbar-h);flex-shrink:0;
     background:linear-gradient(90deg,#0f172a,#1e1b4b,#4c1d95);
@@ -46,6 +48,7 @@
     display:flex;align-items:center;justify-content:center;font-size:1.2rem;
     box-shadow:0 0 20px rgba(99,102,241,.6);
     animation:pulse-logo 3s ease-in-out infinite;
+    cursor:pointer;user-select:none;
   }
   @keyframes pulse-logo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
   .brand-text{min-width:0;overflow:hidden}
@@ -57,6 +60,7 @@
   .brand-text .sub{font-size:.62rem;color:var(--muted);white-space:nowrap}
   .top-actions{display:flex;gap:4px;align-items:center;position:relative;z-index:1;flex-shrink:0}
 
+  /* BUTTONS */
   .btn{
     min-height:36px;min-width:36px;padding:8px 12px;border:none;border-radius:9px;
     font-size:.82rem;font-weight:700;font-family:'Cairo',sans-serif;
@@ -67,10 +71,12 @@
   .btn:active{transform:scale(.95)}
   .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 4px 15px rgba(99,102,241,.4)}
   .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,.4)}
+  .btn-danger{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
   .btn-publish{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;box-shadow:0 4px 15px rgba(245,158,11,.5);font-weight:800}
   .btn-ghost{background:rgba(255,255,255,.08);color:var(--muted);border:1px solid var(--border)}
   .btn-icon{padding:8px;width:38px;height:38px}
 
+  /* MAIN */
   .main{flex:1;display:flex;overflow:hidden;position:relative;min-height:0}
   .panel{
     display:flex;flex-direction:column;overflow:hidden;
@@ -81,6 +87,7 @@
     width:100%;height:100%;min-height:0;
   }
 
+  /* TABS */
   .tabs{
     display:flex;overflow-x:auto;overflow-y:hidden;
     background:var(--panel3);border-bottom:1px solid var(--border);
@@ -101,6 +108,7 @@
   .tab-content.active{display:block;animation:fadeIn .25s ease}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
+  /* FORM */
   .section-block{
     background:var(--panel2);border-radius:12px;padding:14px;margin-bottom:12px;
     border:1px solid var(--border);
@@ -236,6 +244,7 @@
   .switch.on{background:var(--success)}
   .switch.on::after{right:calc(100% - 25px)}
 
+  /* BOTTOM NAV */
   .bottom-nav{
     display:flex;background:var(--panel3);border-top:1px solid var(--border);
     flex-shrink:0;height:56px;padding-bottom:var(--safe-bottom);
@@ -253,6 +262,7 @@
   }
   .bn-item .ic{font-size:1.2rem;line-height:1}
 
+  /* DESKTOP */
   @media(min-width:1024px){
     .main{display:grid;grid-template-columns:460px 1fr}
     .panel{width:auto}
@@ -261,6 +271,7 @@
     .preview-fab{display:none}
   }
 
+  /* PREVIEW */
   .preview-toolbar{
     height:52px;background:var(--panel3);border-bottom:1px solid var(--border);
     display:flex;align-items:center;justify-content:space-between;
@@ -287,6 +298,7 @@
   .preview-frame-wrap.mobile{max-width:390px}
   #previewFrame{width:100%;height:100%;border:none;background:#fff;display:block}
 
+  /* MOBILE PREVIEW */
   .mobile-preview{
     position:fixed;top:0;left:0;right:0;bottom:0;
     background:var(--panel2);z-index:9000;display:none;flex-direction:column;
@@ -310,6 +322,7 @@
   .mobile-preview-body .preview-frame-wrap.desktop{max-width:100%}
   .mobile-preview-body .preview-frame-wrap iframe{width:100%;height:100%;border:none;display:block;background:#fff}
 
+  /* FAB */
   .preview-fab{
     position:fixed;bottom:calc(76px + var(--safe-bottom));left:16px;
     width:56px;height:56px;border-radius:50%;
@@ -322,6 +335,7 @@
   .preview-fab.hidden{opacity:0;pointer-events:none;transform:scale(.8)}
   @media(min-width:1024px){.preview-fab{display:none}}
 
+  /* MODAL */
   .modal{
     position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
     align-items:flex-end;justify-content:center;z-index:9998;
@@ -336,6 +350,7 @@
     max-height:90vh;overflow-y:auto;
     padding-bottom:calc(22px + var(--safe-bottom));
     animation:slideUp .3s ease;
+    position:relative;
   }
   @media(min-width:600px){.modal-box{border-radius:20px;animation:scaleIn .3s ease}}
   @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
@@ -346,7 +361,14 @@
   }
   @media(min-width:600px){.modal-handle{display:none}}
   .modal-box h3{margin-bottom:14px;color:#fff;font-size:1.1rem}
+  .modal-close{
+    position:absolute;top:14px;left:14px;width:36px;height:36px;
+    border-radius:50%;background:var(--panel2);border:none;color:#fff;
+    cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;
+  }
+  .modal-close:hover{background:var(--danger)}
 
+  /* TOAST */
   .toast{
     position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
     transform:translateX(-50%) translateY(120px);
@@ -358,20 +380,102 @@
   .toast.show{transform:translateX(-50%) translateY(0)}
   .toast.error{background:linear-gradient(135deg,#ef4444,#b91c1c)}
 
-  .publish-url-box{
-    background:#0a0e1a;border:2px solid var(--primary);border-radius:12px;
-    padding:14px;margin:16px 0;
+  /* CARD MODAL */
+  .card-input-wrap{
+    margin:20px 0;
+    direction:ltr;
   }
-  .publish-url-box .label{font-size:.7rem;color:var(--muted);margin-bottom:6px}
-  .publish-url-box .url{
-    font-family:monospace;font-size:.78rem;color:var(--primary);
-    word-break:break-all;direction:ltr;text-align:left;font-weight:700;line-height:1.5;
+  .card-input-wrap input{
+    font-family:monospace;font-size:1.1rem;
+    letter-spacing:2px;text-align:center;font-weight:700;
+    padding:16px;background:#0a0e1a;border:2px solid var(--primary);
   }
+  .card-input-wrap input:focus{
+    box-shadow:0 0 0 4px rgba(99,102,241,.25);
+  }
+  .card-format-hint{
+    font-size:.72rem;color:var(--muted);text-align:center;margin-top:8px;
+    font-family:monospace;
+  }
+
+  /* ADMIN PANEL */
+  .admin-panel{
+    position:fixed;inset:0;background:var(--bg);z-index:9999;
+    display:none;flex-direction:column;overflow:hidden;
+  }
+  .admin-panel.show{display:flex}
+  .admin-header{
+    height:56px;background:linear-gradient(90deg,#0f172a,#1e1b4b);
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 16px;gap:10px;flex-shrink:0;
+  }
+  .admin-header h2{font-size:1rem;font-weight:800;color:#fff}
+  .admin-body{flex:1;overflow-y:auto;padding:16px}
+  .admin-section{
+    background:var(--panel);border:1px solid var(--border);
+    border-radius:12px;padding:16px;margin-bottom:14px;
+  }
+  .admin-section h3{
+    font-size:.9rem;color:#fff;margin-bottom:12px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .stat-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+  }
+  @media(min-width:480px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
+  .stat-box{
+    background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
+    padding:14px;text-align:center;
+  }
+  .stat-box .num{
+    font-size:1.6rem;font-weight:900;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    margin-bottom:4px;
+  }
+  .stat-box .lbl{font-size:.72rem;color:var(--muted);font-weight:600}
+
+  .card-item{
+    background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
+    padding:12px;margin-bottom:10px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .card-item .card-code{
+    font-family:monospace;font-weight:700;font-size:.9rem;
+    color:var(--primary);flex:1;min-width:200px;
+    letter-spacing:1px;
+  }
+  .card-item .card-status{
+    padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;
+  }
+  .card-status.available{background:rgba(16,185,129,.2);color:#10b981}
+  .card-status.used{background:rgba(239,68,68,.2);color:#ef4444}
+  .card-item .card-date{font-size:.7rem;color:var(--muted);font-family:monospace}
+  .card-item .card-actions{display:flex;gap:5px;margin-right:auto}
+  .card-item .card-actions button{
+    width:32px;height:32px;border-radius:8px;border:none;
+    background:var(--panel2);color:var(--muted);cursor:pointer;
+    font-size:.85rem;transition:all .2s;
+  }
+  .card-item .card-actions button:hover{background:var(--primary);color:#fff}
+  .card-item .card-actions button.del:hover{background:var(--danger)}
+
+  .empty-admin{
+    text-align:center;padding:40px 20px;color:var(--muted);
+    font-size:.85rem;
+  }
+
+  /* HELPERS */
+  .hint{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.5}
   .empty{
     text-align:center;padding:26px 12px;color:var(--muted);font-size:.82rem;
     border:2px dashed var(--border);border-radius:10px;
   }
-  .badge{background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;border-radius:20px;font-weight:700}
+  .badge{
+    background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;
+    border-radius:20px;font-weight:700;
+  }
   .img-preview{
     width:64px;height:64px;border-radius:12px;object-fit:cover;
     border:2px solid var(--border);background:#0a0e1a;flex-shrink:0;
@@ -384,8 +488,7 @@
     font-family:inherit;font-weight:700;font-size:.82rem;transition:all .2s;
   }
   .add-btn:active{background:var(--panel2);border-color:var(--primary);color:#fff}
-  .hint{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.5}
-  
+
   .loading-indicator{
     font-size:.75rem;color:var(--warning);margin-top:8px;
     display:flex;align-items:center;gap:6px;justify-content:center;
@@ -397,30 +500,43 @@
   }
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  .progress-bar-pub{
-    height:6px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:16px;
+  .publish-url-box{
+    background:#0a0e1a;border:2px solid var(--primary);border-radius:12px;
+    padding:14px;margin:16px 0;
   }
-  .progress-bar-pub .fill{
-    height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));
-    width:0%;transition:width .3s ease;border-radius:6px;
+  .publish-url-box .label{font-size:.7rem;color:var(--muted);margin-bottom:6px}
+  .publish-url-box .url{
+    font-family:monospace;font-size:.78rem;color:var(--primary);
+    word-break:break-all;direction:ltr;text-align:left;font-weight:700;line-height:1.5;
+  }
+
+  /* Admin input code */
+  .code-generator{
+    display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;
+  }
+  .code-generator input{
+    flex:1;font-family:monospace;font-size:.9rem;
+    letter-spacing:1px;text-align:center;
   }
 </style>
 </head>
-<body><div class="topbar">
+<body><!-- TOPBAR -->
+<div class="topbar">
   <div class="brand">
-    <div class="brand-logo">⚡</div>
+    <div class="brand-logo" id="brandLogo" onclick="handleLogoClick()">⚡</div>
     <div class="brand-text">
       <div class="title">Perfect Builder</div>
-      <div class="sub">v13.0 — Firebase</div>
+      <div class="sub">v14.0 — بطاقات</div>
     </div>
   </div>
   <div class="top-actions">
     <button class="btn btn-ghost btn-icon" onclick="resetAll()" title="جديد">🔄</button>
-    <button class="btn btn-ghost btn-icon" onclick="downloadSite()" title="تحميل">⬇️</button>
-    <button class="btn btn-publish" onclick="generateLink()" title="احصل على رابط">🔗 رابط</button>
+    <button class="btn btn-ghost btn-icon" onclick="requestDownload()" title="تحميل">⬇️</button>
+    <button class="btn btn-publish" onclick="requestGenerateLink()" title="احصل على رابط">🔗 رابط</button>
   </div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
   <div class="panel">
     <div class="tabs">
@@ -701,9 +817,9 @@
     <div class="bottom-nav">
       <div class="bn-item active" onclick="switchPanelTab('basic')"><div class="ic">👤</div><div>أساسي</div></div>
       <div class="bn-item" onclick="switchPanelTab('design')"><div class="ic">🎨</div><div>تصميم</div></div>
-      <div class="bn-item" onclick="generateLink()"><div class="ic">🔗</div><div>رابط</div></div>
+      <div class="bn-item" onclick="requestGenerateLink()"><div class="ic">🔗</div><div>رابط</div></div>
       <div class="bn-item" onclick="openMobilePreview()"><div class="ic">👁️</div><div>معاينة</div></div>
-      <div class="bn-item" onclick="downloadSite()"><div class="ic">⬇️</div><div>تحميل</div></div>
+      <div class="bn-item" onclick="requestDownload()"><div class="ic">⬇️</div><div>تحميل</div></div>
     </div>
   </div>
 
@@ -727,6 +843,7 @@
   </div>
 </div>
 
+<!-- MOBILE PREVIEW -->
 <div class="mobile-preview" id="mobilePreview">
   <div class="preview-toolbar">
     <button class="btn btn-ghost btn-icon" onclick="closeMobilePreview()" style="font-size:1.15rem">✕</button>
@@ -747,6 +864,9 @@
 
 <button class="preview-fab" id="previewFab" onclick="openMobilePreview()">👁️</button>
 
+<!-- ============================================================
+     LINK MODAL (نافذة الرابط بعد التحقق)
+     ============================================================ -->
 <div class="modal" id="linkModal">
   <div class="modal-box" style="text-align:center">
     <span class="modal-handle"></span>
@@ -771,7 +891,122 @@
     <a id="openLink" href="#" target="_blank" class="btn btn-ghost" style="width:100%;text-decoration:none;display:flex;margin-bottom:8px;padding:14px">
       🌐 فتح الموقع
     </a>
-    <button class="btn btn-ghost" style="width:100%" onclick="closeModal()">إغلاق</button>
+    <button class="btn btn-ghost" style="width:100%" onclick="closeModal('linkModal')">إغلاق</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     CARD MODAL (نافذة إدخال البطاقة)
+     ============================================================ -->
+<div class="modal" id="cardModal">
+  <div class="modal-box" style="text-align:center">
+    <span class="modal-handle"></span>
+    <div style="font-size:3rem;margin-bottom:12px">🔐</div>
+    <h3 style="color:#fff;margin-bottom:8px">أدخل رقم البطاقة</h3>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px;line-height:1.6" id="cardModalDesc">
+      لإنشاء موقعك، أدخل رقم البطاقة الخاص بك
+    </p>
+    
+    <div class="card-input-wrap">
+      <input type="text" id="cardInput" maxlength="17" placeholder="ABCDEFGHI1234567X" 
+             autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"
+             oninput="formatCardInput(this)">
+      <div class="card-format-hint">9 أحرف + 7 أرقام + 1 حرف</div>
+    </div>
+    
+    <div id="cardError" style="display:none;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#ef4444;padding:10px;border-radius:8px;font-size:.8rem;margin-bottom:12px;text-align:center"></div>
+    <div id="cardSuccess" style="display:none;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#10b981;padding:10px;border-radius:8px;font-size:.8rem;margin-bottom:12px;text-align:center"></div>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+      <button class="btn btn-primary" id="cardSubmitBtn" onclick="submitCard()" style="padding:14px">✅ تأكيد</button>
+      <button class="btn btn-ghost" onclick="closeModal('cardModal')" style="padding:14px">❌ إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ADMIN LOGIN MODAL
+     ============================================================ -->
+<div class="modal" id="adminLoginModal">
+  <div class="modal-box" style="text-align:center">
+    <span class="modal-handle"></span>
+    <div style="font-size:3rem;margin-bottom:12px">🔑</div>
+    <h3 style="color:#fff;margin-bottom:8px">لوحة تحكم الأدمن</h3>
+    <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px">أدخل كلمة المرور</p>
+    <div class="form-group">
+      <input type="password" id="adminPassword" placeholder="كلمة المرور" style="text-align:center">
+    </div>
+    <div id="adminLoginError" style="display:none;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#ef4444;padding:10px;border-radius:8px;font-size:.8rem;margin-bottom:12px"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="btn btn-primary" onclick="submitAdminLogin()" style="padding:14px">🔓 دخول</button>
+      <button class="btn btn-ghost" onclick="closeModal('adminLoginModal')" style="padding:14px">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ADMIN PANEL (لوحة التحكم الكاملة)
+     ============================================================ -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <h2>🔧 لوحة التحكم</h2>
+    <button class="btn btn-ghost btn-icon" onclick="closeAdminPanel()">✕</button>
+  </div>
+  <div class="admin-body">
+    
+    <!-- Stats -->
+    <div class="admin-section">
+      <h3>📊 الإحصائيات</h3>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="num" id="statTotal">0</div>
+          <div class="lbl">إجمالي البطاقات</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="statAvailable">0</div>
+          <div class="lbl">متاحة</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="statUsed">0</div>
+          <div class="lbl">مستخدمة</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="statSites">0</div>
+          <div class="lbl">مواقع منشأة</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Cards -->
+    <div class="admin-section">
+      <h3>➕ إضافة بطاقات</h3>
+      <p class="hint" style="margin-bottom:10px">الشكل: 9 أحرف + 7 أرقام + 1 حرف (17 خانة)</p>
+      
+      <div class="code-generator">
+        <input type="text" id="newCardInput" maxlength="17" placeholder="ABCDEFGHI1234567X"
+               style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+        <button class="btn btn-success" onclick="addNewCard()">➕ إضافة</button>
+      </div>
+      
+      <button class="btn btn-ghost" onclick="generateRandomCards(1)" style="width:100%;margin-bottom:8px">🎲 توليد بطاقة عشوائية</button>
+      <button class="btn btn-ghost" onclick="generateRandomCards(10)" style="width:100%;margin-bottom:8px">🎲 توليد 10 بطاقات</button>
+      <button class="btn btn-ghost" onclick="generateRandomCards(50)" style="width:100%">🎲 توليد 50 بطاقة</button>
+    </div>
+
+    <!-- Cards List -->
+    <div class="admin-section">
+      <h3>
+        <span>📋 البطاقات</span>
+        <span style="display:flex;gap:8px">
+          <button class="btn btn-ghost" onclick="loadCardsList()" style="padding:6px 10px;font-size:.75rem">🔄 تحديث</button>
+          <button class="btn btn-danger" onclick="deleteAllCards()" style="padding:6px 10px;font-size:.75rem">🗑️ حذف الكل</button>
+        </span>
+      </h3>
+      <div id="cardsListContainer">
+        <div class="empty-admin">جاري التحميل...</div>
+      </div>
+    </div>
+    
   </div>
 </div>
 
@@ -780,7 +1015,7 @@
    🔥 Firebase Config
    ============================================================ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, set, get, child, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtrD0RkCrjgUyl_T465vKr2uUYPfNH2Io",
@@ -794,6 +1029,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+
+/* ============================================================
+   🔑 Admin Password
+   ============================================================ */
+const ADMIN_PASSWORD = 'bahaa 567';
 
 /* ============================================================
    STATE
@@ -873,6 +1113,11 @@ const defaultState = {
 
 let state = JSON.parse(JSON.stringify(defaultState));
 
+/* Session state */
+let currentCard = null;       // البطاقة الحالية المستخدمة
+let currentSiteId = null;     // معرف الموقع الحالي
+let pendingAction = null;     // الإجراء المطلوب (link/download)
+
 const themes = {
   indigo:{name:'بنفسجي', c:{primary:'#6366f1',secondary:'#8b5cf6',accent:'#ec4899',bg:'#0f172a'}},
   emerald:{name:'زمردي', c:{primary:'#10b981',secondary:'#059669',accent:'#34d399',bg:'#064e3b'}},
@@ -898,11 +1143,15 @@ const sectionNames = {
    STORAGE
    ============================================================ */
 function saveToStorage(){
-  try{ localStorage.setItem('builder_v13', JSON.stringify(state)); }catch(e){}
+  try{
+    localStorage.setItem('builder_v14', JSON.stringify(state));
+    if(currentCard) localStorage.setItem('builder_card', currentCard);
+    if(currentSiteId) localStorage.setItem('builder_site', currentSiteId);
+  }catch(e){}
 }
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('builder_v13');
+    const s = localStorage.getItem('builder_v14');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -912,6 +1161,10 @@ function loadFromStorage(){
         }
       });
     }
+    const c = localStorage.getItem('builder_card');
+    const si = localStorage.getItem('builder_site');
+    if(c) currentCard = c;
+    if(si) currentSiteId = si;
   }catch(e){}
 }
 
@@ -975,7 +1228,7 @@ function getRendererFor(arr){
 }
 
 /* ============================================================
-   RENDERERS - Lists
+   RENDERERS
    ============================================================ */
 function renderHighlights(){
   renderList('highlightsList','highlightCount', state.highlights, (h,i)=>`
@@ -1139,7 +1392,6 @@ function renderSocials(){
     </div>`, 'لا توجد روابط');
 }
 
-/* Add functions */
 window.addHighlight = function(){ state.highlights.push({icon:'✅',text:'نقطة'}); renderHighlights(); refresh(); };
 window.addSkill = function(){ state.skills.push({name:'مهارة',level:80,icon:'⭐'}); renderSkills(); refresh(); };
 window.addService = function(){ state.services.push({icon:'✨',title:'خدمة',desc:'وصف'}); renderServices(); refresh(); };
@@ -1186,7 +1438,7 @@ function renderSectionsOrder(){
   const c = document.getElementById('sectionsOrderList');
   if(!c) return;
   c.innerHTML = state.sectionsOrder.map((k,i)=>`
-    <div class="section-item" data-key="${k}">
+    <div class="section-item">
       <span class="drag-icon">☰</span>
       <span class="sec-name">${sectionNames[k]}</span>
       <div class="move-btns">
@@ -1244,7 +1496,9 @@ Object.keys(bindings).forEach(id => {
   });
 });
 
-/* Preview */
+/* ============================================================
+   Preview Functions
+   ============================================================ */
 let previewOpen = false;
 window.openMobilePreview = function(){
   if(previewOpen) return;
@@ -1278,13 +1532,61 @@ window.setMobileDevice = function(device, btn){
   wrap.classList.add(device);
 };
 
-/* Build HTML - Site Generator */
+/* ============================================================
+   Modal Helpers
+   ============================================================ */
+window.openModal = function(id){ document.getElementById(id).classList.add('show'); };
+window.closeModal = function(id){ document.getElementById(id).classList.remove('show'); };
+
+window.showToast = function(msg, isError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
+};
+
+/* ============================================================
+   Refresh (Live Preview)
+   ============================================================ */
+let timer = null;
+function refresh(){
+  saveToStorage();
+  if(timer) clearTimeout(timer);
+  timer = setTimeout(()=>{
+    if(window.innerWidth >= 1024){
+      const f = document.getElementById('previewFrame');
+      if(f) f.srcdoc = buildHTML();
+    }
+    const sb = document.getElementById('statusBadge');
+    if(sb){
+      sb.textContent = '✅ محدّث';
+      setTimeout(()=>sb.textContent='جاهز', 700);
+    }
+  }, 400);
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+window.resetAll = function(){
+  if(!confirm('إعادة التعيين؟ سيتم مسح البيانات المحفوظة محلياً.')) return;
+  localStorage.removeItem('builder_v14');
+  localStorage.removeItem('builder_card');
+  localStorage.removeItem('builder_site');
+  location.reload();
+};
+
+/* ============================================================
+   Build HTML - Helper Functions
+   ============================================================ */
 function renderHero(c, avatarSrc){
   const typeLines = (state.typewriterText||'').split('\n').filter(l=>l.trim());
   return `
 <section id="hero" class="hero">
   <div class="hero-inner">
-    <div class="hero-text">
+    <div class="hero-text reveal">
       <h2>👋 مرحباً، أنا</h2>
       <h1>${state.fullName}</h1>
       <div class="typewriter-wrap"><span class="typewriter" data-lines='${JSON.stringify(typeLines)}'></span><span class="cursor-blink">|</span></div>
@@ -1294,7 +1596,7 @@ function renderHero(c, avatarSrc){
         ${state.btn2Text?`<a href="${state.btn2Link}" class="btn btn-outline">${state.btn2Text}</a>`:''}
       </div>
     </div>
-    <div class="hero-visual">
+    <div class="hero-visual reveal">
       <div class="avatar-box"><div class="avatar-inner">${avatarSrc?`<img src="${avatarSrc}">`:`<div class="avatar-initial">${state.fullName.charAt(0)}</div>`}</div></div>
     </div>
   </div>
@@ -1304,19 +1606,21 @@ function renderAbout(c){
   return `
 <section id="about">
   <div class="container">
-    <div class="section-head"><h2>عن <span>نفسي</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>عن <span>نفسي</span></h2><div class="line"></div></div>
     <div class="about-grid">
-      <div class="about-text">
+      <div class="about-text reveal">
         <h3>${state.aboutTitle}</h3>
         <p>${state.aboutText}</p>
         <div class="highlights">${state.highlights.map(h=>`<div class="highlight"><div class="ic">${h.icon}</div><span>${h.text}</span></div>`).join('')}</div>
       </div>
-      <div class="card" style="padding:28px">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center">
-          <div><div class="stat-num">5+</div><div class="stat-label">سنوات خبرة</div></div>
-          <div><div class="stat-num">80+</div><div class="stat-label">مشروع</div></div>
-          <div><div class="stat-num">50+</div><div class="stat-label">عميل</div></div>
-          <div><div class="stat-num">12</div><div class="stat-label">جائزة</div></div>
+      <div class="reveal">
+        <div class="card" style="padding:28px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center">
+            <div><div class="stat-num">5+</div><div class="stat-label">سنوات خبرة</div></div>
+            <div><div class="stat-num">80+</div><div class="stat-label">مشروع</div></div>
+            <div><div class="stat-num">50+</div><div class="stat-label">عميل</div></div>
+            <div><div class="stat-num">12</div><div class="stat-label">جائزة</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1325,14 +1629,12 @@ function renderAbout(c){
 }
 function renderSkillsSection(c){
   if(!state.skills.length) return '';
-  const words = state.skillsTitle?state.skillsTitle.split(' '):['مهاراتي','الاحترافية'];
-  const last = words.pop();
   return `
 <section id="skills">
   <div class="container">
-    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>مهاراتي <span>الاحترافية</span></h2><div class="line"></div></div>
     <div class="skills-grid">${state.skills.map(s=>`
-      <div class="skill-item">
+      <div class="skill-item reveal">
         <div class="skill-head"><div class="skill-name"><span class="ic">${s.icon}</span>${s.name}</div><div class="skill-pct">${s.level}%</div></div>
         <div class="skill-bar"><div class="skill-fill" style="width:${s.level}%"></div></div>
       </div>`).join('')}</div>
@@ -1344,9 +1646,9 @@ function renderServicesSection(c){
   return `
 <section id="services" class="alt-bg">
   <div class="container">
-    <div class="section-head"><h2>خدماتي <span>المميزة</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>خدماتي <span>المميزة</span></h2><div class="line"></div></div>
     <div class="services-grid">${state.services.map(s=>`
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-icon">${s.icon}</div>
         <h3>${s.title}</h3>
         <p>${s.desc}</p>
@@ -1359,9 +1661,9 @@ function renderProjectsSection(c){
   return `
 <section id="projects">
   <div class="container">
-    <div class="section-head"><h2>أعمالي <span>الأخيرة</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>أعمالي <span>الأخيرة</span></h2><div class="line"></div></div>
     <div class="projects-grid">${state.projects.map(p=>`
-      <div class="project-card">
+      <div class="project-card reveal">
         <div class="project-img" style="background-image:url('${p.img}')"><span class="project-cat">${p.category||'عام'}</span></div>
         <div class="project-body"><h3>${p.title}</h3><p>${p.desc}</p></div>
       </div>`).join('')}</div>
@@ -1373,9 +1675,9 @@ function renderGallerySection(c){
   return `
 <section id="gallery" class="alt-bg">
   <div class="container">
-    <div class="section-head"><h2>معرض <span>أعمالي</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>معرض <span>أعمالي</span></h2><div class="line"></div></div>
     <div class="gallery-grid">${state.gallery.map(g=>`
-      <div class="gallery-item">
+      <div class="gallery-item reveal">
         <img src="${g.img}" alt="${g.caption}" loading="lazy">
         <div class="gallery-overlay"><span>${g.caption}</span></div>
       </div>`).join('')}</div>
@@ -1387,9 +1689,9 @@ function renderExperienceSection(c){
   return `
 <section id="experience">
   <div class="container">
-    <div class="section-head"><h2>مسيرتي <span>المهنية</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>مسيرتي <span>المهنية</span></h2><div class="line"></div></div>
     <div class="timeline">${state.experience.map(e=>`
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-card">
           <div class="tl-period">${e.period}</div>
           <h3>${e.role}</h3>
@@ -1405,9 +1707,9 @@ function renderEducationSection(c){
   return `
 <section id="education" class="alt-bg">
   <div class="container">
-    <div class="section-head"><h2>المؤهلات <span>العلمية</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>المؤهلات <span>العلمية</span></h2><div class="line"></div></div>
     <div class="timeline">${state.education.map(e=>`
-      <div class="tl-item">
+      <div class="tl-item reveal">
         <div class="tl-card">
           <div class="tl-period">${e.period}</div>
           <h3>${e.degree}</h3>
@@ -1423,9 +1725,9 @@ function renderCertsSection(c){
   return `
 <section id="certs">
   <div class="container">
-    <div class="section-head"><h2>الشهادات <span>والجوائز</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>الشهادات <span>والجوائز</span></h2><div class="line"></div></div>
     <div class="certs-grid">${state.certs.map(cert=>`
-      <div class="cert-card">
+      <div class="cert-card reveal">
         <div class="cert-icon">${cert.icon}</div>
         <h3>${cert.title}</h3>
         <p>${cert.issuer} • ${cert.year}</p>
@@ -1438,9 +1740,9 @@ function renderTestimonialsSection(c){
   return `
 <section id="testimonials" class="alt-bg">
   <div class="container">
-    <div class="section-head"><h2>ماذا يقول <span>العملاء</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>ماذا يقول <span>العملاء</span></h2><div class="line"></div></div>
     <div class="testi-grid">${state.testimonials.map(t=>`
-      <div class="testi-card">
+      <div class="testi-card reveal">
         <p class="testi-text">${t.text}</p>
         <div class="testi-user"><h4>${t.name}</h4><span>${t.role}</span></div>
       </div>`).join('')}</div>
@@ -1452,9 +1754,9 @@ function renderPricingSection(c){
   return `
 <section id="pricing">
   <div class="container">
-    <div class="section-head"><h2>خطط <span>الأسعار</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>خطط <span>الأسعار</span></h2><div class="line"></div></div>
     <div class="pricing-grid">${state.pricing.map(p=>`
-      <div class="price-card ${p.popular?'popular':''}">
+      <div class="price-card reveal ${p.popular?'popular':''}">
         ${p.popular?'<div class="popular-badge">⭐ الأكثر طلباً</div>':''}
         <h3>${p.name}</h3>
         <div class="price-tag"><span class="currency">${p.currency}</span><span class="amount">${p.price}</span><span class="period">/${p.period}</span></div>
@@ -1469,9 +1771,9 @@ function renderFaqSection(c){
   return `
 <section id="faq" class="alt-bg">
   <div class="container">
-    <div class="section-head"><h2>الأسئلة <span>الشائعة</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>الأسئلة <span>الشائعة</span></h2><div class="line"></div></div>
     <div class="faq-list">${state.faq.map(f=>`
-      <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-item reveal" onclick="this.classList.toggle('open')">
         <div class="faq-q"><span>${f.q}</span><span class="faq-icon">+</span></div>
         <div class="faq-a"><p>${f.a}</p></div>
       </div>`).join('')}</div>
@@ -1482,7 +1784,7 @@ function renderContactSection(c){
   return `
 <section id="contact">
   <div class="container">
-    <div class="contact-box">
+    <div class="contact-box reveal">
       <h2>لنعمل <span>معاً</span></h2>
       <p>تواصل معي وسأرد في أقرب وقت</p>
       <div class="contact-info">
@@ -1582,7 +1884,7 @@ function buildHTML(){
   .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;max-width:1200px;width:100%}
   @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;gap:30px}}
   .hero-text h2{font-size:1.15rem;color:${c.accent};font-weight:700;margin-bottom:10px}
-  .hero-text h1{font-size:clamp(1.8rem,6vw,3.6rem);font-weight:900;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero-text h1{font-size:clamp(1.8rem,6vw,3.6rem);font-weight:900;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .typewriter-wrap{font-size:clamp(1rem,2.5vw,1.3rem);color:${c.accent};font-weight:700;margin-bottom:12px;min-height:1.6em}
   .cursor-blink{animation:blink 1s infinite}
   @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
@@ -1605,7 +1907,7 @@ function buildHTML(){
   .alt-bg{background:${isDark?'rgba(255,255,255,.015)':'rgba(0,0,0,.02)'}}
   .section-head{text-align:center;margin-bottom:50px}
   .section-head h2{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;margin-bottom:10px}
-  .section-head h2 span{background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .section-head h2 span{background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .section-head .line{width:54px;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});border-radius:4px;margin:14px auto 0}
   .card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:24px;backdrop-filter:blur(10px)}
   .about-grid{display:grid;grid-template-columns:1fr;gap:30px}
@@ -1614,7 +1916,7 @@ function buildHTML(){
   .about-text p{color:${muted};margin-bottom:20px}
   .highlights{display:grid;gap:10px}
   .highlight{display:flex;gap:10px;align-items:center;padding:12px 14px;background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius}}
-  .highlight .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${c.primary},${c.secondary});font-size:1rem;flex-shrink:0}
+  .highlight .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${c.primary},${c.secondary});font-size:1rem;flex-shrink:0;color:#fff}
   .highlight span{font-weight:600;font-size:.92rem}
   .stat-num{font-size:2rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .stat-label{color:${muted};font-weight:600;font-size:.85rem}
@@ -1786,37 +2088,187 @@ ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" clas
 </body>
 </html>`;
 }
-
 /* ============================================================
-   🎯 Firebase Upload / Load
+   🎴 CARD SYSTEM - نظام البطاقات
    ============================================================ */
-async function uploadToFirebase(html){
-  const siteId = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
-  await set(ref(db, 'sites/' + siteId), {
-    html: html,
-    createdAt: Date.now(),
-    name: state.fullName
-  });
-  return siteId;
+
+/* تنسيق إدخال البطاقة */
+window.formatCardInput = function(input){
+  let val = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  input.value = val;
+};
+
+/* التحقق من صيغة البطاقة */
+function isValidCardFormat(card){
+  if(!card || card.length !== 17) return false;
+  // 9 أحرف + 7 أرقام + 1 حرف
+  return /^[A-Z]{9}[0-9]{7}[A-Z]{1}$/.test(card);
 }
 
-async function loadFromFirebase(siteId){
-  try{
-    const snapshot = await get(child(ref(db), 'sites/' + siteId));
-    if(snapshot.exists()) return snapshot.val().html;
-    return null;
-  }catch(e){
-    console.error('Load error:', e);
-    return null;
+/* طلب الحصول على رابط */
+window.requestGenerateLink = async function(){
+  // إذا كان لديه بطاقة + موقع بالفعل → مباشرة
+  if(currentCard && currentSiteId){
+    // تحقق أن البطاقة لا تزال صالحة
+    try{
+      const snap = await get(child(ref(db), 'cards/' + currentCard));
+      if(snap.exists()){
+        await doGenerateLink();
+        return;
+      }
+    }catch(e){}
   }
+  // طلب بطاقة
+  pendingAction = 'link';
+  showCardModal('link');
+};
+
+/* طلب تحميل الملف */
+window.requestDownload = async function(){
+  if(currentCard && currentSiteId){
+    try{
+      const snap = await get(child(ref(db), 'cards/' + currentCard));
+      if(snap.exists()){
+        await doDownload();
+        return;
+      }
+    }catch(e){}
+  }
+  pendingAction = 'download';
+  showCardModal('download');
+};
+
+/* عرض نافذة البطاقة */
+function showCardModal(action){
+  const desc = document.getElementById('cardModalDesc');
+  const input = document.getElementById('cardInput');
+  const error = document.getElementById('cardError');
+  const success = document.getElementById('cardSuccess');
+  
+  input.value = currentCard || '';
+  error.style.display = 'none';
+  success.style.display = 'none';
+  
+  if(action === 'link'){
+    desc.textContent = 'لإنشاء موقعك أو تعديله، أدخل رقم البطاقة';
+  } else if(action === 'download'){
+    desc.textContent = 'لتحميل ملف الموقع، أدخل رقم البطاقة';
+  }
+  
+  openModal('cardModal');
+  setTimeout(()=>input.focus(), 300);
+}
+
+/* إرسال البطاقة */
+window.submitCard = async function(){
+  const input = document.getElementById('cardInput');
+  const card = input.value.trim().toUpperCase();
+  const error = document.getElementById('cardError');
+  const success = document.getElementById('cardSuccess');
+  const btn = document.getElementById('cardSubmitBtn');
+  
+  error.style.display = 'none';
+  success.style.display = 'none';
+  
+  // تحقق من الصيغة
+  if(!isValidCardFormat(card)){
+    error.textContent = '❌ الصيغة خاطئة! يجب: 9 أحرف + 7 أرقام + 1 حرف';
+    error.style.display = 'block';
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري التحقق...';
+  
+  try{
+    // جلب البطاقة من Firebase
+    const snap = await get(child(ref(db), 'cards/' + card));
+    
+    if(!snap.exists()){
+      error.textContent = '❌ البطاقة غير صحيحة أو غير موجودة';
+      error.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '✅ تأكيد';
+      return;
+    }
+    
+    const cardData = snap.val();
+    
+    // الحالات:
+    // 1. بطاقة جديدة (used = false) → استخدام جديد
+    // 2. بطاقة مستخدمة لكن نفس الجهاز (siteId موجود) → تعديل
+    // 3. بطاقة مستخدمة على جهاز آخر → رفض
+    
+    if(cardData.used === true && cardData.siteId){
+      // تحقق إذا كانت مرتبطة بنفس الجهاز
+      const localSite = localStorage.getItem('builder_site');
+      const localCard = localStorage.getItem('builder_card');
+      
+      if(localCard === card && localSite === cardData.siteId){
+        // نفس المستخدم → يسمح بالتعديل
+        currentCard = card;
+        currentSiteId = cardData.siteId;
+        success.textContent = '✅ بطاقتك صحيحة — جاري المتابعة';
+        success.style.display = 'block';
+        
+        setTimeout(async ()=>{
+          closeModal('cardModal');
+          await executePendingAction();
+        }, 500);
+        return;
+      } else {
+        // مستخدم آخر
+        error.textContent = '❌ هذه البطاقة مستخدمة بالفعل على جهاز آخر';
+        error.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '✅ تأكيد';
+        return;
+      }
+    }
+    
+    // بطاقة جديدة → احفظها محلياً
+    currentCard = card;
+    // siteId سيُنشأ عند النشر
+    localStorage.setItem('builder_card', card);
+    
+    success.textContent = '✅ بطاقة صحيحة — جاري المتابعة';
+    success.style.display = 'block';
+    
+    setTimeout(async ()=>{
+      closeModal('cardModal');
+      await executePendingAction();
+    }, 500);
+    
+  }catch(e){
+    console.error(e);
+    error.textContent = '❌ خطأ في الاتصال: ' + e.message;
+    error.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = '✅ تأكيد';
+    return;
+  }
+  
+  btn.disabled = false;
+  btn.textContent = '✅ تأكيد';
+};
+
+/* تنفيذ الإجراء المطلوب */
+async function executePendingAction(){
+  if(pendingAction === 'link'){
+    await doGenerateLink();
+  } else if(pendingAction === 'download'){
+    await doDownload();
+  }
+  pendingAction = null;
 }
 
 /* ============================================================
-   🎯 Generate Link
+   🎯 Generate Link (ينشئ موقع جديد أو يحدّث الموجود)
    ============================================================ */
-window.generateLink = async function(){
+async function doGenerateLink(){
+  // افتح نافذة الرابط
   openModal('linkModal');
-  document.getElementById('generatedUrl').textContent = '⏳ جاري إنشاء الرابط...';
+  document.getElementById('generatedUrl').textContent = '⏳ جاري المعالجة...';
   document.getElementById('openLink').href = '#';
   document.getElementById('longLinkBackup').innerHTML = '';
   const indicator = document.getElementById('shorteningIndicator');
@@ -1824,7 +2276,38 @@ window.generateLink = async function(){
   
   try{
     const html = buildHTML();
-    const siteId = await uploadToFirebase(html);
+    let siteId = currentSiteId;
+    
+    if(!siteId){
+      // إنشاء موقع جديد
+      siteId = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
+      currentSiteId = siteId;
+      localStorage.setItem('builder_site', siteId);
+      
+      // احفظ الموقع
+      await set(ref(db, 'sites/' + siteId), {
+        html: html,
+        cardId: currentCard,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        name: state.fullName
+      });
+      
+      // تحديث البطاقة
+      await update(ref(db, 'cards/' + currentCard), {
+        used: true,
+        siteId: siteId,
+        usedAt: Date.now()
+      });
+    } else {
+      // تحديث موقع موجود
+      await update(ref(db, 'sites/' + siteId), {
+        html: html,
+        updatedAt: Date.now(),
+        name: state.fullName
+      });
+    }
+    
     const baseUrl = window.location.origin + window.location.pathname;
     const shortUrl = `${baseUrl}#f=${siteId}`;
     
@@ -1832,15 +2315,57 @@ window.generateLink = async function(){
     window._generatedLink = shortUrl;
     document.getElementById('generatedUrl').textContent = shortUrl;
     document.getElementById('openLink').href = shortUrl;
-    showToast('✅ تم إنشاء الرابط القصير!');
+    
+    showToast('✅ تم إنشاء الرابط!');
+    
   }catch(e){
     console.error(e);
     document.getElementById('generatedUrl').textContent = '❌ فشل: ' + e.message;
     showToast('فشل الإنشاء', true);
   }
   indicator.style.display = 'none';
-};
+}
 
+/* ============================================================
+   ⬇️ Download HTML
+   ============================================================ */
+async function doDownload(){
+  try{
+    const html = buildHTML();
+    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${state.fullName.replace(/\s+/g,'-')}-website.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    // إذا كانت بطاقة جديدة، علمها كمستخدمة
+    if(currentCard){
+      const snap = await get(child(ref(db), 'cards/' + currentCard));
+      if(snap.exists()){
+        const c = snap.val();
+        if(!c.used){
+          // فقط علمها، بدون ربطها بموقع (لأنه لم ينشر)
+          await update(ref(db, 'cards/' + currentCard), {
+            used: true,
+            usedAt: Date.now(),
+            siteId: null
+          });
+        }
+      }
+    }
+    
+    showToast('⬇️ تم التحميل!');
+  }catch(e){
+    console.error(e);
+    showToast('فشل التحميل: ' + e.message, true);
+  }
+}
+
+/* ============================================================
+   📋 Copy / Share Link
+   ============================================================ */
 window.copyLink = async function(){
   const url = window._shortLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
@@ -1879,51 +2404,260 @@ window.shareLink = async function(){
   await copyLink();
 };
 
-window.openModal = function(id){ document.getElementById(id).classList.add('show'); };
-window.closeModal = function(){ document.getElementById('linkModal').classList.remove('show'); };
+/* ============================================================
+   🎯 Firebase Upload / Load Functions
+   ============================================================ */
+async function loadFromFirebase(siteId){
+  try{
+    const snapshot = await get(child(ref(db), 'sites/' + siteId));
+    if(snapshot.exists()) return snapshot.val().html;
+    return null;
+  }catch(e){
+    console.error('Load error:', e);
+    return null;
+  }
+}
 
-window.downloadSite = function(){
-  const html = buildHTML();
-  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${state.fullName.replace(/\s+/g,'-')}-website.html`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('⬇️ تم التحميل!');
+/* ============================================================
+   🎯 Logo Click Handler - 5 clicks → Admin
+   ============================================================ */
+let logoClickCount = 0;
+let logoClickTimer = null;
+
+window.handleLogoClick = function(){
+  logoClickCount++;
+  clearTimeout(logoClickTimer);
+  logoClickTimer = setTimeout(()=>{ logoClickCount = 0; }, 2000); // 2 ثانية
+  
+  if(logoClickCount >= 5){
+    logoClickCount = 0;
+    clearTimeout(logoClickTimer);
+    // افتح نافذة تسجيل الأدمن
+    document.getElementById('adminLoginError').style.display = 'none';
+    document.getElementById('adminPassword').value = '';
+    openModal('adminLoginModal');
+    setTimeout(()=>document.getElementById('adminPassword').focus(), 300);
+  }
 };
 
-window.resetAll = function(){
-  if(!confirm('إعادة التعيين؟')) return;
-  localStorage.removeItem('builder_v13');
-  location.reload();
+/* إرسال كلمة مرور الأدمن */
+window.submitAdminLogin = function(){
+  const pass = document.getElementById('adminPassword').value;
+  const err = document.getElementById('adminLoginError');
+  
+  if(pass === ADMIN_PASSWORD){
+    closeModal('adminLoginModal');
+    openAdminPanel();
+  } else {
+    err.textContent = '❌ كلمة المرور خاطئة';
+    err.style.display = 'block';
+  }
 };
 
-window.showToast = function(msg, isError){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.toggle('error', !!isError);
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
+/* Enter key للإدمن */
+document.getElementById('adminPassword').addEventListener('keypress', e=>{
+  if(e.key === 'Enter') submitAdminLogin();
+});
+
+/* فتح لوحة الأدمن */
+function openAdminPanel(){
+  document.getElementById('adminPanel').classList.add('show');
+  loadCardsList();
+  updateStats();
+}
+
+window.closeAdminPanel = function(){
+  document.getElementById('adminPanel').classList.remove('show');
 };
 
-let timer = null;
-function refresh(){
-  saveToStorage();
-  if(timer) clearTimeout(timer);
-  timer = setTimeout(()=>{
-    if(window.innerWidth >= 1024){
-      const f = document.getElementById('previewFrame');
-      if(f) f.srcdoc = buildHTML();
+/* ============================================================
+   🎴 Admin - Card Management
+   ============================================================ */
+
+/* إضافة بطاقة جديدة */
+window.addNewCard = async function(){
+  const input = document.getElementById('newCardInput');
+  const card = input.value.trim().toUpperCase();
+  
+  if(!isValidCardFormat(card)){
+    showToast('❌ صيغة البطاقة خاطئة! (9 أحرف + 7 أرقام + 1 حرف)', true);
+    return;
+  }
+  
+  try{
+    const snap = await get(child(ref(db), 'cards/' + card));
+    if(snap.exists()){
+      showToast('⚠️ البطاقة موجودة مسبقاً', true);
+      return;
     }
-    const sb = document.getElementById('statusBadge');
-    if(sb){
-      sb.textContent = '✅ محدّث';
-      setTimeout(()=>sb.textContent='جاهز', 700);
+    
+    await set(ref(db, 'cards/' + card), {
+      used: false,
+      siteId: null,
+      createdAt: Date.now(),
+      usedAt: null
+    });
+    
+    input.value = '';
+    showToast('✅ تمت إضافة البطاقة!');
+    loadCardsList();
+    updateStats();
+  }catch(e){
+    showToast('فشل الإضافة: ' + e.message, true);
+  }
+};
+
+/* توليد بطاقات عشوائية */
+window.generateRandomCards = async function(count){
+  if(!confirm(`توليد ${count} بطاقة؟`)) return;
+  
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const digits = '0123456789';
+  
+  let success = 0;
+  let fail = 0;
+  
+  for(let i = 0; i < count; i++){
+    // 9 أحرف + 7 أرقام + 1 حرف
+    let card = '';
+    for(let j = 0; j < 9; j++) card += chars[Math.floor(Math.random()*chars.length)];
+    for(let j = 0; j < 7; j++) card += digits[Math.floor(Math.random()*digits.length)];
+    card += chars[Math.floor(Math.random()*chars.length)];
+    
+    try{
+      await set(ref(db, 'cards/' + card), {
+        used: false,
+        siteId: null,
+        createdAt: Date.now(),
+        usedAt: null
+      });
+      success++;
+    }catch(e){
+      fail++;
     }
-  }, 400);
+  }
+  
+  showToast(`✅ تم توليد ${success} بطاقة${fail ? ' — فشل: '+fail : ''}`);
+  loadCardsList();
+  updateStats();
+};
+
+/* تحميل قائمة البطاقات */
+window.loadCardsList = async function(){
+  const container = document.getElementById('cardsListContainer');
+  container.innerHTML = '<div class="empty-admin">جاري التحميل...</div>';
+  
+  try{
+    const snap = await get(child(ref(db), 'cards'));
+    
+    if(!snap.exists()){
+      container.innerHTML = '<div class="empty-admin">لا توجد بطاقات بعد</div>';
+      return;
+    }
+    
+    const cards = snap.val();
+    const entries = Object.entries(cards).sort((a,b)=> (b[1].createdAt||0) - (a[1].createdAt||0));
+    
+    if(!entries.length){
+      container.innerHTML = '<div class="empty-admin">لا توجد بطاقات بعد</div>';
+      return;
+    }
+    
+    container.innerHTML = entries.map(([code, data])=>{
+      const isUsed = data.used === true;
+      const date = data.createdAt ? new Date(data.createdAt).toLocaleDateString('ar') : '';
+      return `
+        <div class="card-item">
+          <div class="card-code">${code}</div>
+          <div class="card-status ${isUsed?'used':'available'}">${isUsed?'مستخدمة':'متاحة'}</div>
+          <div class="card-date">${date}</div>
+          <div class="card-actions">
+            ${isUsed ? `<button onclick="resetCard('${code}')" title="إعادة تعيين">🔄</button>` : ''}
+            <button class="del" onclick="deleteCard('${code}')" title="حذف">🗑️</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+    
+  }catch(e){
+    container.innerHTML = `<div class="empty-admin">خطأ: ${e.message}</div>`;
+  }
+};
+
+/* حذف بطاقة */
+window.deleteCard = async function(cardCode){
+  if(!confirm(`حذف البطاقة "${cardCode}"؟`)) return;
+  try{
+    await remove(ref(db, 'cards/' + cardCode));
+    showToast('🗑️ تم الحذف');
+    loadCardsList();
+    updateStats();
+  }catch(e){
+    showToast('فشل الحذف: ' + e.message, true);
+  }
+};
+
+/* إعادة تعيين بطاقة (جعلها متاحة) */
+window.resetCard = async function(cardCode){
+  if(!confirm(`إعادة تعيين "${cardCode}"؟`)) return;
+  try{
+    await update(ref(db, 'cards/' + cardCode), {
+      used: false,
+      siteId: null,
+      usedAt: null
+    });
+    showToast('🔄 تم إعادة التعيين');
+    loadCardsList();
+    updateStats();
+  }catch(e){
+    showToast('فشل: ' + e.message, true);
+  }
+};
+
+/* حذف كل البطاقات */
+window.deleteAllCards = async function(){
+  if(!confirm('⚠️ حذف جميع البطاقات نهائياً؟')) return;
+  if(!confirm('⚠️ متأكد؟ لا يمكن التراجع!')) return;
+  
+  try{
+    const snap = await get(child(ref(db), 'cards'));
+    if(snap.exists()){
+      await remove(ref(db, 'cards'));
+    }
+    showToast('🗑️ تم حذف جميع البطاقات');
+    loadCardsList();
+    updateStats();
+  }catch(e){
+    showToast('فشل: ' + e.message, true);
+  }
+};
+
+/* تحديث الإحصائيات */
+async function updateStats(){
+  try{
+    const cardsSnap = await get(child(ref(db), 'cards'));
+    const sitesSnap = await get(child(ref(db), 'sites'));
+    
+    let total = 0, available = 0, used = 0;
+    
+    if(cardsSnap.exists()){
+      const cards = cardsSnap.val();
+      total = Object.keys(cards).length;
+      Object.values(cards).forEach(c=>{
+        if(c.used) used++;
+        else available++;
+      });
+    }
+    
+    const sitesCount = sitesSnap.exists() ? Object.keys(sitesSnap.val()).length : 0;
+    
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statAvailable').textContent = available;
+    document.getElementById('statUsed').textContent = used;
+    document.getElementById('statSites').textContent = sitesCount;
+  }catch(e){
+    console.error('Stats error:', e);
+  }
 }
 
 /* ============================================================
