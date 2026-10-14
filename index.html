@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="theme-color" content="#6366f1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>⚡ Perfect Site Builder v6.0</title>
+<title>⚡ Perfect Site Builder v7.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -432,7 +432,7 @@
     <div class="brand-logo">⚡</div>
     <div class="brand-text">
       <div class="title">Perfect Builder</div>
-      <div class="sub">v6.0 — نشر تلقائي</div>
+      <div class="sub">v7.0 — نشر ومشاركة</div>
     </div>
   </div>
   <div class="top-actions">
@@ -865,21 +865,25 @@
       <div style="font-size:4rem;margin-bottom:12px">🎉</div>
       <h3 style="color:#fff;margin-bottom:6px">موقعك جاهز على الإنترنت!</h3>
       <p style="color:var(--muted);font-size:.82rem;margin-bottom:6px">
-        شارك هذا الرابط — أي شخص يفتحه سيرى موقعك
+        الرابط:
       </p>
       
       <div class="publish-url-box">
-        <div class="label">🌐 رابط موقعك:</div>
         <div class="url" id="publishedUrl"></div>
       </div>
       
+      <p style="color:var(--warning);font-size:.76rem;margin-bottom:12px;line-height:1.6">
+        ⏱️ انتظر <strong>30 ثانية</strong> قبل فتح الرابط<br>
+        (لتفعيل SSL)
+      </p>
+      
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-        <button class="btn btn-primary" onclick="copyPublishedUrl()">📋 نسخ</button>
+        <button class="btn btn-primary" onclick="copyPublishedUrl()">📋 نسخ الرابط</button>
         <button class="btn btn-success" onclick="sharePublishedUrl()">📤 مشاركة</button>
       </div>
       
       <a id="openPublishedUrl" href="#" target="_blank" class="btn btn-ghost" style="width:100%;text-decoration:none;display:flex;margin-bottom:8px">
-        🌐 فتح الموقع
+        🌐 فتح الموقع الآن
       </a>
       
       <button class="btn btn-ghost" style="width:100%" onclick="closeModal('publishModal')">إغلاق</button>
@@ -1008,7 +1012,8 @@ const defaultState = {
     hero:true, about:true, stats:true, skills:true, services:true,
     projects:true, gallery:true, experience:true, education:true,
     certs:true, testimonials:true, pricing:true, faq:true, contact:true
-  }
+  },
+  lastPublishedUrl:''
 };
 
 let state = JSON.parse(JSON.stringify(defaultState));
@@ -1043,15 +1048,15 @@ const fonts = {Cairo:'القاهرة', Tajawal:'تجوال', 'IBM Plex Sans Arab
    ============================================================ */
 function saveToStorage(showMsg){
   try{
-    localStorage.setItem('perfectSiteBuilder_v6', JSON.stringify(state));
+    localStorage.setItem('perfectSiteBuilder_v7', JSON.stringify(state));
     if(showMsg) showToast('💾 تم الحفظ');
   }catch(e){ showToast('فشل الحفظ', true); }
 }
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('perfectSiteBuilder_v6') 
-           || localStorage.getItem('perfectSiteBuilder_v51')
-           || localStorage.getItem('perfectSiteBuilder_v5');
+    const s = localStorage.getItem('perfectSiteBuilder_v7')
+           || localStorage.getItem('perfectSiteBuilder_v6')
+           || localStorage.getItem('perfectSiteBuilder_v51');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -1081,7 +1086,7 @@ function openModal(id){ document.getElementById(id).classList.add('show'); }
 function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 function resetAll(){
   if(!confirm('إعادة التعيين؟')) return;
-  localStorage.removeItem('perfectSiteBuilder_v6'); location.reload();
+  localStorage.removeItem('perfectSiteBuilder_v7'); location.reload();
 }
 
 /* ============================================================
@@ -2350,11 +2355,28 @@ async function publishAndShare(){
 
 function showPublishedUrl(url){
   _publishDone = true;
+  
+  // ✅ تأكد أن الرابط صحيح
+  let cleanUrl = url;
+  if(cleanUrl && !cleanUrl.startsWith('http')){
+    cleanUrl = 'https://' + cleanUrl;
+  }
+  
+  // ⚠️ رفض روابط لوحة Netlify
+  if(!cleanUrl || cleanUrl.includes('app.netlify.com') || cleanUrl.includes('netlify.com/edge')){
+    showPublishError('رابط غير صالح: ' + cleanUrl);
+    return;
+  }
+  
+  // حفظ الرابط
+  state.lastPublishedUrl = cleanUrl;
+  saveToStorage();
+  
   document.getElementById('publishLoading').style.display = 'none';
   document.getElementById('publishSuccess').style.display = 'block';
-  document.getElementById('publishedUrl').textContent = url;
-  document.getElementById('openPublishedUrl').href = url;
-  window._publishedUrl = url;
+  document.getElementById('publishedUrl').textContent = cleanUrl;
+  document.getElementById('openPublishedUrl').href = cleanUrl;
+  window._publishedUrl = cleanUrl;
 }
 
 function showPublishError(msg){
@@ -2364,37 +2386,102 @@ function showPublishError(msg){
   document.getElementById('publishErrorMsg').textContent = msg || 'حدث خطأ غير متوقع';
 }
 
-async function copyPublishedUrl(){
-  const url = window._publishedUrl;
-  if(!url) return;
+/* ============================================================
+   📋 نسخ الرابط — يعمل على جميع الأجهزة
+   ============================================================ */
+async function copyToClipboard(text){
+  if(!text) return false;
+  
+  // الطريقة 1: Clipboard API الحديثة
   try{
-    if(navigator.clipboard){
-      await navigator.clipboard.writeText(url);
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = url;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return true;
     }
-    showToast('✅ تم نسخ الرابط!');
-  }catch(e){ showToast('فشل النسخ', true); }
+  }catch(e){}
+  
+  // الطريقة 2: textarea fallback (يعمل على الجوال)
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    ta.style.pointerEvents = 'none';
+    ta.setAttribute('readonly', '');
+    document.body.appendChild(ta);
+    
+    // للجوال: تحديد النص
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return ok;
+  }catch(e){ return false; }
 }
 
+async function copyPublishedUrl(){
+  const url = window._publishedUrl || state.lastPublishedUrl;
+  if(!url){ showToast('لا يوجد رابط', true); return; }
+  
+  const ok = await copyToClipboard(url);
+  if(ok){
+    showToast('✅ تم نسخ الرابط!');
+  } else {
+    // إذا فشل النسخ → أظهر الرابط للمستخدم
+    prompt('انسخ الرابط يدوياً:', url);
+  }
+}
+
+/* ============================================================
+   📤 مشاركة الرابط — تعمل بشكل صحيح على الجوال
+   ============================================================ */
 async function sharePublishedUrl(){
-  const url = window._publishedUrl;
-  if(!url) return;
+  const url = window._publishedUrl || state.lastPublishedUrl;
+  
+  if(!url){
+    showToast('لا يوجد رابط للمشاركة', true);
+    return;
+  }
+  
+  // ✅ تأكد أن الرابط صحيح (يبدأ بـ https)
+  let cleanUrl = url;
+  if(!cleanUrl.startsWith('http')){
+    cleanUrl = 'https://' + cleanUrl;
+  }
+  
+  // ⚠️ رفض الروابط الخاطئة
+  if(cleanUrl.includes('app.netlify.com') || cleanUrl.includes('netlify.com/edge')){
+    showToast('الرابط غير صالح — استخدم زر "نسخ" بدلاً', true);
+    return;
+  }
+  
+  // 🎯 محاولة المشاركة الأصلية
   if(navigator.share){
     try{
       await navigator.share({
         title: state.fullName + ' — ' + state.jobTitle,
-        text: 'شاهد موقعي الشخصي!',
-        url: url
+        text: 'شاهد موقعي: ' + cleanUrl,
+        url: cleanUrl
       });
-    }catch(e){ if(e.name !== 'AbortError') copyPublishedUrl(); }
+      showToast('✅ تمت المشاركة');
+      return;
+    }catch(e){
+      // المستخدم ألغى → لا نفعل شيء
+      if(e.name === 'AbortError') return;
+      // فشل → ننتقل للنسخ
+      console.log('Share failed, falling back to copy:', e);
+    }
+  }
+  
+  // 🎯 Fallback: نسخ الرابط
+  const ok = await copyToClipboard(cleanUrl);
+  if(ok){
+    showToast('✅ تم نسخ الرابط للمشاركة!');
   } else {
-    copyPublishedUrl();
+    prompt('انسخ الرابط يدوياً:', cleanUrl);
   }
 }
 
