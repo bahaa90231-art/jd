@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<title>⚡ Perfect Site Builder v11.1</title>
+<title>⚡ Perfect Site Builder v12.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -236,7 +236,7 @@
     <div class="brand-logo">⚡</div>
     <div class="brand-text">
       <div class="title">Perfect Builder</div>
-      <div class="sub">v11.1 — Gist</div>
+      <div class="sub">v12.0 — Firebase</div>
     </div>
   </div>
   <div class="top-actions">
@@ -450,12 +450,29 @@
 
 <div class="toast" id="toast">✅ تم!</div>
 
-<script>
+<script type="module">
 /* ============================================================
-   🔑 GitHub Token مدمج
+   🔥 Firebase Configuration
    ============================================================ */
-const DEFAULT_GITHUB_TOKEN = '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';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyAtrD0RkCrjgUyl_T465vKr2uUYPfNH2Io",
+  authDomain: "site-builder8.firebaseapp.com",
+  databaseURL: "https://site-builder8-default-rtdb.firebaseio.com",
+  projectId: "site-builder8",
+  storageBucket: "site-builder8.firebasestorage.app",
+  messagingSenderId: "871708193250",
+  appId: "1:871708193250:web:bc59cf5dc1e4e702cac9bb"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* ============================================================
+   STATE
+   ============================================================ */
 const defaultState = {
   fullName:'أحمد محمد', jobTitle:'مطور ويب ومصمم UI/UX',
   heroBio:'مطور ويب شغوف بخبرة 5 سنوات في بناء تطبيقات ويب حديثة.',
@@ -517,10 +534,10 @@ const themes = {
   blue:{name:'أزرق', c:{primary:'#3b82f6',secondary:'#2563eb',accent:'#60a5fa',bg:'#0c1e3e'}}
 };
 
-function saveToStorage(){ try{ localStorage.setItem('builder_v111', JSON.stringify(state)); }catch(e){} }
+function saveToStorage(){ try{ localStorage.setItem('builder_v12', JSON.stringify(state)); }catch(e){} }
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('builder_v111') || localStorage.getItem('builder_v11');
+    const s = localStorage.getItem('builder_v12') || localStorage.getItem('builder_v11');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -533,11 +550,11 @@ function loadFromStorage(){
   }catch(e){}
 }
 
-function switchTab(name){
+window.switchTab = function(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === name));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active', c.dataset.tab === name));
   document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
-}
+};
 document.querySelectorAll('.tab').forEach(t=>{
   t.addEventListener('click', ()=>switchTab(t.dataset.tab));
 });
@@ -552,20 +569,21 @@ function renderList(containerId, badgeId, arr, templateFn, emptyMsg){
   if(!arr.length){ c.innerHTML = `<div class="empty">${emptyMsg}</div>`; return; }
   c.innerHTML = arr.map((item,i)=>templateFn(item,i)).join('');
 }
-function updateItem(arr, idx, key, val, rerender){
+
+window.updateItem = function(arr, idx, key, val, rerender){
   state[arr][idx][key] = val;
   if(rerender){
     const r = getRendererFor(arr);
     if(r) r();
   }
   refresh();
-}
-function removeItem(arr, idx){
+};
+window.removeItem = function(arr, idx){
   state[arr].splice(idx,1);
   const r = getRendererFor(arr);
   if(r) r();
   refresh();
-}
+};
 function getRendererFor(arr){
   return {highlights:renderHighlights,skills:renderSkills,services:renderServices,
     projects:renderProjects,experience:renderExperience,education:renderEducation,
@@ -684,14 +702,14 @@ function renderSocials(){
     </div>`, 'لا توجد روابط');
 }
 
-function addHighlight(){ state.highlights.push({icon:'✅',text:'نقطة'}); renderHighlights(); refresh(); }
-function addSkill(){ state.skills.push({name:'مهارة',level:80,icon:'⭐'}); renderSkills(); refresh(); }
-function addService(){ state.services.push({icon:'✨',title:'خدمة',desc:'وصف'}); renderServices(); refresh(); }
-function addProject(){ state.projects.push({title:'مشروع',category:'عام',desc:'وصف',img:'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600'}); renderProjects(); refresh(); }
-function addExperience(){ state.experience.push({role:'مسمى',company:'شركة',period:'2020 - 2022',desc:'وصف'}); renderExperience(); refresh(); }
-function addEducation(){ state.education.push({degree:'مؤهل',school:'جامعة',period:'2016 - 2020',desc:'وصف'}); renderEducation(); refresh(); }
-function addTestimonial(){ state.testimonials.push({name:'عميل',role:'وظيفة',text:'رأي'}); renderTestimonials(); refresh(); }
-function addSocial(){ state.socials.push({icon:'🔗',name:'رابط',url:'https://'}); renderSocials(); refresh(); }
+window.addHighlight = function(){ state.highlights.push({icon:'✅',text:'نقطة'}); renderHighlights(); refresh(); };
+window.addSkill = function(){ state.skills.push({name:'مهارة',level:80,icon:'⭐'}); renderSkills(); refresh(); };
+window.addService = function(){ state.services.push({icon:'✨',title:'خدمة',desc:'وصف'}); renderServices(); refresh(); };
+window.addProject = function(){ state.projects.push({title:'مشروع',category:'عام',desc:'وصف',img:'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600'}); renderProjects(); refresh(); };
+window.addExperience = function(){ state.experience.push({role:'مسمى',company:'شركة',period:'2020 - 2022',desc:'وصف'}); renderExperience(); refresh(); };
+window.addEducation = function(){ state.education.push({degree:'مؤهل',school:'جامعة',period:'2016 - 2020',desc:'وصف'}); renderEducation(); refresh(); };
+window.addTestimonial = function(){ state.testimonials.push({name:'عميل',role:'وظيفة',text:'رأي'}); renderTestimonials(); refresh(); };
+window.addSocial = function(){ state.socials.push({icon:'🔗',name:'رابط',url:'https://'}); renderSocials(); refresh(); };
 
 function renderThemes(){
   const g = document.getElementById('themeGrid');
@@ -702,7 +720,7 @@ function renderThemes(){
       <span>${t.name}</span>
     </div>`).join('');
 }
-function applyTheme(k){
+window.applyTheme = function(k){
   state.theme = k;
   state.colors = {...themes[k].c};
   ['Primary','Secondary','Accent','Bg'].forEach(p=>{
@@ -710,7 +728,7 @@ function applyTheme(k){
     if(el) el.value = state.colors[p.toLowerCase()];
   });
   renderThemes(); refresh();
-}
+};
 
 const bindings = {
   fullName:'fullName', jobTitle:'jobTitle', heroBio:'heroBio',
@@ -1044,9 +1062,9 @@ ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" clas
 }
 
 /* ============================================================
-   🎯 توليد الرابط القصير
+   🎯 توليد الرابط عبر Firebase
    ============================================================ */
-async function generateLink(){
+window.generateLink = async function(){
   openModal('linkModal');
   document.getElementById('generatedUrl').textContent = '⏳ جاري إنشاء الرابط...';
   document.getElementById('openLink').href = '#';
@@ -1056,9 +1074,9 @@ async function generateLink(){
   
   try{
     const html = buildHTML();
-    const gistId = await uploadToGist(html);
+    const siteId = await uploadToFirebase(html);
     const baseUrl = window.location.origin + window.location.pathname;
-    const shortUrl = `${baseUrl}#g=${gistId}`;
+    const shortUrl = `${baseUrl}#f=${siteId}`;
     
     window._shortLink = shortUrl;
     window._generatedLink = shortUrl;
@@ -1071,56 +1089,35 @@ async function generateLink(){
     showToast('فشل الإنشاء: ' + e.message, true);
   }
   indicator.style.display = 'none';
-}
+};
 
-async function uploadToGist(html){
-  const token = DEFAULT_GITHUB_TOKEN;
-  const fileName = `site-${Date.now().toString(36)}.html`;
+async function uploadToFirebase(html){
+  // توليد ID فريد
+  const siteId = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
   
-  const res = await fetch('https://api.github.com/gists', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Accept': 'application/vnd.github+json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      description: `موقع ${state.fullName}`,
-      public: false,
-      files: { [fileName]: { content: html } }
-    })
+  await set(ref(db, 'sites/' + siteId), {
+    html: html,
+    createdAt: Date.now(),
+    name: state.fullName || 'site'
   });
   
-  if(!res.ok){
-    const err = await res.json().catch(()=>({}));
-    throw new Error(err.message || 'فشل الرفع (' + res.status + ')');
-  }
-  
-  const gist = await res.json();
-  return gist.id;
+  return siteId;
 }
 
-async function loadFromGist(gistId){
+async function loadFromFirebase(siteId){
   try{
-    const res = await fetch(`https://api.github.com/gists/${gistId}`);
-    if(!res.ok) return null;
-    const gist = await res.json();
-    const files = Object.values(gist.files);
-    if(!files.length) return null;
-    const file = files[0];
-    let content = file.content;
-    if(file.truncated){
-      const rawRes = await fetch(file.raw_url);
-      content = await rawRes.text();
+    const snapshot = await get(child(ref(db), 'sites/' + siteId));
+    if(snapshot.exists()){
+      return snapshot.val().html;
     }
-    return content;
+    return null;
   }catch(e){
-    console.error('Load Gist error:', e);
+    console.error('Load Firebase error:', e);
     return null;
   }
 }
 
-async function copyLink(){
+window.copyLink = async function(){
   const url = window._shortLink || window._generatedLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
   try{
@@ -1144,30 +1141,24 @@ async function copyLink(){
     if(ok) showToast('✅ تم النسخ!');
     else prompt('انسخ الرابط:', url);
   }catch(e){ prompt('انسخ الرابط:', url); }
-}
+};
 
-async function shareLink(){
+window.shareLink = async function(){
   const url = window._shortLink || window._generatedLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
   if(navigator.share){
     try{
-      await navigator.share({
-        title: state.fullName,
-        text: 'شاهد موقعي',
-        url: url
-      });
+      await navigator.share({title: state.fullName, text: 'شاهد موقعي', url: url});
       return;
     }catch(e){ if(e.name === 'AbortError') return; }
   }
   await copyLink();
-}
+};
 
-function openModal(id){ document.getElementById(id).classList.add('show'); }
-function closeModal(){
-  document.getElementById('linkModal').classList.remove('show');
-}
+window.openModal = function(id){ document.getElementById(id).classList.add('show'); };
+window.closeModal = function(){ document.getElementById('linkModal').classList.remove('show'); };
 
-function downloadSite(){
+window.downloadSite = function(){
   const html = buildHTML();
   const blob = new Blob([html], {type:'text/html;charset=utf-8'});
   const url = URL.createObjectURL(blob);
@@ -1177,17 +1168,17 @@ function downloadSite(){
   a.click();
   URL.revokeObjectURL(url);
   showToast('⬇️ تم التحميل!');
-}
+};
 
-function openMobilePreview(){
+window.openMobilePreview = function(){
   const overlay = document.getElementById('mobilePreview');
   overlay.classList.add('show');
   const frame = document.getElementById('mobilePreviewFrame');
   frame.srcdoc = buildHTML();
-}
-function closeMobilePreview(){
+};
+window.closeMobilePreview = function(){
   document.getElementById('mobilePreview').classList.remove('show');
-}
+};
 
 let timer = null;
 function refresh(){
@@ -1206,27 +1197,30 @@ function refresh(){
   }, 400);
 }
 
-function resetAll(){
+window.resetAll = function(){
   if(!confirm('إعادة التعيين؟')) return;
-  localStorage.removeItem('builder_v111');
+  localStorage.removeItem('builder_v12');
   location.reload();
-}
+};
 
-function showToast(msg, isError){
+window.showToast = function(msg, isError){
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.toggle('error', !!isError);
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
-}
+};
 
+/* ============================================================
+   🎯 عرض الموقع المنشور
+   ============================================================ */
 async function checkForPublishedSite(){
   const hash = window.location.hash;
   if(!hash) return false;
   
-  if(hash.startsWith('#g=')){
-    const gistId = hash.substring(3);
+  if(hash.startsWith('#f=')){
+    const siteId = hash.substring(3);
     document.body.innerHTML = `
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
         <div style="font-size:4rem;animation:spin 1s linear infinite;display:inline-block">⏳</div>
@@ -1235,7 +1229,7 @@ async function checkForPublishedSite(){
       </div>
       <style>@keyframes spin{to{transform:rotate(360deg)}}*{margin:0;padding:0;box-sizing:border-box}</style>
     `;
-    const html = await loadFromGist(gistId);
+    const html = await loadFromFirebase(siteId);
     if(html){
       document.open();
       document.write(html);
@@ -1250,43 +1244,34 @@ async function checkForPublishedSite(){
     }
     return true;
   }
-  
-  if(hash.startsWith('#site=')){
-    try{
-      let encoded = hash.substring(6).replace(/-/g,'+').replace(/_/g,'/');
-      while(encoded.length % 4) encoded += '=';
-      const html = decodeURIComponent(escape(atob(encoded)));
-      document.open();
-      document.write(html);
-      document.close();
-      return true;
-    }catch(e){ return false; }
-  }
   return false;
 }
 
-function init(){
-  checkForPublishedSite().then(found=>{
-    if(found) return;
-    loadFromStorage();
-    Object.keys(bindings).forEach(id => {
-      const el = document.getElementById(id);
-      if(el && state[bindings[id]] !== undefined){
-        el.value = state[bindings[id]];
-      }
-    });
-    ['Primary','Secondary','Accent','Bg'].forEach(p=>{
-      const el = document.getElementById('c'+p);
-      if(el) el.value = state.colors[p.toLowerCase()];
-    });
-    renderHighlights(); renderSkills(); renderServices(); renderProjects();
-    renderExperience(); renderEducation(); renderTestimonials(); renderSocials();
-    renderThemes();
-    if(window.innerWidth >= 1024){
-      const f = document.getElementById('previewFrame');
-      if(f) f.srcdoc = buildHTML();
+/* ============================================================
+   INIT
+   ============================================================ */
+async function init(){
+  const found = await checkForPublishedSite();
+  if(found) return;
+  
+  loadFromStorage();
+  Object.keys(bindings).forEach(id => {
+    const el = document.getElementById(id);
+    if(el && state[bindings[id]] !== undefined){
+      el.value = state[bindings[id]];
     }
   });
+  ['Primary','Secondary','Accent','Bg'].forEach(p=>{
+    const el = document.getElementById('c'+p);
+    if(el) el.value = state.colors[p.toLowerCase()];
+  });
+  renderHighlights(); renderSkills(); renderServices(); renderProjects();
+  renderExperience(); renderEducation(); renderTestimonials(); renderSocials();
+  renderThemes();
+  if(window.innerWidth >= 1024){
+    const f = document.getElementById('previewFrame');
+    if(f) f.srcdoc = buildHTML();
+  }
 }
 init();
 </script>
