@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="theme-color" content="#6366f1">
-<title>⚡ Perfect Site Builder v14.0</title>
+<title>مَوقِعي — صانع المواقع العربية</title>
+<meta name="description" content="مَوقِعي — أول أداة عربية لإنشاء المواقع الشخصية الاحترافية بضغطة واحدة. مجانية 100%">
+<meta name="keywords" content="مَوقِعي, موقع شخصي, موقع احترافي, إنشاء موقع, صانع مواقع, مواقع مجانية">
+<meta name="author" content="مَوقِعي">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -26,8 +29,8 @@
     -webkit-font-smoothing:antialiased;
   }
   body.preview-locked{position:fixed;width:100%;height:100%}
+  body.drawer-open{overflow:hidden}
 
-  /* TOPBAR */
   .topbar{
     height:var(--topbar-h);flex-shrink:0;
     background:linear-gradient(90deg,#0f172a,#1e1b4b,#4c1d95);
@@ -60,7 +63,20 @@
   .brand-text .sub{font-size:.62rem;color:var(--muted);white-space:nowrap}
   .top-actions{display:flex;gap:4px;align-items:center;position:relative;z-index:1;flex-shrink:0}
 
-  /* BUTTONS */
+  /* زر القائمة ☰ - يظهر فقط على الجوال */
+  .menu-btn{
+    display:none;
+    min-height:38px;min-width:38px;padding:8px;
+    background:rgba(255,255,255,.1);border:1px solid var(--border);
+    border-radius:9px;color:#fff;cursor:pointer;font-size:1.2rem;
+    align-items:center;justify-content:center;
+    transition:all .2s;touch-action:manipulation;
+  }
+  .menu-btn:active{transform:scale(.92);background:var(--primary)}
+  @media(max-width:767px){
+    .menu-btn{display:flex}
+  }
+
   .btn{
     min-height:36px;min-width:36px;padding:8px 12px;border:none;border-radius:9px;
     font-size:.82rem;font-weight:700;font-family:'Cairo',sans-serif;
@@ -76,7 +92,6 @@
   .btn-ghost{background:rgba(255,255,255,.08);color:var(--muted);border:1px solid var(--border)}
   .btn-icon{padding:8px;width:38px;height:38px}
 
-  /* MAIN */
   .main{flex:1;display:flex;overflow:hidden;position:relative;min-height:0}
   .panel{
     display:flex;flex-direction:column;overflow:hidden;
@@ -87,7 +102,6 @@
     width:100%;height:100%;min-height:0;
   }
 
-  /* TABS */
   .tabs{
     display:flex;overflow-x:auto;overflow-y:hidden;
     background:var(--panel3);border-bottom:1px solid var(--border);
@@ -103,12 +117,113 @@
   }
   .tab.active{color:#fff;border-bottom-color:var(--primary);background:var(--panel2)}
 
+  /* إخفاء التبويبات على الجوال */
+  @media(max-width:767px){
+    .tabs{display:none}
+  }
+
+  /* ============================================================
+     DRAWER - قائمة جانبية للأقسام (للجوال فقط)
+     ============================================================ */
+  .drawer-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.7);
+    backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+    z-index:9990;opacity:0;visibility:hidden;transition:all .3s;
+  }
+  .drawer-overlay.show{opacity:1;visibility:visible}
+
+  .drawer{
+    position:fixed;top:0;right:0;bottom:0;width:280px;max-width:85vw;
+    background:var(--panel);z-index:9991;
+    transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column;
+    box-shadow:-10px 0 40px rgba(0,0,0,.6);
+    padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
+  }
+  .drawer.show{transform:translateX(0)}
+
+  .drawer-header{
+    padding:16px;border-bottom:1px solid var(--border);
+    background:linear-gradient(135deg,#0f172a,#1e1b4b);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    flex-shrink:0;
+  }
+  .drawer-header h3{
+    font-size:1rem;font-weight:800;color:#fff;
+    display:flex;align-items:center;gap:8px;
+  }
+  .drawer-close{
+    width:36px;height:36px;border-radius:9px;
+    background:rgba(255,255,255,.08);border:1px solid var(--border);
+    color:#fff;cursor:pointer;font-size:1rem;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .2s;touch-action:manipulation;
+  }
+  .drawer-close:active{background:var(--danger);transform:scale(.92)}
+
+  .drawer-body{
+    flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding:10px;
+  }
+  .drawer-body::-webkit-scrollbar{width:6px}
+  .drawer-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+  .drawer-item{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;border-radius:10px;
+    color:var(--text);cursor:pointer;
+    transition:all .2s;margin-bottom:4px;
+    font-size:.9rem;font-weight:600;
+    touch-action:manipulation;user-select:none;
+    border:1px solid transparent;
+  }
+  .drawer-item:active{
+    background:rgba(99,102,241,.2);
+    border-color:rgba(99,102,241,.3);
+    transform:scale(.97);
+  }
+  .drawer-item.active{
+    background:linear-gradient(135deg,rgba(99,102,241,.25),rgba(139,92,246,.25));
+    border-color:var(--primary);
+    color:#fff;
+    box-shadow:0 4px 15px rgba(99,102,241,.3);
+  }
+  .drawer-item .di-icon{
+    font-size:1.2rem;width:28px;text-align:center;flex-shrink:0;
+  }
+  .drawer-item .di-text{flex:1}
+  .drawer-item .di-badge{
+    background:var(--primary);color:#fff;font-size:.65rem;
+    padding:2px 8px;border-radius:20px;font-weight:700;
+  }
+
+  /* Drawer Footer */
+  .drawer-footer{
+    padding:12px;border-top:1px solid var(--border);
+    background:var(--panel2);flex-shrink:0;
+  }
+  .drawer-footer-btn{
+    width:100%;padding:12px;border-radius:10px;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:#fff;border:none;font-family:inherit;font-weight:700;font-size:.85rem;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+    transition:all .2s;touch-action:manipulation;
+  }
+  .drawer-footer-btn:active{transform:scale(.97)}
+
+  /* منع Drawer على الحاسوب */
+  @media(min-width:768px){
+    .drawer,.drawer-overlay{display:none !important}
+  }
+
+  /* منع التمرير في Body عند فتح Drawer */
+  body.drawer-open{overflow:hidden}
+
   .tab-contents{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:0}
   .tab-content{display:none;padding:14px}
   .tab-content.active{display:block;animation:fadeIn .25s ease}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-  /* FORM */
   .section-block{
     background:var(--panel2);border-radius:12px;padding:14px;margin-bottom:12px;
     border:1px solid var(--border);
@@ -244,7 +359,6 @@
   .switch.on{background:var(--success)}
   .switch.on::after{right:calc(100% - 25px)}
 
-  /* BOTTOM NAV */
   .bottom-nav{
     display:flex;background:var(--panel3);border-top:1px solid var(--border);
     flex-shrink:0;height:56px;padding-bottom:var(--safe-bottom);
@@ -253,7 +367,7 @@
   .bn-item{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:2px;cursor:pointer;color:var(--muted);font-size:.65rem;font-weight:700;
-    transition:all .2s;position:relative;
+    transition:all .2s;position:relative;touch-action:manipulation;
   }
   .bn-item.active{color:var(--primary)}
   .bn-item.active::before{
@@ -262,7 +376,6 @@
   }
   .bn-item .ic{font-size:1.2rem;line-height:1}
 
-  /* DESKTOP */
   @media(min-width:1024px){
     .main{display:grid;grid-template-columns:460px 1fr}
     .panel{width:auto}
@@ -271,7 +384,6 @@
     .preview-fab{display:none}
   }
 
-  /* PREVIEW */
   .preview-toolbar{
     height:52px;background:var(--panel3);border-bottom:1px solid var(--border);
     display:flex;align-items:center;justify-content:space-between;
@@ -298,7 +410,6 @@
   .preview-frame-wrap.mobile{max-width:390px}
   #previewFrame{width:100%;height:100%;border:none;background:#fff;display:block}
 
-  /* MOBILE PREVIEW */
   .mobile-preview{
     position:fixed;top:0;left:0;right:0;bottom:0;
     background:var(--panel2);z-index:9000;display:none;flex-direction:column;
@@ -322,7 +433,6 @@
   .mobile-preview-body .preview-frame-wrap.desktop{max-width:100%}
   .mobile-preview-body .preview-frame-wrap iframe{width:100%;height:100%;border:none;display:block;background:#fff}
 
-  /* FAB */
   .preview-fab{
     position:fixed;bottom:calc(76px + var(--safe-bottom));left:16px;
     width:56px;height:56px;border-radius:50%;
@@ -335,7 +445,6 @@
   .preview-fab.hidden{opacity:0;pointer-events:none;transform:scale(.8)}
   @media(min-width:1024px){.preview-fab{display:none}}
 
-  /* MODAL */
   .modal{
     position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
     align-items:flex-end;justify-content:center;z-index:9998;
@@ -349,26 +458,15 @@
     box-shadow:0 -20px 60px rgba(0,0,0,.7);
     max-height:90vh;overflow-y:auto;
     padding-bottom:calc(22px + var(--safe-bottom));
-    animation:slideUp .3s ease;
-    position:relative;
+    animation:slideUp .3s ease;position:relative;
   }
   @media(min-width:600px){.modal-box{border-radius:20px;animation:scaleIn .3s ease}}
   @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   @keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-  .modal-handle{
-    width:40px;height:4px;background:var(--border);border-radius:4px;
-    margin:0 auto 14px;display:block;
-  }
+  .modal-handle{width:40px;height:4px;background:var(--border);border-radius:4px;margin:0 auto 14px;display:block}
   @media(min-width:600px){.modal-handle{display:none}}
   .modal-box h3{margin-bottom:14px;color:#fff;font-size:1.1rem}
-  .modal-close{
-    position:absolute;top:14px;left:14px;width:36px;height:36px;
-    border-radius:50%;background:var(--panel2);border:none;color:#fff;
-    cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;
-  }
-  .modal-close:hover{background:var(--danger)}
 
-  /* TOAST */
   .toast{
     position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
     transform:translateX(-50%) translateY(120px);
@@ -380,143 +478,78 @@
   .toast.show{transform:translateX(-50%) translateY(0)}
   .toast.error{background:linear-gradient(135deg,#ef4444,#b91c1c)}
 
-  /* CARD MODAL */
-  .card-input-wrap{
-    margin:20px 0;
-    direction:ltr;
-  }
-  .card-input-wrap input{
-    font-family:monospace;font-size:1.1rem;
-    letter-spacing:2px;text-align:center;font-weight:700;
-    padding:16px;background:#0a0e1a;border:2px solid var(--primary);
-  }
-  .card-input-wrap input:focus{
-    box-shadow:0 0 0 4px rgba(99,102,241,.25);
-  }
-  .card-format-hint{
-    font-size:.72rem;color:var(--muted);text-align:center;margin-top:8px;
-    font-family:monospace;
-  }
+  .card-input-wrap{margin:20px 0;direction:ltr}
+  .card-input-wrap input{font-family:monospace;font-size:1.1rem;letter-spacing:2px;text-align:center;font-weight:700;padding:16px;background:#0a0e1a;border:2px solid var(--primary)}
+  .card-input-wrap input:focus{box-shadow:0 0 0 4px rgba(99,102,241,.25)}
+  .card-format-hint{font-size:.72rem;color:var(--muted);text-align:center;margin-top:8px;font-family:monospace}
 
-  /* ADMIN PANEL */
-  .admin-panel{
-    position:fixed;inset:0;background:var(--bg);z-index:9999;
-    display:none;flex-direction:column;overflow:hidden;
-  }
+  .admin-panel{position:fixed;inset:0;background:var(--bg);z-index:9999;display:none;flex-direction:column;overflow:hidden}
   .admin-panel.show{display:flex}
-  .admin-header{
-    height:56px;background:linear-gradient(90deg,#0f172a,#1e1b4b);
-    border-bottom:1px solid var(--border);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 16px;gap:10px;flex-shrink:0;
-  }
+  .admin-header{height:56px;background:linear-gradient(90deg,#0f172a,#1e1b4b);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:10px;flex-shrink:0}
   .admin-header h2{font-size:1rem;font-weight:800;color:#fff}
   .admin-body{flex:1;overflow-y:auto;padding:16px}
-  .admin-section{
-    background:var(--panel);border:1px solid var(--border);
-    border-radius:12px;padding:16px;margin-bottom:14px;
-  }
-  .admin-section h3{
-    font-size:.9rem;color:#fff;margin-bottom:12px;
-    display:flex;justify-content:space-between;align-items:center;
-  }
-  .stat-grid{
-    display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
-  }
+  .admin-section{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+  .admin-section h3{font-size:.9rem;color:#fff;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   @media(min-width:480px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
-  .stat-box{
-    background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
-    padding:14px;text-align:center;
-  }
-  .stat-box .num{
-    font-size:1.6rem;font-weight:900;
-    background:linear-gradient(135deg,var(--primary),var(--accent));
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-    margin-bottom:4px;
-  }
+  .stat-box{background:#0a0e1a;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+  .stat-box .num{font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
   .stat-box .lbl{font-size:.72rem;color:var(--muted);font-weight:600}
 
-  .card-item{
-    background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
-    padding:12px;margin-bottom:10px;
-    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  }
-  .card-item .card-code{
-    font-family:monospace;font-weight:700;font-size:.9rem;
-    color:var(--primary);flex:1;min-width:200px;
-    letter-spacing:1px;
-  }
-  .card-item .card-status{
-    padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700;
-  }
+  .card-item{background:#0a0e1a;border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .card-item .card-code{font-family:monospace;font-weight:700;font-size:.9rem;color:var(--primary);flex:1;min-width:200px;letter-spacing:1px}
+  .card-item .card-status{padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700}
   .card-status.available{background:rgba(16,185,129,.2);color:#10b981}
   .card-status.used{background:rgba(239,68,68,.2);color:#ef4444}
   .card-item .card-date{font-size:.7rem;color:var(--muted);font-family:monospace}
   .card-item .card-actions{display:flex;gap:5px;margin-right:auto}
-  .card-item .card-actions button{
-    width:32px;height:32px;border-radius:8px;border:none;
-    background:var(--panel2);color:var(--muted);cursor:pointer;
-    font-size:.85rem;transition:all .2s;
-  }
+  .card-item .card-actions button{width:32px;height:32px;border-radius:8px;border:none;background:var(--panel2);color:var(--muted);cursor:pointer;font-size:.85rem;transition:all .2s}
   .card-item .card-actions button:hover{background:var(--primary);color:#fff}
   .card-item .card-actions button.del:hover{background:var(--danger)}
+  .empty-admin{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem}
 
-  .empty-admin{
-    text-align:center;padding:40px 20px;color:var(--muted);
-    font-size:.85rem;
-  }
-
-  /* HELPERS */
   .hint{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.5}
-  .empty{
-    text-align:center;padding:26px 12px;color:var(--muted);font-size:.82rem;
-    border:2px dashed var(--border);border-radius:10px;
-  }
-  .badge{
-    background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;
-    border-radius:20px;font-weight:700;
-  }
-  .img-preview{
-    width:64px;height:64px;border-radius:12px;object-fit:cover;
-    border:2px solid var(--border);background:#0a0e1a;flex-shrink:0;
-  }
+  .empty{text-align:center;padding:26px 12px;color:var(--muted);font-size:.82rem;border:2px dashed var(--border);border-radius:10px}
+  .badge{background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;border-radius:20px;font-weight:700}
+  .img-preview{width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--border);background:#0a0e1a;flex-shrink:0}
   .img-upload-row{display:flex;gap:10px;align-items:flex-start}
   .img-upload-row > div{flex:1;min-width:0}
-  .add-btn{
-    width:100%;padding:12px;border:2px dashed var(--border);border-radius:10px;
-    background:transparent;color:var(--muted);cursor:pointer;
-    font-family:inherit;font-weight:700;font-size:.82rem;transition:all .2s;
-  }
+  .add-btn{width:100%;padding:12px;border:2px dashed var(--border);border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;font-weight:700;font-size:.82rem;transition:all .2s}
   .add-btn:active{background:var(--panel2);border-color:var(--primary);color:#fff}
 
-  .loading-indicator{
-    font-size:.75rem;color:var(--warning);margin-top:8px;
-    display:flex;align-items:center;gap:6px;justify-content:center;
-  }
-  .loading-indicator .spinner{
-    width:14px;height:14px;border:2px solid var(--border);
-    border-top-color:var(--warning);border-radius:50%;
-    animation:spin .8s linear infinite;
-  }
+  .loading-indicator{font-size:.75rem;color:var(--warning);margin-top:8px;display:flex;align-items:center;gap:6px;justify-content:center}
+  .loading-indicator .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--warning);border-radius:50%;animation:spin .8s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  .publish-url-box{
-    background:#0a0e1a;border:2px solid var(--primary);border-radius:12px;
-    padding:14px;margin:16px 0;
-  }
+  .publish-url-box{background:#0a0e1a;border:2px solid var(--primary);border-radius:12px;padding:14px;margin:16px 0}
   .publish-url-box .label{font-size:.7rem;color:var(--muted);margin-bottom:6px}
-  .publish-url-box .url{
-    font-family:monospace;font-size:.78rem;color:var(--primary);
-    word-break:break-all;direction:ltr;text-align:left;font-weight:700;line-height:1.5;
-  }
+  .publish-url-box .url{font-family:monospace;font-size:.78rem;color:var(--primary);word-break:break-all;direction:ltr;text-align:left;font-weight:700;line-height:1.5}
 
-  /* Admin input code */
-  .code-generator{
-    display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;
+  .code-generator{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .code-generator input{flex:1;font-family:monospace;font-size:.9rem;letter-spacing:1px;text-align:center}
+
+  .contact-float{
+    position:fixed;bottom:calc(70px + var(--safe-bottom, 0px));right:16px;
+    height:50px;padding:0 16px;background:linear-gradient(135deg, #25D366, #128C7E);
+    color:white;border-radius:25px;display:flex;align-items:center;gap:8px;
+    box-shadow:0 10px 30px rgba(37,211,102,0.5);z-index:85;
+    font-family:'Cairo',sans-serif;font-weight:700;font-size:.82rem;
+    text-decoration:none;cursor:pointer;transition:all .3s;
   }
-  .code-generator input{
-    flex:1;font-family:monospace;font-size:.9rem;
-    letter-spacing:1px;text-align:center;
+  .contact-float:hover{transform:scale(1.05)}
+  .contact-float.hidden{display:none}
+  @media(min-width:1024px){.contact-float{bottom:30px;right:30px;}}
+
+  /* Languages selector */
+  .lang-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  @media(min-width:480px){.lang-grid{grid-template-columns:repeat(3,1fr)}}
+  .lang-opt{
+    padding:10px;background:#0a0e1a;border:2px solid var(--border);
+    border-radius:9px;cursor:pointer;text-align:center;
+    font-size:.82rem;font-weight:600;transition:all .2s;
+  }
+  .lang-opt.active{
+    border-color:var(--primary);background:rgba(99,102,241,.15);color:#fff;
   }
 </style>
 </head>
@@ -525,14 +558,34 @@
   <div class="brand">
     <div class="brand-logo" id="brandLogo" onclick="handleLogoClick()">⚡</div>
     <div class="brand-text">
-      <div class="title">Perfect Builder</div>
-      <div class="sub">v14.0 — بطاقات</div>
+      <div class="title">مَوقِعي</div>
+      <div class="sub">v17.0 — موقعك بضغطة</div>
     </div>
   </div>
   <div class="top-actions">
+    <button class="menu-btn" onclick="openDrawer()" title="الأقسام" aria-label="القائمة">☰</button>
     <button class="btn btn-ghost btn-icon" onclick="resetAll()" title="جديد">🔄</button>
     <button class="btn btn-ghost btn-icon" onclick="requestDownload()" title="تحميل">⬇️</button>
-    <button class="btn btn-publish" onclick="requestGenerateLink()" title="احصل على رابط">🔗 رابط</button>
+    <button class="btn btn-publish" onclick="requestGenerateLink()" title="احصل على رابط">🔗</button>
+  </div>
+</div>
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h3>📂 الأقسام</h3>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="إغلاق">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody">
+    <!-- سيتم ملؤها عبر JavaScript -->
+  </div>
+  <div class="drawer-footer">
+    <button class="drawer-footer-btn" onclick="openWhatsAppSupport()">
+      💬 تواصل مع الدعم
+    </button>
   </div>
 </div>
 
@@ -554,6 +607,7 @@
       <div class="tab" data-tab="faq">❓ أسئلة</div>
       <div class="tab" data-tab="contact">📞 تواصل</div>
       <div class="tab" data-tab="advanced">⚙️ متقدم</div>
+      <div class="tab" data-tab="language">🌍 اللغة</div>
       <div class="tab" data-tab="design">🎨 تصميم</div>
       <div class="tab" data-tab="sections">📋 أقسام</div>
     </div>
@@ -730,19 +784,28 @@
           <div class="switch-row"><label>Cursor مخصص</label><div class="switch" id="cursorToggle" onclick="toggleSwitch(this,'customCursor')"></div></div>
         </div>
         <div class="section-block">
-          <h3><span>🌐 اللغة</span></h3>
-          <div class="form-group"><label>اللغة الافتراضية</label>
-            <select id="defaultLang">
-              <option value="ar" selected>العربية</option>
-              <option value="en">English</option>
-            </select>
-          </div>
-          <div class="switch-row"><label>زر تبديل اللغة</label><div class="switch" id="langToggle" onclick="toggleSwitch(this,'langSwitcher')"></div></div>
-        </div>
-        <div class="section-block">
           <h3><span>🔔 الإشعارات</span></h3>
           <div class="switch-row"><label>شريط إشعار</label><div class="switch" id="noticeToggle" onclick="toggleSwitch(this,'noticeBar')"></div></div>
           <div class="form-group"><label>نص الإشعار</label><input type="text" id="noticeText" value="🎉 خصم 20% هذا الشهر!"></div>
+        </div>
+      </div>
+
+      <!-- LANGUAGE -->
+      <div class="tab-content" data-tab="language">
+        <div class="section-block">
+          <h3><span>🌍 لغة الموقع</span></h3>
+          <p class="hint" style="margin-bottom:12px">
+            اختر اللغة الافتراضية للموقع. جميع العناوين الثابتة ستُترجم تلقائياً.
+          </p>
+          <div class="lang-grid" id="langGrid"></div>
+        </div>
+        <div class="section-block">
+          <h3><span>⚙️ خيارات اللغة</span></h3>
+          <div class="switch-row">
+            <label>زر تبديل اللغة للزوار</label>
+            <div class="switch" id="langSwitcherToggle" onclick="toggleSwitch(this,'langSwitcher')"></div>
+          </div>
+          <p class="hint">سيظهر زر في أعلى الموقع للزوار لتبديل اللغة.</p>
         </div>
       </div>
 
@@ -864,9 +927,7 @@
 
 <button class="preview-fab" id="previewFab" onclick="openMobilePreview()">👁️</button>
 
-<!-- ============================================================
-     LINK MODAL (نافذة الرابط بعد التحقق)
-     ============================================================ -->
+<!-- LINK MODAL -->
 <div class="modal" id="linkModal">
   <div class="modal-box" style="text-align:center">
     <span class="modal-handle"></span>
@@ -895,9 +956,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     CARD MODAL (نافذة إدخال البطاقة)
-     ============================================================ -->
+<!-- CARD MODAL -->
 <div class="modal" id="cardModal">
   <div class="modal-box" style="text-align:center">
     <span class="modal-handle"></span>
@@ -906,17 +965,14 @@
     <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px;line-height:1.6" id="cardModalDesc">
       لإنشاء موقعك، أدخل رقم البطاقة الخاص بك
     </p>
-    
     <div class="card-input-wrap">
       <input type="text" id="cardInput" maxlength="17" placeholder="ABCDEFGHI1234567X" 
              autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"
              oninput="formatCardInput(this)">
       <div class="card-format-hint">9 أحرف + 7 أرقام + 1 حرف</div>
     </div>
-    
     <div id="cardError" style="display:none;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#ef4444;padding:10px;border-radius:8px;font-size:.8rem;margin-bottom:12px;text-align:center"></div>
     <div id="cardSuccess" style="display:none;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.4);color:#10b981;padding:10px;border-radius:8px;font-size:.8rem;margin-bottom:12px;text-align:center"></div>
-    
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
       <button class="btn btn-primary" id="cardSubmitBtn" onclick="submitCard()" style="padding:14px">✅ تأكيد</button>
       <button class="btn btn-ghost" onclick="closeModal('cardModal')" style="padding:14px">❌ إلغاء</button>
@@ -924,9 +980,7 @@
   </div>
 </div>
 
-<!-- ============================================================
-     ADMIN LOGIN MODAL
-     ============================================================ -->
+<!-- ADMIN LOGIN MODAL -->
 <div class="modal" id="adminLoginModal">
   <div class="modal-box" style="text-align:center">
     <span class="modal-handle"></span>
@@ -944,17 +998,13 @@
   </div>
 </div>
 
-<!-- ============================================================
-     ADMIN PANEL (لوحة التحكم الكاملة)
-     ============================================================ -->
+<!-- ADMIN PANEL -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-header">
     <h2>🔧 لوحة التحكم</h2>
     <button class="btn btn-ghost btn-icon" onclick="closeAdminPanel()">✕</button>
   </div>
   <div class="admin-body">
-    
-    <!-- Stats -->
     <div class="admin-section">
       <h3>📊 الإحصائيات</h3>
       <div class="stat-grid">
@@ -977,23 +1027,19 @@
       </div>
     </div>
 
-    <!-- Add Cards -->
     <div class="admin-section">
       <h3>➕ إضافة بطاقات</h3>
       <p class="hint" style="margin-bottom:10px">الشكل: 9 أحرف + 7 أرقام + 1 حرف (17 خانة)</p>
-      
       <div class="code-generator">
         <input type="text" id="newCardInput" maxlength="17" placeholder="ABCDEFGHI1234567X"
                style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
         <button class="btn btn-success" onclick="addNewCard()">➕ إضافة</button>
       </div>
-      
       <button class="btn btn-ghost" onclick="generateRandomCards(1)" style="width:100%;margin-bottom:8px">🎲 توليد بطاقة عشوائية</button>
       <button class="btn btn-ghost" onclick="generateRandomCards(10)" style="width:100%;margin-bottom:8px">🎲 توليد 10 بطاقات</button>
       <button class="btn btn-ghost" onclick="generateRandomCards(50)" style="width:100%">🎲 توليد 50 بطاقة</button>
     </div>
 
-    <!-- Cards List -->
     <div class="admin-section">
       <h3>
         <span>📋 البطاقات</span>
@@ -1006,7 +1052,6 @@
         <div class="empty-admin">جاري التحميل...</div>
       </div>
     </div>
-    
   </div>
 </div>
 
@@ -1015,7 +1060,7 @@
    🔥 Firebase Config
    ============================================================ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, set, get, child, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, set, get, child, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAtrD0RkCrjgUyl_T465vKr2uUYPfNH2Io",
@@ -1031,9 +1076,308 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 /* ============================================================
-   🔑 Admin Password
+   🔑 Constants
    ============================================================ */
 const ADMIN_PASSWORD = 'bahaa 567';
+const CONTACT_PHONE = '0982520358';
+const WHATSAPP_NUMBER = '963982520358';
+const BRAND_NAME = 'مَوقِعي';
+
+/* ============================================================
+   🌍 TRANSLATIONS - 10 لغات
+   ============================================================ */
+const TRANSLATIONS = {
+  ar: {
+    dir: 'rtl',
+    name: 'العربية',
+    flag: '🇸🇦',
+    nav_home: 'الرئيسية', nav_about: 'عني', nav_skills: 'مهارات',
+    nav_services: 'خدمات', nav_projects: 'أعمال', nav_gallery: 'معرض',
+    nav_experience: 'خبرات', nav_education: 'تعليم', nav_certs: 'شهادات',
+    nav_testimonials: 'آراء', nav_pricing: 'أسعار', nav_faq: 'أسئلة', nav_contact: 'تواصل',
+    hero_greeting: 'مرحباً، أنا',
+    about_title: 'عن نفسي', about_title_span: 'نفسي', about_title_prefix: 'عن ',
+    skills_title: 'مهاراتي الاحترافية', skills_title_prefix: 'مهاراتي ', skills_title_span: 'الاحترافية',
+    services_title: 'خدماتي المميزة', services_title_prefix: 'خدماتي ', services_title_span: 'المميزة',
+    projects_title: 'أعمالي الأخيرة', projects_title_prefix: 'أعمالي ', projects_title_span: 'الأخيرة',
+    gallery_title: 'معرض أعمالي', gallery_title_prefix: 'معرض ', gallery_title_span: 'أعمالي',
+    experience_title: 'مسيرتي المهنية', experience_title_prefix: 'مسيرتي ', experience_title_span: 'المهنية',
+    education_title: 'المؤهلات العلمية', education_title_prefix: 'المؤهلات ', education_title_span: 'العلمية',
+    certs_title: 'الشهادات والجوائز', certs_title_prefix: 'الشهادات ', certs_title_span: 'والجوائز',
+    testimonials_title: 'ماذا يقول العملاء', testimonials_title_prefix: 'ماذا يقول ', testimonials_title_span: 'العملاء',
+    pricing_title: 'خطط الأسعار', pricing_title_prefix: 'خطط ', pricing_title_span: 'الأسعار',
+    faq_title: 'الأسئلة الشائعة', faq_title_prefix: 'الأسئلة ', faq_title_span: 'الشائعة',
+    contact_title: 'لنعمل معاً', contact_title_prefix: 'لنعمل ', contact_title_span: 'معاً',
+    contact_subtitle: 'تواصل معي وسأرد في أقرب وقت',
+    btn_contact: 'تواصل', btn_projects: 'أعمالي', btn_order: 'اطلب الآن',
+    years_exp: 'سنوات خبرة', projects_done: 'مشروع', happy_clients: 'عميل', awards: 'جائزة',
+    footer_rights: 'جميع الحقوق محفوظة',
+    footer_made_by: 'صُنع بواسطة',
+    footer_contact: 'للتواصل',
+    popular: 'الأكثر طلباً'
+  },
+  en: {
+    dir: 'ltr',
+    name: 'English',
+    flag: '🇬🇧',
+    nav_home: 'Home', nav_about: 'About', nav_skills: 'Skills',
+    nav_services: 'Services', nav_projects: 'Projects', nav_gallery: 'Gallery',
+    nav_experience: 'Experience', nav_education: 'Education', nav_certs: 'Certs',
+    nav_testimonials: 'Testimonials', nav_pricing: 'Pricing', nav_faq: 'FAQ', nav_contact: 'Contact',
+    hero_greeting: "Hello, I'm",
+    about_title: 'About Me', about_title_prefix: 'About ', about_title_span: 'Me',
+    skills_title: 'My Professional Skills', skills_title_prefix: 'My Professional ', skills_title_span: 'Skills',
+    services_title: 'My Services', services_title_prefix: 'My ', services_title_span: 'Services',
+    projects_title: 'Recent Projects', projects_title_prefix: 'Recent ', projects_title_span: 'Projects',
+    gallery_title: 'My Gallery', gallery_title_prefix: 'My ', gallery_title_span: 'Gallery',
+    experience_title: 'My Career', experience_title_prefix: 'My ', experience_title_span: 'Career',
+    education_title: 'Education', education_title_prefix: '', education_title_span: 'Education',
+    certs_title: 'Certificates & Awards', certs_title_prefix: 'Certificates & ', certs_title_span: 'Awards',
+    testimonials_title: 'What Clients Say', testimonials_title_prefix: 'What Clients ', testimonials_title_span: 'Say',
+    pricing_title: 'Pricing Plans', pricing_title_prefix: 'Pricing ', pricing_title_span: 'Plans',
+    faq_title: 'FAQ', faq_title_prefix: '', faq_title_span: 'FAQ',
+    contact_title: "Let's Work Together", contact_title_prefix: "Let's Work ", contact_title_span: 'Together',
+    contact_subtitle: "Contact me and I'll reply soon",
+    btn_contact: 'Contact', btn_projects: 'My Work', btn_order: 'Order Now',
+    years_exp: 'Years Exp', projects_done: 'Projects', happy_clients: 'Clients', awards: 'Awards',
+    footer_rights: 'All rights reserved',
+    footer_made_by: 'Made by',
+    footer_contact: 'Contact',
+    popular: 'Most Popular'
+  },
+  fr: {
+    dir: 'ltr',
+    name: 'Français',
+    flag: '🇫🇷',
+    nav_home: 'Accueil', nav_about: 'À propos', nav_skills: 'Compétences',
+    nav_services: 'Services', nav_projects: 'Projets', nav_gallery: 'Galerie',
+    nav_experience: 'Expérience', nav_education: 'Éducation', nav_certs: 'Certificats',
+    nav_testimonials: 'Avis', nav_pricing: 'Tarifs', nav_faq: 'FAQ', nav_contact: 'Contact',
+    hero_greeting: 'Bonjour, je suis',
+    about_title: 'À propos', about_title_prefix: 'À ', about_title_span: 'propos',
+    skills_title: 'Mes Compétences', skills_title_prefix: 'Mes ', skills_title_span: 'Compétences',
+    services_title: 'Mes Services', services_title_prefix: 'Mes ', services_title_span: 'Services',
+    projects_title: 'Projets Récents', projects_title_prefix: 'Projets ', projects_title_span: 'Récents',
+    gallery_title: 'Ma Galerie', gallery_title_prefix: 'Ma ', gallery_title_span: 'Galerie',
+    experience_title: 'Ma Carrière', experience_title_prefix: 'Ma ', experience_title_span: 'Carrière',
+    education_title: 'Formation', education_title_prefix: '', education_title_span: 'Formation',
+    certs_title: 'Certificats', certs_title_prefix: '', certs_title_span: 'Certificats',
+    testimonials_title: 'Témoignages', testimonials_title_prefix: '', testimonials_title_span: 'Témoignages',
+    pricing_title: 'Tarifs', pricing_title_prefix: '', pricing_title_span: 'Tarifs',
+    faq_title: 'FAQ', faq_title_prefix: '', faq_title_span: 'FAQ',
+    contact_title: 'Travaillons Ensemble', contact_title_prefix: 'Travaillons ', contact_title_span: 'Ensemble',
+    contact_subtitle: 'Contactez-moi et je répondrai bientôt',
+    btn_contact: 'Contact', btn_projects: 'Mes Projets', btn_order: 'Commander',
+    years_exp: 'Ans Exp', projects_done: 'Projets', happy_clients: 'Clients', awards: 'Prix',
+    footer_rights: 'Tous droits réservés',
+    footer_made_by: 'Créé par',
+    footer_contact: 'Contact',
+    popular: 'Plus Populaire'
+  },
+  es: {
+    dir: 'ltr',
+    name: 'Español',
+    flag: '🇪🇸',
+    nav_home: 'Inicio', nav_about: 'Acerca', nav_skills: 'Habilidades',
+    nav_services: 'Servicios', nav_projects: 'Proyectos', nav_gallery: 'Galería',
+    nav_experience: 'Experiencia', nav_education: 'Educación', nav_certs: 'Certificados',
+    nav_testimonials: 'Reseñas', nav_pricing: 'Precios', nav_faq: 'FAQ', nav_contact: 'Contacto',
+    hero_greeting: 'Hola, soy',
+    about_title: 'Sobre Mí', about_title_prefix: 'Sobre ', about_title_span: 'Mí',
+    skills_title: 'Mis Habilidades', skills_title_prefix: 'Mis ', skills_title_span: 'Habilidades',
+    services_title: 'Mis Servicios', services_title_prefix: 'Mis ', services_title_span: 'Servicios',
+    projects_title: 'Proyectos Recientes', projects_title_prefix: 'Proyectos ', projects_title_span: 'Recientes',
+    gallery_title: 'Mi Galería', gallery_title_prefix: 'Mi ', gallery_title_span: 'Galería',
+    experience_title: 'Mi Carrera', experience_title_prefix: 'Mi ', experience_title_span: 'Carrera',
+    education_title: 'Educación', education_title_prefix: '', education_title_span: 'Educación',
+    certs_title: 'Certificados', certs_title_prefix: '', certs_title_span: 'Certificados',
+    testimonials_title: 'Testimonios', testimonials_title_prefix: '', testimonials_title_span: 'Testimonios',
+    pricing_title: 'Precios', pricing_title_prefix: '', pricing_title_span: 'Precios',
+    faq_title: 'FAQ', faq_title_prefix: '', faq_title_span: 'FAQ',
+    contact_title: 'Trabajemos Juntos', contact_title_prefix: 'Trabajemos ', contact_title_span: 'Juntos',
+    contact_subtitle: 'Contáctame y responderé pronto',
+    btn_contact: 'Contacto', btn_projects: 'Mi Trabajo', btn_order: 'Ordenar',
+    years_exp: 'Años Exp', projects_done: 'Proyectos', happy_clients: 'Clientes', awards: 'Premios',
+    footer_rights: 'Todos los derechos reservados',
+    footer_made_by: 'Hecho por',
+    footer_contact: 'Contacto',
+    popular: 'Más Popular'
+  },
+  de: {
+    dir: 'ltr',
+    name: 'Deutsch',
+    flag: '🇩🇪',
+    nav_home: 'Startseite', nav_about: 'Über', nav_skills: 'Fähigkeiten',
+    nav_services: 'Dienste', nav_projects: 'Projekte', nav_gallery: 'Galerie',
+    nav_experience: 'Erfahrung', nav_education: 'Bildung', nav_certs: 'Zertifikate',
+    nav_testimonials: 'Bewertungen', nav_pricing: 'Preise', nav_faq: 'FAQ', nav_contact: 'Kontakt',
+    hero_greeting: 'Hallo, ich bin',
+    about_title: 'Über Mich', about_title_prefix: 'Über ', about_title_span: 'Mich',
+    skills_title: 'Meine Fähigkeiten', skills_title_prefix: 'Meine ', skills_title_span: 'Fähigkeiten',
+    services_title: 'Meine Dienste', services_title_prefix: 'Meine ', services_title_span: 'Dienste',
+    projects_title: 'Aktuelle Projekte', projects_title_prefix: 'Aktuelle ', projects_title_span: 'Projekte',
+    gallery_title: 'Meine Galerie', gallery_title_prefix: 'Meine ', gallery_title_span: 'Galerie',
+    experience_title: 'Meine Karriere', experience_title_prefix: 'Meine ', experience_title_span: 'Karriere',
+    education_title: 'Bildung', education_title_prefix: '', education_title_span: 'Bildung',
+    certs_title: 'Zertifikate', certs_title_prefix: '', certs_title_span: 'Zertifikate',
+    testimonials_title: 'Bewertungen', testimonials_title_prefix: '', testimonials_title_span: 'Bewertungen',
+    pricing_title: 'Preise', pricing_title_prefix: '', pricing_title_span: 'Preise',
+    faq_title: 'FAQ', faq_title_prefix: '', faq_title_span: 'FAQ',
+    contact_title: 'Lass uns zusammenarbeiten', contact_title_prefix: 'Lass uns ', contact_title_span: 'zusammenarbeiten',
+    contact_subtitle: 'Kontaktiere mich, ich antworte bald',
+    btn_contact: 'Kontakt', btn_projects: 'Meine Arbeit', btn_order: 'Bestellen',
+    years_exp: 'Jahre Erf', projects_done: 'Projekte', happy_clients: 'Kunden', awards: 'Auszeichnungen',
+    footer_rights: 'Alle Rechte vorbehalten',
+    footer_made_by: 'Erstellt von',
+    footer_contact: 'Kontakt',
+    popular: 'Beliebteste'
+  },
+  tr: {
+    dir: 'ltr',
+    name: 'Türkçe',
+    flag: '🇹🇷',
+    nav_home: 'Ana Sayfa', nav_about: 'Hakkımda', nav_skills: 'Yetenekler',
+    nav_services: 'Hizmetler', nav_projects: 'Projeler', nav_gallery: 'Galeri',
+    nav_experience: 'Deneyim', nav_education: 'Eğitim', nav_certs: 'Sertifikalar',
+    nav_testimonials: 'Yorumlar', nav_pricing: 'Fiyatlar', nav_faq: 'SSS', nav_contact: 'İletişim',
+    hero_greeting: 'Merhaba, ben',
+    about_title: 'Hakkımda', about_title_prefix: '', about_title_span: 'Hakkımda',
+    skills_title: 'Yeteneklerim', skills_title_prefix: '', skills_title_span: 'Yeteneklerim',
+    services_title: 'Hizmetlerim', services_title_prefix: '', services_title_span: 'Hizmetlerim',
+    projects_title: 'Son Projeler', projects_title_prefix: 'Son ', projects_title_span: 'Projeler',
+    gallery_title: 'Galerim', gallery_title_prefix: '', gallery_title_span: 'Galerim',
+    experience_title: 'Kariyerim', experience_title_prefix: '', experience_title_span: 'Kariyerim',
+    education_title: 'Eğitim', education_title_prefix: '', education_title_span: 'Eğitim',
+    certs_title: 'Sertifikalar', certs_title_prefix: '', certs_title_span: 'Sertifikalar',
+    testimonials_title: 'Yorumlar', testimonials_title_prefix: '', testimonials_title_span: 'Yorumlar',
+    pricing_title: 'Fiyatlar', pricing_title_prefix: '', pricing_title_span: 'Fiyatlar',
+    faq_title: 'SSS', faq_title_prefix: '', faq_title_span: 'SSS',
+    contact_title: 'Birlikte Çalışalım', contact_title_prefix: 'Birlikte ', contact_title_span: 'Çalışalım',
+    contact_subtitle: 'Bana ulaş, en kısa sürede cevaplayacağım',
+    btn_contact: 'İletişim', btn_projects: 'İşlerim', btn_order: 'Sipariş Ver',
+    years_exp: 'Yıl Den', projects_done: 'Proje', happy_clients: 'Müşteri', awards: 'Ödül',
+    footer_rights: 'Tüm hakları saklıdır',
+    footer_made_by: 'Yapımcı',
+    footer_contact: 'İletişim',
+    popular: 'En Popüler'
+  },
+  ru: {
+    dir: 'ltr',
+    name: 'Русский',
+    flag: '🇷🇺',
+    nav_home: 'Главная', nav_about: 'Обо мне', nav_skills: 'Навыки',
+    nav_services: 'Услуги', nav_projects: 'Проекты', nav_gallery: 'Галерея',
+    nav_experience: 'Опыт', nav_education: 'Образование', nav_certs: 'Сертификаты',
+    nav_testimonials: 'Отзывы', nav_pricing: 'Цены', nav_faq: 'FAQ', nav_contact: 'Контакты',
+    hero_greeting: 'Привет, я',
+    about_title: 'Обо мне', about_title_prefix: '', about_title_span: 'Обо мне',
+    skills_title: 'Мои навыки', skills_title_prefix: 'Мои ', skills_title_span: 'навыки',
+    services_title: 'Мои услуги', services_title_prefix: 'Мои ', services_title_span: 'услуги',
+    projects_title: 'Последние проекты', projects_title_prefix: 'Последние ', projects_title_span: 'проекты',
+    gallery_title: 'Моя галерея', gallery_title_prefix: 'Моя ', gallery_title_span: 'галерея',
+    experience_title: 'Моя карьера', experience_title_prefix: 'Моя ', experience_title_span: 'карьера',
+    education_title: 'Образование', education_title_prefix: '', education_title_span: 'Образование',
+    certs_title: 'Сертификаты', certs_title_prefix: '', certs_title_span: 'Сертификаты',
+    testimonials_title: 'Отзывы', testimonials_title_prefix: '', testimonials_title_span: 'Отзывы',
+    pricing_title: 'Цены', pricing_title_prefix: '', pricing_title_span: 'Цены',
+    faq_title: 'FAQ', faq_title_prefix: '', faq_title_span: 'FAQ',
+    contact_title: 'Давайте работать вместе', contact_title_prefix: 'Давайте ', contact_title_span: 'работать вместе',
+    contact_subtitle: 'Свяжитесь со мной, я отвечу скоро',
+    btn_contact: 'Связаться', btn_projects: 'Мои работы', btn_order: 'Заказать',
+    years_exp: 'Лет опыта', projects_done: 'Проектов', happy_clients: 'Клиентов', awards: 'Наград',
+    footer_rights: 'Все права защищены',
+    footer_made_by: 'Создано',
+    footer_contact: 'Контакты',
+    popular: 'Популярное'
+  },
+  zh: {
+    dir: 'ltr',
+    name: '中文',
+    flag: '🇨🇳',
+    nav_home: '首页', nav_about: '关于', nav_skills: '技能',
+    nav_services: '服务', nav_projects: '项目', nav_gallery: '作品集',
+    nav_experience: '经验', nav_education: '教育', nav_certs: '证书',
+    nav_testimonials: '评价', nav_pricing: '价格', nav_faq: '常见问题', nav_contact: '联系',
+    hero_greeting: '你好，我是',
+    about_title: '关于我', about_title_prefix: '关于', about_title_span: '我',
+    skills_title: '我的专业技能', skills_title_prefix: '我的专业', skills_title_span: '技能',
+    services_title: '我的服务', services_title_prefix: '我的', services_title_span: '服务',
+    projects_title: '最近项目', projects_title_prefix: '最近', projects_title_span: '项目',
+    gallery_title: '我的作品集', gallery_title_prefix: '我的', gallery_title_span: '作品集',
+    experience_title: '我的职业', experience_title_prefix: '我的', experience_title_span: '职业',
+    education_title: '教育', education_title_prefix: '', education_title_span: '教育',
+    certs_title: '证书和奖项', certs_title_prefix: '证书和', certs_title_span: '奖项',
+    testimonials_title: '客户评价', testimonials_title_prefix: '客户', testimonials_title_span: '评价',
+    pricing_title: '价格方案', pricing_title_prefix: '价格', pricing_title_span: '方案',
+    faq_title: '常见问题', faq_title_prefix: '常见', faq_title_span: '问题',
+    contact_title: '让我们一起工作', contact_title_prefix: '让我们', contact_title_span: '一起工作',
+    contact_subtitle: '联系我，我会尽快回复',
+    btn_contact: '联系', btn_projects: '我的作品', btn_order: '立即订购',
+    years_exp: '年经验', projects_done: '项目', happy_clients: '客户', awards: '奖项',
+    footer_rights: '版权所有',
+    footer_made_by: '制作',
+    footer_contact: '联系',
+    popular: '最受欢迎'
+  },
+  hi: {
+    dir: 'ltr',
+    name: 'हिन्दी',
+    flag: '🇮🇳',
+    nav_home: 'होम', nav_about: 'परिचय', nav_skills: 'कौशल',
+    nav_services: 'सेवाएं', nav_projects: 'प्रोजेक्ट', nav_gallery: 'गैलरी',
+    nav_experience: 'अनुभव', nav_education: 'शिक्षा', nav_certs: 'प्रमाणपत्र',
+    nav_testimonials: 'समीक्षाएं', nav_pricing: 'मूल्य', nav_faq: 'FAQ', nav_contact: 'संपर्क',
+    hero_greeting: 'नमस्ते, मैं हूं',
+    about_title: 'मेरे बारे में', about_title_prefix: 'मेरे बारे ', about_title_span: 'में',
+    skills_title: 'मेरे कौशल', skills_title_prefix: 'मेरे ', skills_title_span: 'कौशल',
+    services_title: 'मेरी सेवाएं', services_title_prefix: 'मेरी ', services_title_span: 'सेवाएं',
+    projects_title: 'हाल के प्रोजेक्ट', projects_title_prefix: 'हाल के ', projects_title_span: 'प्रोजेक्ट',
+    gallery_title: 'मेरी गैलरी', gallery_title_prefix: 'मेरी ', gallery_title_span: 'गैलरी',
+    experience_title: 'मेरा करियर', experience_title_prefix: 'मेरा ', experience_title_span: 'करियर',
+    education_title: 'शिक्षा', education_title_prefix: '', education_title_span: 'शिक्षा',
+    certs_title: 'प्रमाणपत्र', certs_title_prefix: '', certs_title_span: 'प्रमाणपत्र',
+    testimonials_title: 'समीक्षाएं', testimonials_title_prefix: '', testimonials_title_span: 'समीक्षाएं',
+    pricing_title: 'मूल्य', pricing_title_prefix: '', pricing_title_span: 'मूल्य',
+    faq_title: 'FAQ', faq_title_prefix: '', faq_title_span: 'FAQ',
+    contact_title: 'आइए मिलकर काम करें', contact_title_prefix: 'आइए मिलकर ', contact_title_span: 'काम करें',
+    contact_subtitle: 'मुझसे संपर्क करें, मैं जल्द जवाब दूंगा',
+    btn_contact: 'संपर्क', btn_projects: 'मेरा काम', btn_order: 'अभी ऑर्डर करें',
+    years_exp: 'साल अनुभव', projects_done: 'प्रोजेक्ट', happy_clients: 'ग्राहक', awards: 'पुरस्कार',
+    footer_rights: 'सर्वाधिकार सुरक्षित',
+    footer_made_by: 'द्वारा बनाया',
+    footer_contact: 'संपर्क',
+    popular: 'सबसे लोकप्रिय'
+  },
+  ur: {
+    dir: 'rtl',
+    name: 'اردو',
+    flag: '🇵🇰',
+    nav_home: 'ہوم', nav_about: 'میرے بارے میں', nav_skills: 'مہارتیں',
+    nav_services: 'خدمات', nav_projects: 'پروجیکٹس', nav_gallery: 'گیلری',
+    nav_experience: 'تجربہ', nav_education: 'تعلیم', nav_certs: 'سرٹیفکیٹس',
+    nav_testimonials: 'تبصرے', nav_pricing: 'قیمتیں', nav_faq: 'سوالات', nav_contact: 'رابطہ',
+    hero_greeting: 'ہیلو، میں ہوں',
+    about_title: 'میرے بارے میں', about_title_prefix: 'میرے ', about_title_span: 'بارے میں',
+    skills_title: 'میری مہارتیں', skills_title_prefix: 'میری ', skills_title_span: 'مہارتیں',
+    services_title: 'میری خدمات', services_title_prefix: 'میری ', services_title_span: 'خدمات',
+    projects_title: 'حالیہ پروجیکٹس', projects_title_prefix: 'حالیہ ', projects_title_span: 'پروجیکٹس',
+    gallery_title: 'میری گیلری', gallery_title_prefix: 'میری ', gallery_title_span: 'گیلری',
+    experience_title: 'میرا کیریئر', experience_title_prefix: 'میرا ', experience_title_span: 'کیریئر',
+    education_title: 'تعلیم', education_title_prefix: '', education_title_span: 'تعلیم',
+    certs_title: 'سرٹیفکیٹس', certs_title_prefix: '', certs_title_span: 'سرٹیفکیٹس',
+    testimonials_title: 'تبصرے', testimonials_title_prefix: '', testimonials_title_span: 'تبصرے',
+    pricing_title: 'قیمتیں', pricing_title_prefix: '', pricing_title_span: 'قیمتیں',
+    faq_title: 'سوالات', faq_title_prefix: '', faq_title_span: 'سوالات',
+    contact_title: 'آئیے مل کر کام کریں', contact_title_prefix: 'آئیے مل کر ', contact_title_span: 'کام کریں',
+    contact_subtitle: 'مجھ سے رابطہ کریں، جلد جواب دوں گا',
+    btn_contact: 'رابطہ', btn_projects: 'میرا کام', btn_order: 'ابھی آرڈر کریں',
+    years_exp: 'سال تجربہ', projects_done: 'پروجیکٹس', happy_clients: 'کلائنٹس', awards: 'ایوارڈز',
+    footer_rights: 'جملہ حقوق محفوظ ہیں',
+    footer_made_by: 'بنایا گیا',
+    footer_contact: 'رابطہ',
+    popular: 'سب سے مقبول'
+  }
+};
 
 /* ============================================================
    STATE
@@ -1113,10 +1457,9 @@ const defaultState = {
 
 let state = JSON.parse(JSON.stringify(defaultState));
 
-/* Session state */
-let currentCard = null;       // البطاقة الحالية المستخدمة
-let currentSiteId = null;     // معرف الموقع الحالي
-let pendingAction = null;     // الإجراء المطلوب (link/download)
+let currentCard = null;
+let currentSiteId = null;
+let pendingAction = null;
 
 const themes = {
   indigo:{name:'بنفسجي', c:{primary:'#6366f1',secondary:'#8b5cf6',accent:'#ec4899',bg:'#0f172a'}},
@@ -1140,18 +1483,41 @@ const sectionNames = {
 };
 
 /* ============================================================
+   TABS METADATA (للـ Drawer)
+   ============================================================ */
+const TABS_LIST = [
+  {key:'basic',       icon:'👤', label:'أساسي',      desc:'المعلومات الأساسية'},
+  {key:'about',       icon:'📖', label:'عني',        desc:'نبذة + نقاط مميزة'},
+  {key:'skills',      icon:'💡', label:'مهارات',      desc:'قائمة المهارات'},
+  {key:'services',    icon:'🛠️', label:'خدمات',      desc:'الخدمات المقدمة'},
+  {key:'projects',    icon:'📁', label:'أعمال',       desc:'المشاريع'},
+  {key:'gallery',     icon:'🖼️', label:'معرض',       desc:'معرض الصور'},
+  {key:'experience',  icon:'💼', label:'خبرات',       desc:'الخبرات المهنية'},
+  {key:'education',   icon:'🎓', label:'تعليم',       desc:'المؤهلات العلمية'},
+  {key:'certs',       icon:'🏆', label:'شهادات',      desc:'الشهادات والجوائز'},
+  {key:'testimonials',icon:'💬', label:'آراء',        desc:'آراء العملاء'},
+  {key:'pricing',     icon:'💰', label:'أسعار',       desc:'خطط الأسعار'},
+  {key:'faq',         icon:'❓', label:'أسئلة',       desc:'الأسئلة الشائعة'},
+  {key:'contact',     icon:'📞', label:'تواصل',       desc:'بيانات التواصل'},
+  {key:'advanced',    icon:'⚙️', label:'متقدم',       desc:'إعدادات متقدمة'},
+  {key:'language',    icon:'🌍', label:'اللغة',        desc:'لغة الموقع'},
+  {key:'design',      icon:'🎨', label:'تصميم',       desc:'الثيمات والألوان'},
+  {key:'sections',    icon:'📋', label:'أقسام',       desc:'ترتيب الأقسام'}
+];
+
+/* ============================================================
    STORAGE
    ============================================================ */
 function saveToStorage(){
   try{
-    localStorage.setItem('builder_v14', JSON.stringify(state));
-    if(currentCard) localStorage.setItem('builder_card', currentCard);
-    if(currentSiteId) localStorage.setItem('builder_site', currentSiteId);
+    localStorage.setItem('mawqii_v17', JSON.stringify(state));
+    if(currentCard) localStorage.setItem('mawqii_card', currentCard);
+    if(currentSiteId) localStorage.setItem('mawqii_site', currentSiteId);
   }catch(e){}
 }
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('builder_v14');
+    const s = localStorage.getItem('mawqii_v17') || localStorage.getItem('mawqii_v15');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -1161,20 +1527,23 @@ function loadFromStorage(){
         }
       });
     }
-    const c = localStorage.getItem('builder_card');
-    const si = localStorage.getItem('builder_site');
+    const c = localStorage.getItem('mawqii_card');
+    const si = localStorage.getItem('mawqii_site');
     if(c) currentCard = c;
     if(si) currentSiteId = si;
   }catch(e){}
 }
 
 /* ============================================================
-   TABS
+   TABS Switching
    ============================================================ */
 window.switchPanelTab = function(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === name));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active', c.dataset.tab === name));
   document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.drawer-item').forEach(d=>{
+    d.classList.toggle('active', d.dataset.tab === name);
+  });
   const tc = document.getElementById('tabContents');
   if(tc) tc.scrollTop = 0;
   const tab = document.querySelector(`.tab[data-tab="${name}"]`);
@@ -1183,6 +1552,8 @@ window.switchPanelTab = function(name){
 document.querySelectorAll('.tab').forEach(t=>{
   t.addEventListener('click', ()=>switchPanelTab(t.dataset.tab));
 });
+
+/* Device Preview */
 document.querySelectorAll('.preview-area .device-btn').forEach(b => {
   b.addEventListener('click', () => {
     document.querySelectorAll('.preview-area .device-btn').forEach(x=>x.classList.remove('active'));
@@ -1191,6 +1562,75 @@ document.querySelectorAll('.preview-area .device-btn').forEach(b => {
     wrap.classList.remove('desktop','tablet','mobile');
     wrap.classList.add(b.dataset.device);
   });
+});
+
+/* ============================================================
+   🎯 DRAWER SYSTEM
+   ============================================================ */
+window.openDrawer = function(){
+  // بناء قائمة الأقسام
+  const body = document.getElementById('drawerBody');
+  const activeTab = document.querySelector('.tab-content.active')?.dataset.tab || 'basic';
+  
+  body.innerHTML = TABS_LIST.map(item => {
+    const count = getTabCount(item.key);
+    return `
+      <div class="drawer-item ${item.key === activeTab ? 'active' : ''}" 
+           data-tab="${item.key}"
+           onclick="selectDrawerTab('${item.key}')">
+        <div class="di-icon">${item.icon}</div>
+        <div class="di-text">
+          <div style="font-weight:700">${item.label}</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:400">${item.desc}</div>
+        </div>
+        ${count ? `<span class="di-badge">${count}</span>` : ''}
+      </div>
+    `;
+  }).join('');
+  
+  document.getElementById('drawer').classList.add('show');
+  document.getElementById('drawerOverlay').classList.add('show');
+  document.body.classList.add('drawer-open');
+};
+
+window.closeDrawer = function(){
+  document.getElementById('drawer').classList.remove('show');
+  document.getElementById('drawerOverlay').classList.remove('show');
+  document.body.classList.remove('drawer-open');
+};
+
+window.selectDrawerTab = function(tabKey){
+  switchPanelTab(tabKey);
+  closeDrawer();
+};
+
+window.openWhatsAppSupport = function(){
+  const msg = encodeURIComponent('مرحباً، أحتاج مساعدة في مَوقِعي');
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+};
+
+function getTabCount(key){
+  const counts = {
+    skills: state.skills?.length,
+    services: state.services?.length,
+    projects: state.projects?.length,
+    gallery: state.gallery?.length,
+    experience: state.experience?.length,
+    education: state.education?.length,
+    certs: state.certs?.length,
+    testimonials: state.testimonials?.length,
+    pricing: state.pricing?.length,
+    faq: state.faq?.length,
+    highlights: state.highlights?.length
+  };
+  return counts[key] || 0;
+}
+
+/* إغلاق Drawer بـ Escape */
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape'){
+    closeDrawer();
+  }
 });
 
 /* ============================================================
@@ -1392,6 +1832,7 @@ function renderSocials(){
     </div>`, 'لا توجد روابط');
 }
 
+/* Add functions */
 window.addHighlight = function(){ state.highlights.push({icon:'✅',text:'نقطة'}); renderHighlights(); refresh(); };
 window.addSkill = function(){ state.skills.push({name:'مهارة',level:80,icon:'⭐'}); renderSkills(); refresh(); };
 window.addService = function(){ state.services.push({icon:'✨',title:'خدمة',desc:'وصف'}); renderServices(); refresh(); };
@@ -1432,6 +1873,23 @@ function renderFonts(){
   `).join('');
 }
 window.applyFont = function(f){ state.font = f; renderFonts(); refresh(); };
+
+/* Languages Grid */
+function renderLanguages(){
+  const g = document.getElementById('langGrid');
+  if(!g) return;
+  g.innerHTML = Object.entries(TRANSLATIONS).map(([key, t])=>`
+    <div class="lang-opt ${state.defaultLang===key?'active':''}" onclick="applyLanguage('${key}')">
+      <div style="font-size:1.4rem;margin-bottom:4px">${t.flag}</div>
+      <div>${t.name}</div>
+    </div>
+  `).join('');
+}
+window.applyLanguage = function(key){
+  state.defaultLang = key;
+  renderLanguages();
+  refresh();
+};
 
 /* Sections Order */
 function renderSectionsOrder(){
@@ -1489,16 +1947,53 @@ Object.keys(bindings).forEach(id => {
     state.theme = 'custom'; refresh();
   });
 });
-['fontSize','radius','mode','effects','cardStyle','bgAnimation','defaultLang'].forEach(id=>{
+['fontSize','radius','mode','effects','cardStyle','bgAnimation'].forEach(id=>{
   const el = document.getElementById(id);
   if(el) el.addEventListener('change', e => {
     state[id] = e.target.value; refresh();
   });
 });
 
-/* ============================================================
-   Preview Functions
-   ============================================================ */
+/* Modal Helpers */
+window.openModal = function(id){ document.getElementById(id).classList.add('show'); };
+window.closeModal = function(id){ document.getElementById(id).classList.remove('show'); };
+
+window.showToast = function(msg, isError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
+};
+
+/* Refresh */
+let timer = null;
+function refresh(){
+  saveToStorage();
+  if(timer) clearTimeout(timer);
+  timer = setTimeout(()=>{
+    if(window.innerWidth >= 1024){
+      const f = document.getElementById('previewFrame');
+      if(f) f.srcdoc = buildHTML();
+    }
+    const sb = document.getElementById('statusBadge');
+    if(sb){
+      sb.textContent = '✅ محدّث';
+      setTimeout(()=>sb.textContent='جاهز', 700);
+    }
+  }, 400);
+}
+
+window.resetAll = function(){
+  if(!confirm('إعادة التعيين؟')) return;
+  localStorage.removeItem('mawqii_v17');
+  localStorage.removeItem('mawqii_card');
+  localStorage.removeItem('mawqii_site');
+  location.reload();
+};
+
+/* Preview */
 let previewOpen = false;
 window.openMobilePreview = function(){
   if(previewOpen) return;
@@ -1532,68 +2027,47 @@ window.setMobileDevice = function(device, btn){
   wrap.classList.add(device);
 };
 
+/* Contact Floating Button */
+function addContactFloat(){
+  if(document.getElementById('contactFloat')) return;
+  const btn = document.createElement('a');
+  btn.id = 'contactFloat';
+  btn.className = 'contact-float';
+  btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحباً، أرغب بالاستفسار عن مَوقِعي')}`;
+  btn.target = '_blank';
+  btn.innerHTML = '💬 <span>تواصل معنا</span>';
+  document.body.appendChild(btn);
+  
+  const hideWhenPreview = () => {
+    const isPreview = document.getElementById('mobilePreview')?.classList.contains('show');
+    const isAdmin = document.getElementById('adminPanel')?.classList.contains('show');
+    const isDrawer = document.getElementById('drawer')?.classList.contains('show');
+    btn.style.display = (isPreview || isAdmin || isDrawer) ? 'none' : 'flex';
+  };
+  setInterval(hideWhenPreview, 500);
+}
 /* ============================================================
-   Modal Helpers
+   🎯 Build Site - Section Renderers (WITH TRANSLATIONS)
    ============================================================ */
-window.openModal = function(id){ document.getElementById(id).classList.add('show'); };
-window.closeModal = function(id){ document.getElementById(id).classList.remove('show'); };
-
-window.showToast = function(msg, isError){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.toggle('error', !!isError);
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
-};
-
-/* ============================================================
-   Refresh (Live Preview)
-   ============================================================ */
-let timer = null;
-function refresh(){
-  saveToStorage();
-  if(timer) clearTimeout(timer);
-  timer = setTimeout(()=>{
-    if(window.innerWidth >= 1024){
-      const f = document.getElementById('previewFrame');
-      if(f) f.srcdoc = buildHTML();
-    }
-    const sb = document.getElementById('statusBadge');
-    if(sb){
-      sb.textContent = '✅ محدّث';
-      setTimeout(()=>sb.textContent='جاهز', 700);
-    }
-  }, 400);
+function T(key){
+  const lang = state.defaultLang || 'ar';
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.ar;
+  return t[key] || TRANSLATIONS.ar[key] || key;
 }
 
-/* ============================================================
-   Reset
-   ============================================================ */
-window.resetAll = function(){
-  if(!confirm('إعادة التعيين؟ سيتم مسح البيانات المحفوظة محلياً.')) return;
-  localStorage.removeItem('builder_v14');
-  localStorage.removeItem('builder_card');
-  localStorage.removeItem('builder_site');
-  location.reload();
-};
-
-/* ============================================================
-   Build HTML - Helper Functions
-   ============================================================ */
 function renderHero(c, avatarSrc){
   const typeLines = (state.typewriterText||'').split('\n').filter(l=>l.trim());
   return `
 <section id="hero" class="hero">
   <div class="hero-inner">
     <div class="hero-text reveal">
-      <h2>👋 مرحباً، أنا</h2>
+      <h2>👋 ${T('hero_greeting')}</h2>
       <h1>${state.fullName}</h1>
       <div class="typewriter-wrap"><span class="typewriter" data-lines='${JSON.stringify(typeLines)}'></span><span class="cursor-blink">|</span></div>
       <p class="bio">${state.heroBio}</p>
       <div class="hero-btns">
-        ${state.btn1Text?`<a href="${state.btn1Link}" class="btn btn-primary">${state.btn1Text}</a>`:''}
-        ${state.btn2Text?`<a href="${state.btn2Link}" class="btn btn-outline">${state.btn2Text}</a>`:''}
+        ${state.btn1Text?`<a href="${state.btn1Link}" class="btn btn-primary" data-ar="${state.btn1Text}" data-en="${T('btn_contact')}">${state.btn1Text}</a>`:''}
+        ${state.btn2Text?`<a href="${state.btn2Link}" class="btn btn-outline" data-ar="${state.btn2Text}" data-en="${T('btn_projects')}">${state.btn2Text}</a>`:''}
       </div>
     </div>
     <div class="hero-visual reveal">
@@ -1602,11 +2076,12 @@ function renderHero(c, avatarSrc){
   </div>
 </section>`;
 }
+
 function renderAbout(c){
   return `
 <section id="about">
   <div class="container">
-    <div class="section-head reveal"><h2>عن <span>نفسي</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('about_title_prefix')}<span>${T('about_title_span')}</span></h2><div class="line"></div></div>
     <div class="about-grid">
       <div class="about-text reveal">
         <h3>${state.aboutTitle}</h3>
@@ -1616,10 +2091,10 @@ function renderAbout(c){
       <div class="reveal">
         <div class="card" style="padding:28px">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center">
-            <div><div class="stat-num">5+</div><div class="stat-label">سنوات خبرة</div></div>
-            <div><div class="stat-num">80+</div><div class="stat-label">مشروع</div></div>
-            <div><div class="stat-num">50+</div><div class="stat-label">عميل</div></div>
-            <div><div class="stat-num">12</div><div class="stat-label">جائزة</div></div>
+            <div><div class="stat-num">5+</div><div class="stat-label">${T('years_exp')}</div></div>
+            <div><div class="stat-num">80+</div><div class="stat-label">${T('projects_done')}</div></div>
+            <div><div class="stat-num">50+</div><div class="stat-label">${T('happy_clients')}</div></div>
+            <div><div class="stat-num">12</div><div class="stat-label">${T('awards')}</div></div>
           </div>
         </div>
       </div>
@@ -1627,12 +2102,13 @@ function renderAbout(c){
   </div>
 </section>`;
 }
+
 function renderSkillsSection(c){
   if(!state.skills.length) return '';
   return `
 <section id="skills">
   <div class="container">
-    <div class="section-head reveal"><h2>مهاراتي <span>الاحترافية</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('skills_title_prefix')}<span>${T('skills_title_span')}</span></h2><div class="line"></div></div>
     <div class="skills-grid">${state.skills.map(s=>`
       <div class="skill-item reveal">
         <div class="skill-head"><div class="skill-name"><span class="ic">${s.icon}</span>${s.name}</div><div class="skill-pct">${s.level}%</div></div>
@@ -1641,12 +2117,13 @@ function renderSkillsSection(c){
   </div>
 </section>`;
 }
+
 function renderServicesSection(c){
   if(!state.services.length) return '';
   return `
 <section id="services" class="alt-bg">
   <div class="container">
-    <div class="section-head reveal"><h2>خدماتي <span>المميزة</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('services_title_prefix')}<span>${T('services_title_span')}</span></h2><div class="line"></div></div>
     <div class="services-grid">${state.services.map(s=>`
       <div class="service-card reveal">
         <div class="service-icon">${s.icon}</div>
@@ -1656,12 +2133,13 @@ function renderServicesSection(c){
   </div>
 </section>`;
 }
+
 function renderProjectsSection(c){
   if(!state.projects.length) return '';
   return `
 <section id="projects">
   <div class="container">
-    <div class="section-head reveal"><h2>أعمالي <span>الأخيرة</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('projects_title_prefix')}<span>${T('projects_title_span')}</span></h2><div class="line"></div></div>
     <div class="projects-grid">${state.projects.map(p=>`
       <div class="project-card reveal">
         <div class="project-img" style="background-image:url('${p.img}')"><span class="project-cat">${p.category||'عام'}</span></div>
@@ -1670,12 +2148,13 @@ function renderProjectsSection(c){
   </div>
 </section>`;
 }
+
 function renderGallerySection(c){
   if(!state.gallery.length) return '';
   return `
 <section id="gallery" class="alt-bg">
   <div class="container">
-    <div class="section-head reveal"><h2>معرض <span>أعمالي</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('gallery_title_prefix')}<span>${T('gallery_title_span')}</span></h2><div class="line"></div></div>
     <div class="gallery-grid">${state.gallery.map(g=>`
       <div class="gallery-item reveal">
         <img src="${g.img}" alt="${g.caption}" loading="lazy">
@@ -1684,12 +2163,13 @@ function renderGallerySection(c){
   </div>
 </section>`;
 }
+
 function renderExperienceSection(c){
   if(!state.experience.length) return '';
   return `
 <section id="experience">
   <div class="container">
-    <div class="section-head reveal"><h2>مسيرتي <span>المهنية</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('experience_title_prefix')}<span>${T('experience_title_span')}</span></h2><div class="line"></div></div>
     <div class="timeline">${state.experience.map(e=>`
       <div class="tl-item reveal">
         <div class="tl-card">
@@ -1702,12 +2182,13 @@ function renderExperienceSection(c){
   </div>
 </section>`;
 }
+
 function renderEducationSection(c){
   if(!state.education.length) return '';
   return `
 <section id="education" class="alt-bg">
   <div class="container">
-    <div class="section-head reveal"><h2>المؤهلات <span>العلمية</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('education_title_prefix')}<span>${T('education_title_span')}</span></h2><div class="line"></div></div>
     <div class="timeline">${state.education.map(e=>`
       <div class="tl-item reveal">
         <div class="tl-card">
@@ -1720,12 +2201,13 @@ function renderEducationSection(c){
   </div>
 </section>`;
 }
+
 function renderCertsSection(c){
   if(!state.certs.length) return '';
   return `
 <section id="certs">
   <div class="container">
-    <div class="section-head reveal"><h2>الشهادات <span>والجوائز</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('certs_title_prefix')}<span>${T('certs_title_span')}</span></h2><div class="line"></div></div>
     <div class="certs-grid">${state.certs.map(cert=>`
       <div class="cert-card reveal">
         <div class="cert-icon">${cert.icon}</div>
@@ -1735,12 +2217,13 @@ function renderCertsSection(c){
   </div>
 </section>`;
 }
+
 function renderTestimonialsSection(c){
   if(!state.testimonials.length) return '';
   return `
 <section id="testimonials" class="alt-bg">
   <div class="container">
-    <div class="section-head reveal"><h2>ماذا يقول <span>العملاء</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('testimonials_title_prefix')}<span>${T('testimonials_title_span')}</span></h2><div class="line"></div></div>
     <div class="testi-grid">${state.testimonials.map(t=>`
       <div class="testi-card reveal">
         <p class="testi-text">${t.text}</p>
@@ -1749,29 +2232,31 @@ function renderTestimonialsSection(c){
   </div>
 </section>`;
 }
+
 function renderPricingSection(c){
   if(!state.pricing.length) return '';
   return `
 <section id="pricing">
   <div class="container">
-    <div class="section-head reveal"><h2>خطط <span>الأسعار</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('pricing_title_prefix')}<span>${T('pricing_title_span')}</span></h2><div class="line"></div></div>
     <div class="pricing-grid">${state.pricing.map(p=>`
       <div class="price-card reveal ${p.popular?'popular':''}">
-        ${p.popular?'<div class="popular-badge">⭐ الأكثر طلباً</div>':''}
+        ${p.popular?`<div class="popular-badge">⭐ ${T('popular')}</div>`:''}
         <h3>${p.name}</h3>
         <div class="price-tag"><span class="currency">${p.currency}</span><span class="amount">${p.price}</span><span class="period">/${p.period}</span></div>
         <ul class="price-features">${p.features.split('\n').map(f=>`<li>✓ ${f}</li>`).join('')}</ul>
-        <a href="#contact" class="btn ${p.popular?'btn-primary':'btn-outline'}">اطلب الآن</a>
+        <a href="#contact" class="btn ${p.popular?'btn-primary':'btn-outline'}">${T('btn_order')}</a>
       </div>`).join('')}</div>
   </div>
 </section>`;
 }
+
 function renderFaqSection(c){
   if(!state.faq.length) return '';
   return `
 <section id="faq" class="alt-bg">
   <div class="container">
-    <div class="section-head reveal"><h2>الأسئلة <span>الشائعة</span></h2><div class="line"></div></div>
+    <div class="section-head reveal"><h2>${T('faq_title_prefix')}<span>${T('faq_title_span')}</span></h2><div class="line"></div></div>
     <div class="faq-list">${state.faq.map(f=>`
       <div class="faq-item reveal" onclick="this.classList.toggle('open')">
         <div class="faq-q"><span>${f.q}</span><span class="faq-icon">+</span></div>
@@ -1780,13 +2265,14 @@ function renderFaqSection(c){
   </div>
 </section>`;
 }
+
 function renderContactSection(c){
   return `
 <section id="contact">
   <div class="container">
     <div class="contact-box reveal">
-      <h2>لنعمل <span>معاً</span></h2>
-      <p>تواصل معي وسأرد في أقرب وقت</p>
+      <h2>${T('contact_title_prefix')}<span>${T('contact_title_span')}</span></h2>
+      <p>${T('contact_subtitle')}</p>
       <div class="contact-info">
         ${state.email?`<div class="contact-chip">📧 ${state.email}</div>`:''}
         ${state.phone?`<div class="contact-chip">📱 ${state.phone}</div>`:''}
@@ -1814,6 +2300,9 @@ function getBgAnimationCSS(type, c){
   return `.hero{background:radial-gradient(circle at 20% 30%,${c.primary}22 0%,transparent 45%),radial-gradient(circle at 80% 70%,${c.accent}22 0%,transparent 45%)}`;
 }
 
+/* ============================================================
+   🎯 buildHTML - Full Site Generator
+   ============================================================ */
 function buildHTML(){
   const c = state.colors;
   const isDark = state.mode === 'dark';
@@ -1826,8 +2315,10 @@ function buildHTML(){
   const muted = isDark ? '#94a3b8' : '#64748b';
   const effects = state.effects === 'on';
   const avatarSrc = state.avatarUrl || '';
-  const dir = state.defaultLang === 'ar' ? 'rtl' : 'ltr';
-  const lang = state.defaultLang;
+  const currentLang = state.defaultLang || 'ar';
+  const langData = TRANSLATIONS[currentLang] || TRANSLATIONS.ar;
+  const dir = langData.dir;
+  const lang = currentLang;
 
   const renderers = {
     hero: ()=>renderHero(c,avatarSrc),
@@ -1851,6 +2342,12 @@ function buildHTML(){
     .join('\n');
 
   const bgAnimCSS = getBgAnimationCSS(state.bgAnimation, c);
+
+  // رابط الزر "مواقع أكثر" - يمكن تعديله
+  const navLinks = state.sectionsOrder.filter(k=>state.sectionsVisible[k]).map(k=>{
+    const navKey = 'nav_' + (k === 'hero' ? 'home' : k);
+    return `<li><a href="#${k}">${T(navKey) || k}</a></li>`;
+  }).join('');
 
   return `<!DOCTYPE html>
 <html lang="${lang}" dir="${dir}">
@@ -1878,6 +2375,11 @@ function buildHTML(){
   .nav-links{display:flex;gap:18px;list-style:none}
   .nav-links a{font-size:.85rem;font-weight:600;opacity:.75;transition:all .2s}
   .nav-links a:hover{opacity:1;color:${c.accent}}
+  .lang-switch{
+    padding:6px 12px;background:${cardBg};border:1px solid ${cardBorder};
+    border-radius:8px;color:${text};cursor:pointer;font-weight:700;
+    font-size:.78rem;font-family:inherit;
+  }
   @media(max-width:900px){.nav-links{display:none}}
   ${state.readingProgress?`.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,${c.primary},${c.accent});z-index:1002;transition:width .1s;width:0}`:''}
   .hero{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;position:relative;overflow:hidden}
@@ -2009,10 +2511,28 @@ function buildHTML(){
   .social-link:hover{background:linear-gradient(135deg,${c.primary},${c.accent});transform:translateY(-5px)}
   footer{padding:24px 20px;text-align:center;color:${muted};font-size:.82rem;border-top:1px solid ${cardBorder}}
   footer strong{color:${c.accent}}
+  footer a{color:${c.accent};text-decoration:none;font-weight:700}
+  footer a:hover{text-decoration:underline}
   ${state.backToTop?`.back-to-top{position:fixed;bottom:20px;${dir==='rtl'?'left':'right'}:20px;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s;z-index:900}
   .back-to-top.show{opacity:1;visibility:visible}`:''}
   ${state.whatsapp?`.whatsapp-btn{position:fixed;bottom:20px;${dir==='rtl'?'right':'left'}:20px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:900}`:''}
   ${effects?`.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.4,0,.2,1)}.reveal.visible{opacity:1;transform:translateY(0)}`:'  .reveal{opacity:1}'}
+  
+  /* إخفاء شارة Netlify */
+  #netlify-badge,
+  a[href*="netlify.com"][class*="badge"],
+  a[href*="netlify.com"][target="_blank"]:not(.social-link):not([href*="wa.me"]),
+  iframe[src*="netlify"],
+  div[class*="netlify"],
+  [data-netlify],
+  [data-netlify-badge] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    z-index: -9999 !important;
+  }
 </style>
 </head>
 <body>
@@ -2022,16 +2542,18 @@ ${state.readingProgress?`<div class="progress-bar" id="progressBar"></div>`:''}
   <div class="nav-inner">
     <div class="nav-brand"><span class="dot"></span><span>${state.fullName}</span></div>
     <ul class="nav-links">
-      ${state.sectionsOrder.filter(k=>state.sectionsVisible[k]).map(k=>{
-        const links = {hero:'الرئيسية',about:'عني',skills:'مهارات',services:'خدمات',projects:'أعمال',gallery:'معرض',experience:'خبرات',education:'تعليم',certs:'شهادات',testimonials:'آراء',pricing:'أسعار',faq:'أسئلة',contact:'تواصل'};
-        return `<li><a href="#${k}">${links[k]||k}</a></li>`;
-      }).join('')}
+      ${navLinks}
     </ul>
+    ${state.langSwitcher?`<button class="lang-switch" onclick="cycleLang()">🌍 ${langData.flag}</button>`:''}
   </div>
 </nav>
 ${sectionsHTML}
 <footer>
-  © <span id="year"></span> <strong>${state.fullName}</strong> — جميع الحقوق محفوظة
+  © <span id="year"></span> <strong>${state.fullName}</strong> — ${T('footer_rights')}
+  <div style="margin-top:10px;font-size:.78rem;color:${muted}">
+    ✨ ${T('footer_made_by')} <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank">${BRAND_NAME}</a>
+    • ${T('footer_contact')}: <a href="https://wa.me/${WHATSAPP_NUMBER}" target="_blank" style="font-family:monospace">${CONTACT_PHONE}</a>
+  </div>
 </footer>
 ${state.backToTop?`<button class="back-to-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>`:''}
 ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" class="whatsapp-btn">💬</a>`:''}
@@ -2084,32 +2606,37 @@ ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" clas
       ticking = true;
     }
   }, {passive:true});
+  
+  // Language switcher
+  const AVAILABLE_LANGS = ${JSON.stringify(Object.keys(TRANSLATIONS))};
+  function cycleLang(){
+    const current = document.documentElement.lang;
+    const idx = AVAILABLE_LANGS.indexOf(current);
+    const next = AVAILABLE_LANGS[(idx+1) % AVAILABLE_LANGS.length];
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', next);
+    window.location.href = url.toString();
+  }
+  window.cycleLang = cycleLang;
 <\/script>
 </body>
 </html>`;
 }
 /* ============================================================
-   🎴 CARD SYSTEM - نظام البطاقات
+   🎴 CARD SYSTEM
    ============================================================ */
-
-/* تنسيق إدخال البطاقة */
 window.formatCardInput = function(input){
   let val = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
   input.value = val;
 };
 
-/* التحقق من صيغة البطاقة */
 function isValidCardFormat(card){
   if(!card || card.length !== 17) return false;
-  // 9 أحرف + 7 أرقام + 1 حرف
   return /^[A-Z]{9}[0-9]{7}[A-Z]{1}$/.test(card);
 }
 
-/* طلب الحصول على رابط */
 window.requestGenerateLink = async function(){
-  // إذا كان لديه بطاقة + موقع بالفعل → مباشرة
   if(currentCard && currentSiteId){
-    // تحقق أن البطاقة لا تزال صالحة
     try{
       const snap = await get(child(ref(db), 'cards/' + currentCard));
       if(snap.exists()){
@@ -2118,12 +2645,10 @@ window.requestGenerateLink = async function(){
       }
     }catch(e){}
   }
-  // طلب بطاقة
   pendingAction = 'link';
   showCardModal('link');
 };
 
-/* طلب تحميل الملف */
 window.requestDownload = async function(){
   if(currentCard && currentSiteId){
     try{
@@ -2138,7 +2663,6 @@ window.requestDownload = async function(){
   showCardModal('download');
 };
 
-/* عرض نافذة البطاقة */
 function showCardModal(action){
   const desc = document.getElementById('cardModalDesc');
   const input = document.getElementById('cardInput');
@@ -2159,7 +2683,6 @@ function showCardModal(action){
   setTimeout(()=>input.focus(), 300);
 }
 
-/* إرسال البطاقة */
 window.submitCard = async function(){
   const input = document.getElementById('cardInput');
   const card = input.value.trim().toUpperCase();
@@ -2170,7 +2693,6 @@ window.submitCard = async function(){
   error.style.display = 'none';
   success.style.display = 'none';
   
-  // تحقق من الصيغة
   if(!isValidCardFormat(card)){
     error.textContent = '❌ الصيغة خاطئة! يجب: 9 أحرف + 7 أرقام + 1 حرف';
     error.style.display = 'block';
@@ -2181,7 +2703,6 @@ window.submitCard = async function(){
   btn.textContent = '⏳ جاري التحقق...';
   
   try{
-    // جلب البطاقة من Firebase
     const snap = await get(child(ref(db), 'cards/' + card));
     
     if(!snap.exists()){
@@ -2194,18 +2715,11 @@ window.submitCard = async function(){
     
     const cardData = snap.val();
     
-    // الحالات:
-    // 1. بطاقة جديدة (used = false) → استخدام جديد
-    // 2. بطاقة مستخدمة لكن نفس الجهاز (siteId موجود) → تعديل
-    // 3. بطاقة مستخدمة على جهاز آخر → رفض
-    
     if(cardData.used === true && cardData.siteId){
-      // تحقق إذا كانت مرتبطة بنفس الجهاز
-      const localSite = localStorage.getItem('builder_site');
-      const localCard = localStorage.getItem('builder_card');
+      const localSite = localStorage.getItem('mawqii_site');
+      const localCard = localStorage.getItem('mawqii_card');
       
       if(localCard === card && localSite === cardData.siteId){
-        // نفس المستخدم → يسمح بالتعديل
         currentCard = card;
         currentSiteId = cardData.siteId;
         success.textContent = '✅ بطاقتك صحيحة — جاري المتابعة';
@@ -2217,7 +2731,6 @@ window.submitCard = async function(){
         }, 500);
         return;
       } else {
-        // مستخدم آخر
         error.textContent = '❌ هذه البطاقة مستخدمة بالفعل على جهاز آخر';
         error.style.display = 'block';
         btn.disabled = false;
@@ -2226,10 +2739,8 @@ window.submitCard = async function(){
       }
     }
     
-    // بطاقة جديدة → احفظها محلياً
     currentCard = card;
-    // siteId سيُنشأ عند النشر
-    localStorage.setItem('builder_card', card);
+    localStorage.setItem('mawqii_card', card);
     
     success.textContent = '✅ بطاقة صحيحة — جاري المتابعة';
     success.style.display = 'block';
@@ -2252,7 +2763,6 @@ window.submitCard = async function(){
   btn.textContent = '✅ تأكيد';
 };
 
-/* تنفيذ الإجراء المطلوب */
 async function executePendingAction(){
   if(pendingAction === 'link'){
     await doGenerateLink();
@@ -2263,10 +2773,9 @@ async function executePendingAction(){
 }
 
 /* ============================================================
-   🎯 Generate Link (ينشئ موقع جديد أو يحدّث الموجود)
+   🎯 Generate Link
    ============================================================ */
 async function doGenerateLink(){
-  // افتح نافذة الرابط
   openModal('linkModal');
   document.getElementById('generatedUrl').textContent = '⏳ جاري المعالجة...';
   document.getElementById('openLink').href = '#';
@@ -2279,12 +2788,10 @@ async function doGenerateLink(){
     let siteId = currentSiteId;
     
     if(!siteId){
-      // إنشاء موقع جديد
       siteId = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
       currentSiteId = siteId;
-      localStorage.setItem('builder_site', siteId);
+      localStorage.setItem('mawqii_site', siteId);
       
-      // احفظ الموقع
       await set(ref(db, 'sites/' + siteId), {
         html: html,
         cardId: currentCard,
@@ -2293,14 +2800,12 @@ async function doGenerateLink(){
         name: state.fullName
       });
       
-      // تحديث البطاقة
       await update(ref(db, 'cards/' + currentCard), {
         used: true,
         siteId: siteId,
         usedAt: Date.now()
       });
     } else {
-      // تحديث موقع موجود
       await update(ref(db, 'sites/' + siteId), {
         html: html,
         updatedAt: Date.now(),
@@ -2340,13 +2845,11 @@ async function doDownload(){
     a.click();
     URL.revokeObjectURL(url);
     
-    // إذا كانت بطاقة جديدة، علمها كمستخدمة
     if(currentCard){
       const snap = await get(child(ref(db), 'cards/' + currentCard));
       if(snap.exists()){
         const c = snap.val();
         if(!c.used){
-          // فقط علمها، بدون ربطها بموقع (لأنه لم ينشر)
           await update(ref(db, 'cards/' + currentCard), {
             used: true,
             usedAt: Date.now(),
@@ -2364,7 +2867,7 @@ async function doDownload(){
 }
 
 /* ============================================================
-   📋 Copy / Share Link
+   📋 Copy / Share
    ============================================================ */
 window.copyLink = async function(){
   const url = window._shortLink;
@@ -2405,21 +2908,7 @@ window.shareLink = async function(){
 };
 
 /* ============================================================
-   🎯 Firebase Upload / Load Functions
-   ============================================================ */
-async function loadFromFirebase(siteId){
-  try{
-    const snapshot = await get(child(ref(db), 'sites/' + siteId));
-    if(snapshot.exists()) return snapshot.val().html;
-    return null;
-  }catch(e){
-    console.error('Load error:', e);
-    return null;
-  }
-}
-
-/* ============================================================
-   🎯 Logo Click Handler - 5 clicks → Admin
+   🎯 Logo - Admin Access
    ============================================================ */
 let logoClickCount = 0;
 let logoClickTimer = null;
@@ -2427,12 +2916,11 @@ let logoClickTimer = null;
 window.handleLogoClick = function(){
   logoClickCount++;
   clearTimeout(logoClickTimer);
-  logoClickTimer = setTimeout(()=>{ logoClickCount = 0; }, 2000); // 2 ثانية
+  logoClickTimer = setTimeout(()=>{ logoClickCount = 0; }, 2000);
   
   if(logoClickCount >= 5){
     logoClickCount = 0;
     clearTimeout(logoClickTimer);
-    // افتح نافذة تسجيل الأدمن
     document.getElementById('adminLoginError').style.display = 'none';
     document.getElementById('adminPassword').value = '';
     openModal('adminLoginModal');
@@ -2440,7 +2928,6 @@ window.handleLogoClick = function(){
   }
 };
 
-/* إرسال كلمة مرور الأدمن */
 window.submitAdminLogin = function(){
   const pass = document.getElementById('adminPassword').value;
   const err = document.getElementById('adminLoginError');
@@ -2454,12 +2941,10 @@ window.submitAdminLogin = function(){
   }
 };
 
-/* Enter key للإدمن */
 document.getElementById('adminPassword').addEventListener('keypress', e=>{
   if(e.key === 'Enter') submitAdminLogin();
 });
 
-/* فتح لوحة الأدمن */
 function openAdminPanel(){
   document.getElementById('adminPanel').classList.add('show');
   loadCardsList();
@@ -2471,10 +2956,8 @@ window.closeAdminPanel = function(){
 };
 
 /* ============================================================
-   🎴 Admin - Card Management
+   🎴 Admin - Cards
    ============================================================ */
-
-/* إضافة بطاقة جديدة */
 window.addNewCard = async function(){
   const input = document.getElementById('newCardInput');
   const card = input.value.trim().toUpperCase();
@@ -2507,7 +2990,6 @@ window.addNewCard = async function(){
   }
 };
 
-/* توليد بطاقات عشوائية */
 window.generateRandomCards = async function(count){
   if(!confirm(`توليد ${count} بطاقة؟`)) return;
   
@@ -2518,7 +3000,6 @@ window.generateRandomCards = async function(count){
   let fail = 0;
   
   for(let i = 0; i < count; i++){
-    // 9 أحرف + 7 أرقام + 1 حرف
     let card = '';
     for(let j = 0; j < 9; j++) card += chars[Math.floor(Math.random()*chars.length)];
     for(let j = 0; j < 7; j++) card += digits[Math.floor(Math.random()*digits.length)];
@@ -2542,7 +3023,6 @@ window.generateRandomCards = async function(count){
   updateStats();
 };
 
-/* تحميل قائمة البطاقات */
 window.loadCardsList = async function(){
   const container = document.getElementById('cardsListContainer');
   container.innerHTML = '<div class="empty-admin">جاري التحميل...</div>';
@@ -2584,7 +3064,6 @@ window.loadCardsList = async function(){
   }
 };
 
-/* حذف بطاقة */
 window.deleteCard = async function(cardCode){
   if(!confirm(`حذف البطاقة "${cardCode}"؟`)) return;
   try{
@@ -2597,7 +3076,6 @@ window.deleteCard = async function(cardCode){
   }
 };
 
-/* إعادة تعيين بطاقة (جعلها متاحة) */
 window.resetCard = async function(cardCode){
   if(!confirm(`إعادة تعيين "${cardCode}"؟`)) return;
   try{
@@ -2614,16 +3092,12 @@ window.resetCard = async function(cardCode){
   }
 };
 
-/* حذف كل البطاقات */
 window.deleteAllCards = async function(){
   if(!confirm('⚠️ حذف جميع البطاقات نهائياً؟')) return;
   if(!confirm('⚠️ متأكد؟ لا يمكن التراجع!')) return;
   
   try{
-    const snap = await get(child(ref(db), 'cards'));
-    if(snap.exists()){
-      await remove(ref(db, 'cards'));
-    }
+    await remove(ref(db, 'cards'));
     showToast('🗑️ تم حذف جميع البطاقات');
     loadCardsList();
     updateStats();
@@ -2632,7 +3106,6 @@ window.deleteAllCards = async function(){
   }
 };
 
-/* تحديث الإحصائيات */
 async function updateStats(){
   try{
     const cardsSnap = await get(child(ref(db), 'cards'));
@@ -2661,6 +3134,17 @@ async function updateStats(){
 }
 
 /* ============================================================
+   🌍 Language Switch by URL Param
+   ============================================================ */
+function detectLanguageFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get('lang');
+  if(urlLang && TRANSLATIONS[urlLang]){
+    state.defaultLang = urlLang;
+  }
+}
+
+/* ============================================================
    🎯 Check for Published Site
    ============================================================ */
 async function checkForPublishedSite(){
@@ -2669,6 +3153,38 @@ async function checkForPublishedSite(){
   
   if(hash.startsWith('#f=')){
     const siteId = hash.substring(3);
+    
+    // احصل على اللغة من URL
+    const params = new URLSearchParams(window.location.search);
+    const urlLang = params.get('lang');
+    
+    // أول مرة: اجلب HTML
+    const siteData = await getSiteData(siteId);
+    if(!siteData) {
+      document.body.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
+          <div style="font-size:4rem">❌</div>
+          <h2 style="margin-top:20px;font-weight:700">لم يتم العثور على الموقع</h2>
+        </div>
+      `;
+      return true;
+    }
+    
+    let html = siteData.html;
+    const originalLang = siteData.lang || 'ar';
+    const displayLang = urlLang || originalLang;
+    
+    // إذا كانت اللغة المطلوبة مختلفة، أعد بناء الموقع بتلك اللغة
+    if(displayLang !== originalLang && siteData.state){
+      const savedState = JSON.parse(JSON.stringify(state));
+      state = {...defaultState, ...siteData.state};
+      state.defaultLang = displayLang;
+      html = buildHTML();
+      state = savedState; // استعد الحالة الأصلية
+    } else if(urlLang && siteData.state) {
+      // نفس اللغة - فقط غير الـ defaultLang
+    }
+    
     document.body.innerHTML = `
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
         <div style="font-size:4rem;animation:spin 1s linear infinite;display:inline-block">⏳</div>
@@ -2676,32 +3192,45 @@ async function checkForPublishedSite(){
       </div>
       <style>@keyframes spin{to{transform:rotate(360deg)}}*{margin:0;padding:0;box-sizing:border-box}</style>
     `;
-    const html = await loadFromFirebase(siteId);
-    if(html){
-      document.open();
-      document.write(html);
-      document.close();
-    } else {
-      document.body.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
-          <div style="font-size:4rem">❌</div>
-          <h2 style="margin-top:20px;font-weight:700">لم يتم العثور على الموقع</h2>
-        </div>
-      `;
-    }
+    
+    await new Promise(r=>setTimeout(r, 300));
+    document.open();
+    document.write(html);
+    document.close();
     return true;
   }
   return false;
+}
+
+async function getSiteData(siteId){
+  try{
+    const snapshot = await get(child(ref(db), 'sites/' + siteId));
+    if(!snapshot.exists()) return null;
+    return snapshot.val();
+  }catch(e){
+    console.error('Load error:', e);
+    return null;
+  }
 }
 
 /* ============================================================
    INIT
    ============================================================ */
 async function init(){
+  // إضافة زر التواصل العائم
+  addContactFloat();
+  
+  // تحقق من وجود موقع منشور
   const found = await checkForPublishedSite();
   if(found) return;
   
+  // حمّل الحالة
   loadFromStorage();
+  
+  // طبق الترجمة من URL إن وجدت
+  detectLanguageFromURL();
+  
+  // املأ الحقول
   Object.keys(bindings).forEach(id => {
     const el = document.getElementById(id);
     if(el && state[bindings[id]] !== undefined){
@@ -2712,29 +3241,49 @@ async function init(){
     const el = document.getElementById('c'+p);
     if(el) el.value = state.colors[p.toLowerCase()];
   });
-  ['fontSize','radius','mode','effects','cardStyle','bgAnimation','defaultLang'].forEach(id=>{
+  ['fontSize','radius','mode','effects','cardStyle','bgAnimation'].forEach(id=>{
     const el = document.getElementById(id);
     if(el) el.value = state[id];
   });
+  
+  // Switch toggles
   const switchMap = {
-    progressToggle:'readingProgress', topToggle:'backToTop',
-    cursorToggle:'customCursor', langToggle:'langSwitcher', noticeToggle:'noticeBar'
+    progressToggle:'readingProgress', 
+    topToggle:'backToTop',
+    cursorToggle:'customCursor', 
+    langSwitcherToggle:'langSwitcher', 
+    noticeToggle:'noticeBar'
   };
   Object.entries(switchMap).forEach(([id,key])=>{
     const el = document.getElementById(id);
     if(el) el.classList.toggle('on', !!state[key]);
   });
   
-  renderHighlights(); renderSkills(); renderServices(); renderProjects();
-  renderGallery(); renderExperience(); renderEducation(); renderCerts();
-  renderTestimonials(); renderPricing(); renderFaq(); renderSocials();
-  renderThemes(); renderFonts(); renderSectionsOrder();
+  // Render everything
+  renderHighlights();
+  renderSkills();
+  renderServices();
+  renderProjects();
+  renderGallery();
+  renderExperience();
+  renderEducation();
+  renderCerts();
+  renderTestimonials();
+  renderPricing();
+  renderFaq();
+  renderSocials();
+  renderThemes();
+  renderFonts();
+  renderLanguages();
+  renderSectionsOrder();
   
+  // Load desktop preview
   if(window.innerWidth >= 1024){
     const f = document.getElementById('previewFrame');
     if(f) f.srcdoc = buildHTML();
   }
 }
+
 init();
 </script>
 </body>
