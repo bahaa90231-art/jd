@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<title>⚡ Perfect Site Builder v11.0</title>
+<title>⚡ Perfect Site Builder v11.1</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -227,23 +227,16 @@
     animation:spin .8s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
-  
-  /* Settings tab highlight */
-  .settings-info{
-    background:#0f172a;border:1px solid var(--warning);border-radius:10px;
-    padding:12px;margin-bottom:12px;font-size:.78rem;color:var(--warning);line-height:1.6;
-  }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand">
     <div class="brand-logo">⚡</div>
     <div class="brand-text">
       <div class="title">Perfect Builder</div>
-      <div class="sub">v11.0 — Gist</div>
+      <div class="sub">v11.1 — Gist</div>
     </div>
   </div>
   <div class="top-actions">
@@ -253,7 +246,6 @@
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="panel">
     <div class="tabs">
@@ -267,11 +259,9 @@
       <div class="tab" data-tab="testimonials">💬 آراء</div>
       <div class="tab" data-tab="contact">📞 تواصل</div>
       <div class="tab" data-tab="design">🎨 تصميم</div>
-      <div class="tab" data-tab="settings">⚙️ إعدادات</div>
     </div>
 
     <div class="tab-contents">
-      <!-- BASIC -->
       <div class="tab-content active" data-tab="basic">
         <div class="section-block">
           <h3><span>👤 المعلومات الأساسية</span></h3>
@@ -302,7 +292,6 @@
         </div>
       </div>
 
-      <!-- ABOUT -->
       <div class="tab-content" data-tab="about">
         <div class="section-block">
           <h3><span>📖 قسم عني</span></h3>
@@ -316,7 +305,6 @@
         </div>
       </div>
 
-      <!-- SKILLS -->
       <div class="tab-content" data-tab="skills">
         <div class="section-block">
           <h3><span>💡 المهارات</span><span class="badge" id="skillCount">0</span></h3>
@@ -325,7 +313,6 @@
         </div>
       </div>
 
-      <!-- SERVICES -->
       <div class="tab-content" data-tab="services">
         <div class="section-block">
           <h3><span>🛠️ الخدمات</span><span class="badge" id="serviceCount">0</span></h3>
@@ -334,7 +321,6 @@
         </div>
       </div>
 
-      <!-- PROJECTS -->
       <div class="tab-content" data-tab="projects">
         <div class="section-block">
           <h3><span>📁 الأعمال</span><span class="badge" id="projectCount">0</span></h3>
@@ -343,7 +329,6 @@
         </div>
       </div>
 
-      <!-- EXPERIENCE -->
       <div class="tab-content" data-tab="experience">
         <div class="section-block">
           <h3><span>💼 الخبرات</span><span class="badge" id="expCount">0</span></h3>
@@ -352,7 +337,6 @@
         </div>
       </div>
 
-      <!-- EDUCATION -->
       <div class="tab-content" data-tab="education">
         <div class="section-block">
           <h3><span>🎓 التعليم</span><span class="badge" id="eduCount">0</span></h3>
@@ -361,7 +345,6 @@
         </div>
       </div>
 
-      <!-- TESTIMONIALS -->
       <div class="tab-content" data-tab="testimonials">
         <div class="section-block">
           <h3><span>💬 آراء العملاء</span><span class="badge" id="testCount">0</span></h3>
@@ -370,7 +353,6 @@
         </div>
       </div>
 
-      <!-- CONTACT -->
       <div class="tab-content" data-tab="contact">
         <div class="section-block">
           <h3><span>📞 تواصل</span></h3>
@@ -386,7 +368,6 @@
         </div>
       </div>
 
-      <!-- DESIGN -->
       <div class="tab-content" data-tab="design">
         <div class="section-block">
           <h3><span>🎨 الثيمات</span></h3>
@@ -402,42 +383,6 @@
           </div>
         </div>
       </div>
-
-      <!-- SETTINGS -->
-      <div class="tab-content" data-tab="settings">
-        <div class="section-block">
-          <h3><span>⚙️ إعدادات GitHub</span></h3>
-          <div class="settings-info">
-            <strong>ℹ️ لماذا GitHub Token؟</strong><br>
-            لإعطاء <strong>روابط قصيرة جداً</strong> بدل الروابط الطويلة.<br>
-            الرمز يُحفظ في متصفحك فقط ولا يُشارَك مع أي أحد.
-          </div>
-          
-          <div class="form-group">
-            <label>🔑 GitHub Personal Access Token</label>
-            <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" style="font-family:monospace;font-size:.82rem;direction:ltr;text-align:left">
-            <p style="font-size:.7rem;color:var(--muted);margin-top:6px;line-height:1.6">
-              📌 للحصول عليه:
-              <br>1. اذهب إلى: <a href="https://github.com/settings/tokens/new" target="_blank" style="color:var(--primary)">github.com/settings/tokens/new</a>
-              <br>2. Note: <code style="background:#0f172a;padding:2px 6px;border-radius:4px">Site Builder</code>
-              <br>3. Expiration: <strong>No expiration</strong>
-              <br>4. Scopes: ضع علامة ☑️ على <code style="background:#0f172a;padding:2px 6px;border-radius:4px">gist</code> فقط
-              <br>5. اضغط Generate token
-              <br>6. انسخ الرمز (يبدأ بـ ghp_)
-            </p>
-          </div>
-          
-          <button class="btn btn-primary" onclick="saveGithubToken()" style="width:100%;padding:14px">
-            💾 حفظ الرمز
-          </button>
-          
-          <button class="btn btn-ghost" onclick="clearGithubToken()" style="width:100%;padding:12px;margin-top:8px">
-            🗑️ حذف الرمز المحفوظ
-          </button>
-          
-          <div id="tokenStatus" style="text-align:center;margin-top:12px;font-size:.8rem"></div>
-        </div>
-      </div>
     </div>
 
     <div class="bottom-nav">
@@ -445,7 +390,7 @@
       <div class="bn-item" onclick="switchTab('design')"><div class="ic">🎨</div><div>تصميم</div></div>
       <div class="bn-item" onclick="generateLink()"><div class="ic">🔗</div><div>رابط</div></div>
       <div class="bn-item" onclick="openMobilePreview()"><div class="ic">👁️</div><div>معاينة</div></div>
-      <div class="bn-item" onclick="switchTab('settings')"><div class="ic">⚙️</div><div>إعدادات</div></div>
+      <div class="bn-item" onclick="downloadSite()"><div class="ic">⬇️</div><div>تحميل</div></div>
     </div>
   </div>
 
@@ -464,7 +409,6 @@
   </div>
 </div>
 
-<!-- MOBILE PREVIEW -->
 <div class="mobile-preview" id="mobilePreview">
   <div class="preview-toolbar">
     <button class="btn btn-ghost btn-icon" onclick="closeMobilePreview()">✕</button>
@@ -476,17 +420,14 @@
   </div>
 </div>
 
-<!-- LINK MODAL -->
 <div class="modal" id="linkModal">
   <div class="modal-box" style="text-align:center">
     <span class="modal-handle"></span>
-    
     <div style="font-size:3.5rem;margin-bottom:12px">🎉</div>
     <h3 style="color:#fff;margin-bottom:8px">الرابط جاهز!</h3>
     <p style="color:var(--muted);font-size:.85rem;margin-bottom:16px">
       شارك هذا الرابط — أي شخص يفتحه سيرى موقعك
     </p>
-    
     <div class="publish-url-box">
       <div class="label">🔗 الرابط القصير:</div>
       <div class="url" id="generatedUrl"></div>
@@ -495,18 +436,14 @@
         <span>جاري إنشاء الرابط...</span>
       </div>
     </div>
-    
     <div id="longLinkBackup"></div>
-    
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;margin-top:16px">
       <button class="btn btn-primary" onclick="copyLink()" style="padding:14px">📋 نسخ</button>
       <button class="btn btn-success" onclick="shareLink()" style="padding:14px">📤 مشاركة</button>
     </div>
-    
     <a id="openLink" href="#" target="_blank" class="btn btn-ghost" style="width:100%;text-decoration:none;display:flex;margin-bottom:8px;padding:14px">
       🌐 فتح الموقع
     </a>
-    
     <button class="btn btn-ghost" style="width:100%" onclick="closeModal()">إغلاق</button>
   </div>
 </div>
@@ -515,13 +452,10 @@
 
 <script>
 /* ============================================================
-   🔑 GitHub Token الافتراضي (يُحمّل تلقائياً)
+   🔑 GitHub Token مدمج
    ============================================================ */
-const DEFAULT_GITHUB_TOKEN = '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';
+const DEFAULT_GITHUB_TOKEN = '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';
 
-/* ============================================================
-   STATE
-   ============================================================ */
 const defaultState = {
   fullName:'أحمد محمد', jobTitle:'مطور ويب ومصمم UI/UX',
   heroBio:'مطور ويب شغوف بخبرة 5 سنوات في بناء تطبيقات ويب حديثة.',
@@ -566,8 +500,7 @@ const defaultState = {
     {icon:'💼', name:'LinkedIn', url:'https://linkedin.com'}
   ],
   theme:'indigo',
-  colors:{primary:'#6366f1', secondary:'#8b5cf6', accent:'#ec4899', bg:'#0f172a'},
-  githubToken: DEFAULT_GITHUB_TOKEN
+  colors:{primary:'#6366f1', secondary:'#8b5cf6', accent:'#ec4899', bg:'#0f172a'}
 };
 
 let state = JSON.parse(JSON.stringify(defaultState));
@@ -584,15 +517,10 @@ const themes = {
   blue:{name:'أزرق', c:{primary:'#3b82f6',secondary:'#2563eb',accent:'#60a5fa',bg:'#0c1e3e'}}
 };
 
-/* ============================================================
-   STORAGE
-   ============================================================ */
-function saveToStorage(){
-  try{ localStorage.setItem('builder_v11', JSON.stringify(state)); }catch(e){}
-}
+function saveToStorage(){ try{ localStorage.setItem('builder_v111', JSON.stringify(state)); }catch(e){} }
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('builder_v11') || localStorage.getItem('builder_v10');
+    const s = localStorage.getItem('builder_v111') || localStorage.getItem('builder_v11');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -602,31 +530,18 @@ function loadFromStorage(){
         }
       });
     }
-    // إذا لم يكن هناك Token محفوظ، استخدم الافتراضي
-    if(!state.githubToken){
-      state.githubToken = DEFAULT_GITHUB_TOKEN;
-    }
   }catch(e){}
 }
 
-/* ============================================================
-   TABS
-   ============================================================ */
 function switchTab(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === name));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active', c.dataset.tab === name));
   document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
-  
-  // تحديث حالة الرمز عند فتح الإعدادات
-  if(name === 'settings') updateTokenStatus();
 }
 document.querySelectorAll('.tab').forEach(t=>{
   t.addEventListener('click', ()=>switchTab(t.dataset.tab));
 });
 
-/* ============================================================
-   LIST HELPERS
-   ============================================================ */
 function renderList(containerId, badgeId, arr, templateFn, emptyMsg){
   const c = document.getElementById(containerId);
   if(!c) return;
@@ -657,9 +572,6 @@ function getRendererFor(arr){
     testimonials:renderTestimonials,socials:renderSocials}[arr];
 }
 
-/* ============================================================
-   RENDERERS
-   ============================================================ */
 function renderHighlights(){
   renderList('highlightsList','highlightCount', state.highlights, (h,i)=>`
     <div class="item-card">
@@ -800,9 +712,6 @@ function applyTheme(k){
   renderThemes(); refresh();
 }
 
-/* ============================================================
-   INPUT BINDINGS
-   ============================================================ */
 const bindings = {
   fullName:'fullName', jobTitle:'jobTitle', heroBio:'heroBio',
   typewriterText:'typewriterText', avatarUrl:'avatarUrl',
@@ -826,9 +735,6 @@ Object.keys(bindings).forEach(id => {
   });
 });
 
-/* ============================================================
-   BUILD HTML
-   ============================================================ */
 function buildHTML(){
   const c = state.colors;
   const avatarSrc = state.avatarUrl || '';
@@ -945,7 +851,6 @@ function buildHTML(){
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <div class="nav-inner">
     <div class="nav-brand"><span class="dot"></span>${state.fullName}</div>
@@ -958,7 +863,6 @@ function buildHTML(){
     </ul>
   </div>
 </nav>
-
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
@@ -980,7 +884,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="about">
   <div class="container">
     <div class="section-head"><h2>عن <span>نفسي</span></h2><div class="line"></div></div>
@@ -1003,7 +906,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="skills" style="background:#ffffff05">
   <div class="container">
     <div class="section-head"><h2>مهاراتي <span>الاحترافية</span></h2><div class="line"></div></div>
@@ -1020,7 +922,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="services">
   <div class="container">
     <div class="section-head"><h2>خدماتي <span>المميزة</span></h2><div class="line"></div></div>
@@ -1035,7 +936,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="projects" style="background:#ffffff05">
   <div class="container">
     <div class="section-head"><h2>أعمالي <span>الأخيرة</span></h2><div class="line"></div></div>
@@ -1049,7 +949,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="experience">
   <div class="container">
     <div class="section-head"><h2>مسيرتي <span>المهنية</span></h2><div class="line"></div></div>
@@ -1067,7 +966,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="education" style="background:#ffffff05">
   <div class="container">
     <div class="section-head"><h2>المؤهلات <span>العلمية</span></h2><div class="line"></div></div>
@@ -1085,7 +983,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="testimonials">
   <div class="container">
     <div class="section-head"><h2>ماذا يقول <span>العملاء</span></h2><div class="line"></div></div>
@@ -1099,7 +996,6 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <section id="contact" style="background:#ffffff05">
   <div class="container">
     <div class="contact-box">
@@ -1116,11 +1012,8 @@ function buildHTML(){
     </div>
   </div>
 </section>
-
 <footer>© ${new Date().getFullYear()} ${state.fullName} — جميع الحقوق محفوظة</footer>
-
 ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" class="whatsapp">💬</a>`:''}
-
 <script>
   const tw = document.getElementById('tw');
   const lines = ${JSON.stringify((state.typewriterText||'').split('\n').filter(l=>l.trim()))};
@@ -1151,17 +1044,9 @@ ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" clas
 }
 
 /* ============================================================
-   🎯 توليد الرابط القصير عبر Gist
+   🎯 توليد الرابط القصير
    ============================================================ */
 async function generateLink(){
-  // 1. تحقق من Token
-  if(!state.githubToken){
-    showToast('يجب إضافة GitHub Token أولاً', true);
-    switchTab('settings');
-    return;
-  }
-  
-  // 2. عرض النافذة
   openModal('linkModal');
   document.getElementById('generatedUrl').textContent = '⏳ جاري إنشاء الرابط...';
   document.getElementById('openLink').href = '#';
@@ -1170,42 +1055,26 @@ async function generateLink(){
   indicator.style.display = 'flex';
   
   try{
-    // 3. بناء HTML
     const html = buildHTML();
-    
-    // 4. رفع إلى Gist
     const gistId = await uploadToGist(html);
-    
-    // 5. رابط قصير
     const baseUrl = window.location.origin + window.location.pathname;
     const shortUrl = `${baseUrl}#g=${gistId}`;
     
-    // 6. عرض
     window._shortLink = shortUrl;
     window._generatedLink = shortUrl;
     document.getElementById('generatedUrl').textContent = shortUrl;
     document.getElementById('openLink').href = shortUrl;
-    
-    showToast('✅ تم إنشاء رابط قصير!');
-    
+    showToast('✅ تم إنشاء الرابط القصير!');
   }catch(e){
     console.error(e);
     document.getElementById('generatedUrl').textContent = '❌ فشل: ' + e.message;
     showToast('فشل الإنشاء: ' + e.message, true);
   }
-  
   indicator.style.display = 'none';
 }
 
-/* ============================================================
-   ☁️ رفع إلى GitHub Gist
-   ============================================================ */
 async function uploadToGist(html){
-  const token = state.githubToken;
-  if(!token || !token.startsWith('ghp_')){
-    throw new Error('Token غير صحيح');
-  }
-  
+  const token = DEFAULT_GITHUB_TOKEN;
   const fileName = `site-${Date.now().toString(36)}.html`;
   
   const res = await fetch('https://api.github.com/gists', {
@@ -1218,44 +1087,32 @@ async function uploadToGist(html){
     body: JSON.stringify({
       description: `موقع ${state.fullName}`,
       public: false,
-      files: {
-        [fileName]: { content: html }
-      }
+      files: { [fileName]: { content: html } }
     })
   });
   
   if(!res.ok){
     const err = await res.json().catch(()=>({}));
-    if(res.status === 401){
-      throw new Error('الرمز غير صحيح أو منتهي الصلاحية');
-    }
-    throw new Error(err.message || 'فشل الرفع');
+    throw new Error(err.message || 'فشل الرفع (' + res.status + ')');
   }
   
   const gist = await res.json();
   return gist.id;
 }
 
-/* ============================================================
-   📥 تحميل من Gist
-   ============================================================ */
 async function loadFromGist(gistId){
   try{
     const res = await fetch(`https://api.github.com/gists/${gistId}`);
     if(!res.ok) return null;
-    
     const gist = await res.json();
     const files = Object.values(gist.files);
     if(!files.length) return null;
-    
     const file = files[0];
     let content = file.content;
-    
     if(file.truncated){
       const rawRes = await fetch(file.raw_url);
       content = await rawRes.text();
     }
-    
     return content;
   }catch(e){
     console.error('Load Gist error:', e);
@@ -1263,53 +1120,9 @@ async function loadFromGist(gistId){
   }
 }
 
-/* ============================================================
-   💾 حفظ GitHub Token
-   ============================================================ */
-function saveGithubToken(){
-  const el = document.getElementById('githubToken');
-  if(!el) return;
-  const t = el.value.trim();
-  
-  if(!t.startsWith('ghp_')){
-    showToast('الرمز يجب أن يبدأ بـ ghp_', true);
-    return;
-  }
-  
-  state.githubToken = t;
-  saveToStorage();
-  updateTokenStatus();
-  showToast('💾 تم حفظ الرمز!');
-}
-
-function clearGithubToken(){
-  if(!confirm('حذف الرمز المحفوظ؟')) return;
-  state.githubToken = '';
-  saveToStorage();
-  document.getElementById('githubToken').value = '';
-  updateTokenStatus();
-  showToast('🗑️ تم الحذف');
-}
-
-function updateTokenStatus(){
-  const el = document.getElementById('tokenStatus');
-  if(!el) return;
-  if(state.githubToken){
-    const short = state.githubToken.substring(0, 10) + '...' + state.githubToken.slice(-4);
-    el.innerHTML = `<span style="color:var(--success)">✅ الرمز محفوظ: <code style="background:#0f172a;padding:2px 6px;border-radius:4px">${short}</code></span>`;
-    document.getElementById('githubToken').value = state.githubToken;
-  } else {
-    el.innerHTML = `<span style="color:var(--warning)">⚠️ لم يتم حفظ رمز بعد</span>`;
-  }
-}
-
-/* ============================================================
-   📋 نسخ الرابط
-   ============================================================ */
 async function copyLink(){
   const url = window._shortLink || window._generatedLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
-  
   try{
     if(navigator.clipboard && window.isSecureContext){
       await navigator.clipboard.writeText(url);
@@ -1317,7 +1130,6 @@ async function copyLink(){
       return;
     }
   }catch(e){}
-  
   try{
     const ta = document.createElement('textarea');
     ta.value = url;
@@ -1334,13 +1146,9 @@ async function copyLink(){
   }catch(e){ prompt('انسخ الرابط:', url); }
 }
 
-/* ============================================================
-   📤 مشاركة
-   ============================================================ */
 async function shareLink(){
   const url = window._shortLink || window._generatedLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
-  
   if(navigator.share){
     try{
       await navigator.share({
@@ -1359,9 +1167,6 @@ function closeModal(){
   document.getElementById('linkModal').classList.remove('show');
 }
 
-/* ============================================================
-   ⬇️ تحميل
-   ============================================================ */
 function downloadSite(){
   const html = buildHTML();
   const blob = new Blob([html], {type:'text/html;charset=utf-8'});
@@ -1374,9 +1179,6 @@ function downloadSite(){
   showToast('⬇️ تم التحميل!');
 }
 
-/* ============================================================
-   👁️ معاينة
-   ============================================================ */
 function openMobilePreview(){
   const overlay = document.getElementById('mobilePreview');
   overlay.classList.add('show');
@@ -1387,9 +1189,6 @@ function closeMobilePreview(){
   document.getElementById('mobilePreview').classList.remove('show');
 }
 
-/* ============================================================
-   REFRESH
-   ============================================================ */
 let timer = null;
 function refresh(){
   saveToStorage();
@@ -1407,18 +1206,12 @@ function refresh(){
   }, 400);
 }
 
-/* ============================================================
-   RESET
-   ============================================================ */
 function resetAll(){
   if(!confirm('إعادة التعيين؟')) return;
-  localStorage.removeItem('builder_v11');
+  localStorage.removeItem('builder_v111');
   location.reload();
 }
 
-/* ============================================================
-   TOAST
-   ============================================================ */
 function showToast(msg, isError){
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1428,31 +1221,21 @@ function showToast(msg, isError){
   t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
 }
 
-/* ============================================================
-   🎯 عرض الموقع المنشور عند وجود #g= أو #site=
-   ============================================================ */
 async function checkForPublishedSite(){
   const hash = window.location.hash;
   if(!hash) return false;
   
-  // 1. رابط Gist جديد
   if(hash.startsWith('#g=')){
     const gistId = hash.substring(3);
-    
     document.body.innerHTML = `
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
         <div style="font-size:4rem;animation:spin 1s linear infinite;display:inline-block">⏳</div>
         <h2 style="margin-top:20px;font-weight:700">جاري تحميل الموقع...</h2>
         <p style="color:#94a3b8;margin-top:10px">يستغرق لحظات فقط</p>
       </div>
-      <style>
-        @keyframes spin{to{transform:rotate(360deg)}}
-        *{margin:0;padding:0;box-sizing:border-box}
-      </style>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}*{margin:0;padding:0;box-sizing:border-box}</style>
     `;
-    
     const html = await loadFromGist(gistId);
-    
     if(html){
       document.open();
       document.write(html);
@@ -1462,14 +1245,12 @@ async function checkForPublishedSite(){
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
           <div style="font-size:4rem">❌</div>
           <h2 style="margin-top:20px;font-weight:700">لم يتم العثور على الموقع</h2>
-          <p style="color:#94a3b8;margin-top:10px">الرابط قد يكون معطوباً</p>
         </div>
       `;
     }
     return true;
   }
   
-  // 2. رابط قديم #site=
   if(hash.startsWith('#site=')){
     try{
       let encoded = hash.substring(6).replace(/-/g,'+').replace(/_/g,'/');
@@ -1479,41 +1260,28 @@ async function checkForPublishedSite(){
       document.write(html);
       document.close();
       return true;
-    }catch(e){
-      return false;
-    }
+    }catch(e){ return false; }
   }
-  
   return false;
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
 function init(){
   checkForPublishedSite().then(found=>{
     if(found) return;
-    
-    // الأداتك العادية
     loadFromStorage();
-    
     Object.keys(bindings).forEach(id => {
       const el = document.getElementById(id);
       if(el && state[bindings[id]] !== undefined){
         el.value = state[bindings[id]];
       }
     });
-    
     ['Primary','Secondary','Accent','Bg'].forEach(p=>{
       const el = document.getElementById('c'+p);
       if(el) el.value = state.colors[p.toLowerCase()];
     });
-    
     renderHighlights(); renderSkills(); renderServices(); renderProjects();
     renderExperience(); renderEducation(); renderTestimonials(); renderSocials();
     renderThemes();
-    updateTokenStatus();
-    
     if(window.innerWidth >= 1024){
       const f = document.getElementById('previewFrame');
       if(f) f.srcdoc = buildHTML();
