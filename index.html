@@ -3,81 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-<title>⚡ Perfect Site Builder v12.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+<title>⚡ Perfect Site Builder v13.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   :root{
     --bg:#0a0e1a;--panel:#111827;--panel2:#1a2332;--panel3:#0d1420;
     --border:#1f2937;--text:#e5e7eb;--muted:#94a3b8;
     --primary:#6366f1;--primary2:#8b5cf6;--accent:#ec4899;
     --success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+    --topbar-h:56px;--tabs-h:48px;
     --safe-top:env(safe-area-inset-top,0px);
     --safe-bottom:env(safe-area-inset-bottom,0px);
   }
   body{
     background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;
-    height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;
+    height:100vh;height:100dvh;overflow:hidden;
+    display:flex;flex-direction:column;
     padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
+    -webkit-font-smoothing:antialiased;
   }
+  body.preview-locked{position:fixed;width:100%;height:100%}
+
   .topbar{
-    height:56px;background:linear-gradient(90deg,#0f172a,#1e1b4b,#4c1d95);
+    height:var(--topbar-h);flex-shrink:0;
+    background:linear-gradient(90deg,#0f172a,#1e1b4b,#4c1d95);
     border-bottom:1px solid var(--border);
     display:flex;align-items:center;justify-content:space-between;
-    padding:0 10px;gap:6px;z-index:100;flex-shrink:0;
+    padding:0 10px;gap:6px;z-index:100;position:relative;overflow:hidden;
   }
-  .brand{display:flex;align-items:center;gap:8px;min-width:0}
+  .topbar::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 50%,rgba(99,102,241,.3),transparent 50%),
+               radial-gradient(circle at 80% 50%,rgba(236,72,153,.3),transparent 50%);
+    pointer-events:none;
+  }
+  .brand{display:flex;align-items:center;gap:8px;position:relative;z-index:1;min-width:0}
   .brand-logo{
-    width:36px;height:36px;border-radius:10px;
+    width:36px;height:36px;border-radius:10px;flex-shrink:0;
     background:linear-gradient(135deg,var(--primary),var(--accent));
     display:flex;align-items:center;justify-content:center;font-size:1.2rem;
     box-shadow:0 0 20px rgba(99,102,241,.6);
+    animation:pulse-logo 3s ease-in-out infinite;
   }
+  @keyframes pulse-logo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .brand-text{min-width:0;overflow:hidden}
   .brand-text .title{
-    font-size:.9rem;font-weight:800;
+    font-size:.9rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     background:linear-gradient(135deg,#a5b4fc,#f0abfc);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   }
-  .brand-text .sub{font-size:.62rem;color:var(--muted)}
-  .top-actions{display:flex;gap:4px}
+  .brand-text .sub{font-size:.62rem;color:var(--muted);white-space:nowrap}
+  .top-actions{display:flex;gap:4px;align-items:center;position:relative;z-index:1;flex-shrink:0}
+
   .btn{
-    min-height:36px;padding:8px 12px;border:none;border-radius:9px;
-    font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;
+    min-height:36px;min-width:36px;padding:8px 12px;border:none;border-radius:9px;
+    font-size:.82rem;font-weight:700;font-family:'Cairo',sans-serif;
+    cursor:pointer;transition:transform .15s,box-shadow .2s,background .2s;
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
-    transition:transform .15s;white-space:nowrap;
+    white-space:nowrap;touch-action:manipulation;user-select:none;
   }
   .btn:active{transform:scale(.95)}
-  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
-  .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
-  .btn-publish{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-weight:800}
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 4px 15px rgba(99,102,241,.4)}
+  .btn-success{background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,.4)}
+  .btn-publish{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;box-shadow:0 4px 15px rgba(245,158,11,.5);font-weight:800}
   .btn-ghost{background:rgba(255,255,255,.08);color:var(--muted);border:1px solid var(--border)}
   .btn-icon{padding:8px;width:38px;height:38px}
 
   .main{flex:1;display:flex;overflow:hidden;position:relative;min-height:0}
   .panel{
     display:flex;flex-direction:column;overflow:hidden;
-    background:var(--panel);width:100%;height:100%;
+    background:var(--panel);width:100%;height:100%;min-height:0;
   }
   .preview-area{
     display:none;background:var(--panel2);flex-direction:column;overflow:hidden;
-    width:100%;height:100%;
+    width:100%;height:100%;min-height:0;
   }
+
   .tabs{
-    display:flex;overflow-x:auto;background:var(--panel3);
-    border-bottom:1px solid var(--border);flex-shrink:0;
-    scrollbar-width:none;height:48px;
+    display:flex;overflow-x:auto;overflow-y:hidden;
+    background:var(--panel3);border-bottom:1px solid var(--border);
+    flex-shrink:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    height:var(--tabs-h);
   }
   .tabs::-webkit-scrollbar{display:none}
   .tab{
     padding:0 14px;font-size:.78rem;font-weight:700;color:var(--muted);
     cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;
     white-space:nowrap;display:flex;align-items:center;gap:5px;
-    min-height:48px;user-select:none;
+    min-height:var(--tabs-h);user-select:none;touch-action:manipulation;
   }
   .tab.active{color:#fff;border-bottom-color:var(--primary);background:var(--panel2)}
-  .tab-contents{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0}
+
+  .tab-contents{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;min-height:0}
   .tab-content{display:none;padding:14px}
-  .tab-content.active{display:block}
+  .tab-content.active{display:block;animation:fadeIn .25s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
   .section-block{
     background:var(--panel2);border-radius:12px;padding:14px;margin-bottom:12px;
@@ -87,50 +109,133 @@
     font-size:.86rem;margin-bottom:12px;display:flex;align-items:center;
     gap:8px;color:#fff;justify-content:space-between;flex-wrap:wrap;
   }
+  .section-block h3 span:first-child{display:flex;align-items:center;gap:6px}
+
   .form-group{margin-bottom:11px}
-  label{display:block;margin-bottom:5px;font-size:.76rem;font-weight:600;color:var(--muted)}
+  label{
+    display:block;margin-bottom:5px;font-size:.76rem;font-weight:600;
+    color:var(--muted);user-select:none;
+  }
   input,textarea,select{
     width:100%;padding:11px 12px;background:#0a0e1a;
     border:1.5px solid var(--border);border-radius:9px;color:var(--text);
-    font-size:16px;font-family:inherit;
+    font-size:16px;font-family:'Cairo',sans-serif;transition:all .2s;
+    -webkit-appearance:none;appearance:none;
   }
   input:focus,textarea:focus,select:focus{
     outline:none;border-color:var(--primary);
     box-shadow:0 0 0 3px rgba(99,102,241,.15);
   }
-  textarea{resize:vertical;min-height:70px}
-  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  textarea{resize:vertical;min-height:70px;line-height:1.5}
+  select{
+    background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:left 12px center;background-size:16px;
+    padding-left:36px;
+  }
+  input[type=range]{padding:0;height:36px;background:transparent;border:none;-webkit-appearance:none;appearance:none}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;background:var(--border);border-radius:6px}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;
+    width:22px;height:22px;background:linear-gradient(135deg,var(--primary),var(--accent));
+    border-radius:50%;margin-top:-8px;cursor:pointer;box-shadow:0 3px 10px rgba(99,102,241,.5);
+  }
+
+  .row-2,.row-3{display:grid;gap:8px}
+  .row-2{grid-template-columns:1fr 1fr}
+  .row-3{grid-template-columns:1fr 1fr}
+  @media(min-width:480px){.row-3{grid-template-columns:1fr 1fr 1fr}}
+
   .item-card{
     background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
-    padding:12px;margin-bottom:10px;
+    padding:12px;margin-bottom:10px;animation:slideIn .25s ease;
   }
+  @keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
   .item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
-  .item-title{font-weight:700;font-size:.84rem;color:var(--primary);flex:1}
+  .item-title{
+    font-weight:700;font-size:.84rem;color:var(--primary);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;
+  }
+  .item-actions{display:flex;gap:5px;flex-shrink:0}
   .item-actions button{
-    width:32px;height:32px;border-radius:8px;border:none;
-    background:var(--panel2);color:var(--muted);cursor:pointer;
+    width:32px;height:32px;border-radius:8px;border:none;cursor:pointer;
+    background:var(--panel2);color:var(--muted);font-size:.85rem;
+    transition:all .2s;display:flex;align-items:center;justify-content:center;
   }
-  .add-btn{
-    width:100%;padding:12px;border:2px dashed var(--border);border-radius:10px;
-    background:transparent;color:var(--muted);cursor:pointer;
-    font-family:inherit;font-weight:700;font-size:.82rem;
+  .item-actions button:active{background:var(--danger);color:#fff}
+
+  .color-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(min-width:480px){.color-grid{grid-template-columns:repeat(4,1fr)}}
+  .color-item{text-align:center}
+  .color-item label{font-size:.7rem;margin-bottom:4px}
+  .color-item input[type=color]{
+    width:100%;height:44px;padding:3px;cursor:pointer;border-radius:10px;
+    border:2px solid var(--border);
   }
+
   .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media(min-width:600px){.theme-grid{grid-template-columns:repeat(4,1fr)}}
   .theme-thumb{
-    height:60px;border-radius:10px;cursor:pointer;
-    border:3px solid transparent;transition:all .25s;position:relative;
+    height:66px;border-radius:10px;cursor:pointer;
+    border:3px solid transparent;transition:all .25s;
+    position:relative;overflow:hidden;
   }
   .theme-thumb.active{border-color:#fff;box-shadow:0 0 0 3px var(--primary)}
   .theme-thumb span{
-    position:absolute;bottom:4px;right:5px;font-size:.62rem;
-    color:#fff;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.9);
+    position:absolute;bottom:4px;right:5px;font-size:.65rem;color:#fff;
+    font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.9);
   }
-  .color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  .color-item label{font-size:.7rem}
-  .color-item input[type=color]{
-    width:100%;height:40px;padding:3px;cursor:pointer;border-radius:8px;
-    border:2px solid var(--border);
+
+  .font-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  @media(min-width:480px){.font-grid{grid-template-columns:repeat(3,1fr)}}
+  .font-opt{
+    padding:12px 8px;background:#0a0e1a;border:2px solid var(--border);
+    border-radius:10px;cursor:pointer;text-align:center;font-size:.8rem;
+    font-weight:600;transition:all .2s;
   }
+  .font-opt.active{border-color:var(--primary);background:rgba(99,102,241,.15);color:#fff}
+
+  .sections-list{display:flex;flex-direction:column;gap:8px}
+  .section-item{
+    display:flex;align-items:center;gap:8px;padding:10px;
+    background:#0a0e1a;border:1px solid var(--border);border-radius:10px;
+  }
+  .section-item .drag-icon{color:var(--muted);font-size:1rem;flex-shrink:0}
+  .section-item .sec-name{flex:1;font-weight:600;font-size:.82rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .section-item .move-btns{display:flex;gap:3px;flex-shrink:0}
+  .section-item .move-btns button{
+    width:28px;height:28px;border-radius:7px;border:none;
+    background:var(--panel2);color:var(--muted);cursor:pointer;font-size:.82rem;
+  }
+  .section-item .move-btns button:disabled{opacity:.3}
+
+  .toggle{
+    width:44px;height:26px;background:var(--border);border-radius:20px;
+    position:relative;cursor:pointer;transition:all .25s;flex-shrink:0;
+  }
+  .toggle::after{
+    content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;
+    background:#fff;border-radius:50%;transition:all .25s;
+  }
+  .toggle.on{background:var(--success)}
+  .toggle.on::after{right:calc(100% - 23px)}
+
+  .switch-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;gap:12px;border-bottom:1px solid var(--border);
+  }
+  .switch-row:last-child{border-bottom:none}
+  .switch-row label{margin:0;color:var(--text);font-weight:600;font-size:.84rem;flex:1}
+  .switch{
+    width:48px;height:28px;background:var(--border);border-radius:20px;
+    position:relative;cursor:pointer;transition:all .25s;flex-shrink:0;
+  }
+  .switch::after{
+    content:'';position:absolute;top:3px;right:3px;width:22px;height:22px;
+    background:#fff;border-radius:50%;transition:all .25s;
+  }
+  .switch.on{background:var(--success)}
+  .switch.on::after{right:calc(100% - 25px)}
+
   .bottom-nav{
     display:flex;background:var(--panel3);border-top:1px solid var(--border);
     flex-shrink:0;height:56px;padding-bottom:var(--safe-bottom);
@@ -139,12 +244,12 @@
   .bn-item{
     flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:2px;cursor:pointer;color:var(--muted);font-size:.65rem;font-weight:700;
-    position:relative;
+    transition:all .2s;position:relative;
   }
   .bn-item.active{color:var(--primary)}
   .bn-item.active::before{
     content:'';position:absolute;top:0;left:20%;right:20%;height:3px;
-    background:var(--primary);
+    background:var(--primary);border-radius:0 0 3px 3px;
   }
   .bn-item .ic{font-size:1.2rem;line-height:1}
 
@@ -152,48 +257,99 @@
     .main{display:grid;grid-template-columns:460px 1fr}
     .panel{width:auto}
     .preview-area{display:flex}
+    .bottom-nav{display:none}
+    .preview-fab{display:none}
   }
+
   .preview-toolbar{
     height:52px;background:var(--panel3);border-bottom:1px solid var(--border);
-    display:flex;align-items:center;justify-content:space-between;padding:0 12px;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 12px;flex-shrink:0;gap:8px;
   }
-  .preview-container{flex:1;overflow:auto;padding:10px;display:flex;justify-content:center;background:#080c16}
+  .device-btns{display:flex;gap:5px}
+  .device-btn{
+    width:40px;height:40px;background:transparent;border:1px solid var(--border);
+    border-radius:9px;color:var(--muted);cursor:pointer;font-size:.95rem;
+    transition:all .2s;display:flex;align-items:center;justify-content:center;
+  }
+  .device-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+
+  .preview-container{
+    flex:1;overflow:auto;padding:10px;display:flex;justify-content:center;
+    background:#080c16;-webkit-overflow-scrolling:touch;min-height:0;
+  }
   .preview-frame-wrap{
     width:100%;max-width:100%;height:100%;background:#fff;
     border-radius:12px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.5);
+    transition:max-width .4s ease;position:relative;
   }
-  #previewFrame{width:100%;height:100%;border:none;background:#fff}
+  .preview-frame-wrap.tablet{max-width:768px}
+  .preview-frame-wrap.mobile{max-width:390px}
+  #previewFrame{width:100%;height:100%;border:none;background:#fff;display:block}
 
   .mobile-preview{
-    position:fixed;inset:0;background:var(--panel2);z-index:9000;
-    display:none;flex-direction:column;
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:var(--panel2);z-index:9000;display:none;flex-direction:column;
+    width:100vw;height:100vh;height:100dvh;overflow:hidden;
+    padding-top:var(--safe-top);padding-bottom:var(--safe-bottom);
   }
-  .mobile-preview.show{display:flex}
-  .mobile-preview-body{flex:1;position:relative;overflow:hidden;background:#080c16}
-  .mobile-preview-body iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+  .mobile-preview.show{display:flex;animation:mobilePreviewIn .28s cubic-bezier(.4,0,.2,1)}
+  @keyframes mobilePreviewIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+  .mobile-preview .preview-toolbar{
+    flex:0 0 auto;background:linear-gradient(90deg,#0f172a,#1e1b4b);
+    height:52px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 12px;gap:8px;border-bottom:1px solid var(--border);
+  }
+  .mobile-preview-body{flex:1 1 auto;position:relative;overflow:hidden;background:#080c16;min-height:0}
+  .mobile-preview-body .preview-frame-wrap{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    width:100%;height:100%;max-width:100%;border-radius:0;
+    box-shadow:none;overflow:hidden;background:#fff;margin:0 auto;
+  }
+  .mobile-preview-body .preview-frame-wrap.mobile{max-width:420px}
+  .mobile-preview-body .preview-frame-wrap.desktop{max-width:100%}
+  .mobile-preview-body .preview-frame-wrap iframe{width:100%;height:100%;border:none;display:block;background:#fff}
+
+  .preview-fab{
+    position:fixed;bottom:calc(76px + var(--safe-bottom));left:16px;
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    color:#fff;border:none;font-size:1.5rem;cursor:pointer;
+    box-shadow:0 12px 32px rgba(99,102,241,.6);z-index:85;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .3s;touch-action:manipulation;
+  }
+  .preview-fab.hidden{opacity:0;pointer-events:none;transform:scale(.8)}
+  @media(min-width:1024px){.preview-fab{display:none}}
 
   .modal{
     position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;
     align-items:flex-end;justify-content:center;z-index:9998;
-    backdrop-filter:blur(6px);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   }
   .modal.show{display:flex}
   @media(min-width:600px){.modal{align-items:center}}
   .modal-box{
     background:var(--panel);border-radius:20px 20px 0 0;padding:22px;
     width:100%;max-width:600px;border:1px solid var(--border);
+    box-shadow:0 -20px 60px rgba(0,0,0,.7);
     max-height:90vh;overflow-y:auto;
     padding-bottom:calc(22px + var(--safe-bottom));
+    animation:slideUp .3s ease;
   }
-  @media(min-width:600px){.modal-box{border-radius:20px}}
-  .modal-box h3{margin-bottom:14px;color:#fff;font-size:1.1rem}
+  @media(min-width:600px){.modal-box{border-radius:20px;animation:scaleIn .3s ease}}
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  @keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
   .modal-handle{
     width:40px;height:4px;background:var(--border);border-radius:4px;
     margin:0 auto 14px;display:block;
   }
+  @media(min-width:600px){.modal-handle{display:none}}
+  .modal-box h3{margin-bottom:14px;color:#fff;font-size:1.1rem}
 
   .toast{
-    position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(120px);
+    position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;
+    transform:translateX(-50%) translateY(120px);
     background:linear-gradient(135deg,#10b981,#059669);color:#fff;
     padding:12px 22px;border-radius:12px;font-weight:700;font-size:.85rem;
     box-shadow:0 15px 45px rgba(0,0,0,.6);transition:transform .4s;
@@ -216,6 +372,19 @@
     border:2px dashed var(--border);border-radius:10px;
   }
   .badge{background:var(--primary);color:#fff;font-size:.66rem;padding:2px 8px;border-radius:20px;font-weight:700}
+  .img-preview{
+    width:64px;height:64px;border-radius:12px;object-fit:cover;
+    border:2px solid var(--border);background:#0a0e1a;flex-shrink:0;
+  }
+  .img-upload-row{display:flex;gap:10px;align-items:flex-start}
+  .img-upload-row > div{flex:1;min-width:0}
+  .add-btn{
+    width:100%;padding:12px;border:2px dashed var(--border);border-radius:10px;
+    background:transparent;color:var(--muted);cursor:pointer;
+    font-family:inherit;font-weight:700;font-size:.82rem;transition:all .2s;
+  }
+  .add-btn:active{background:var(--panel2);border-color:var(--primary);color:#fff}
+  .hint{font-size:.72rem;color:var(--muted);margin-top:4px;line-height:1.5}
   
   .loading-indicator{
     font-size:.75rem;color:var(--warning);margin-top:8px;
@@ -227,16 +396,22 @@
     animation:spin .8s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
+
+  .progress-bar-pub{
+    height:6px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:16px;
+  }
+  .progress-bar-pub .fill{
+    height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));
+    width:0%;transition:width .3s ease;border-radius:6px;
+  }
 </style>
 </head>
-<body>
-
-<div class="topbar">
+<body><div class="topbar">
   <div class="brand">
     <div class="brand-logo">⚡</div>
     <div class="brand-text">
       <div class="title">Perfect Builder</div>
-      <div class="sub">v12.0 — Firebase</div>
+      <div class="sub">v13.0 — Firebase</div>
     </div>
   </div>
   <div class="top-actions">
@@ -254,14 +429,21 @@
       <div class="tab" data-tab="skills">💡 مهارات</div>
       <div class="tab" data-tab="services">🛠️ خدمات</div>
       <div class="tab" data-tab="projects">📁 أعمال</div>
+      <div class="tab" data-tab="gallery">🖼️ معرض</div>
       <div class="tab" data-tab="experience">💼 خبرات</div>
       <div class="tab" data-tab="education">🎓 تعليم</div>
+      <div class="tab" data-tab="certs">🏆 شهادات</div>
       <div class="tab" data-tab="testimonials">💬 آراء</div>
+      <div class="tab" data-tab="pricing">💰 أسعار</div>
+      <div class="tab" data-tab="faq">❓ أسئلة</div>
       <div class="tab" data-tab="contact">📞 تواصل</div>
+      <div class="tab" data-tab="advanced">⚙️ متقدم</div>
       <div class="tab" data-tab="design">🎨 تصميم</div>
+      <div class="tab" data-tab="sections">📋 أقسام</div>
     </div>
 
-    <div class="tab-contents">
+    <div class="tab-contents" id="tabContents">
+      <!-- BASIC -->
       <div class="tab-content active" data-tab="basic">
         <div class="section-block">
           <h3><span>👤 المعلومات الأساسية</span></h3>
@@ -292,6 +474,7 @@
         </div>
       </div>
 
+      <!-- ABOUT -->
       <div class="tab-content" data-tab="about">
         <div class="section-block">
           <h3><span>📖 قسم عني</span></h3>
@@ -305,6 +488,7 @@
         </div>
       </div>
 
+      <!-- SKILLS -->
       <div class="tab-content" data-tab="skills">
         <div class="section-block">
           <h3><span>💡 المهارات</span><span class="badge" id="skillCount">0</span></h3>
@@ -313,6 +497,7 @@
         </div>
       </div>
 
+      <!-- SERVICES -->
       <div class="tab-content" data-tab="services">
         <div class="section-block">
           <h3><span>🛠️ الخدمات</span><span class="badge" id="serviceCount">0</span></h3>
@@ -321,6 +506,7 @@
         </div>
       </div>
 
+      <!-- PROJECTS -->
       <div class="tab-content" data-tab="projects">
         <div class="section-block">
           <h3><span>📁 الأعمال</span><span class="badge" id="projectCount">0</span></h3>
@@ -329,6 +515,16 @@
         </div>
       </div>
 
+      <!-- GALLERY -->
+      <div class="tab-content" data-tab="gallery">
+        <div class="section-block">
+          <h3><span>🖼️ معرض الصور</span><span class="badge" id="galleryCount">0</span></h3>
+          <div id="galleryList"></div>
+          <button class="add-btn" onclick="addGallery()">➕ إضافة</button>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE -->
       <div class="tab-content" data-tab="experience">
         <div class="section-block">
           <h3><span>💼 الخبرات</span><span class="badge" id="expCount">0</span></h3>
@@ -337,6 +533,7 @@
         </div>
       </div>
 
+      <!-- EDUCATION -->
       <div class="tab-content" data-tab="education">
         <div class="section-block">
           <h3><span>🎓 التعليم</span><span class="badge" id="eduCount">0</span></h3>
@@ -345,6 +542,16 @@
         </div>
       </div>
 
+      <!-- CERTS -->
+      <div class="tab-content" data-tab="certs">
+        <div class="section-block">
+          <h3><span>🏆 الشهادات</span><span class="badge" id="certCount">0</span></h3>
+          <div id="certsList"></div>
+          <button class="add-btn" onclick="addCert()">➕ إضافة</button>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
       <div class="tab-content" data-tab="testimonials">
         <div class="section-block">
           <h3><span>💬 آراء العملاء</span><span class="badge" id="testCount">0</span></h3>
@@ -353,6 +560,25 @@
         </div>
       </div>
 
+      <!-- PRICING -->
+      <div class="tab-content" data-tab="pricing">
+        <div class="section-block">
+          <h3><span>💰 خطط الأسعار</span><span class="badge" id="priceCount">0</span></h3>
+          <div id="pricingList"></div>
+          <button class="add-btn" onclick="addPricing()">➕ إضافة</button>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="tab-content" data-tab="faq">
+        <div class="section-block">
+          <h3><span>❓ الأسئلة</span><span class="badge" id="faqCount">0</span></h3>
+          <div id="faqList"></div>
+          <button class="add-btn" onclick="addFaq()">➕ إضافة</button>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
       <div class="tab-content" data-tab="contact">
         <div class="section-block">
           <h3><span>📞 تواصل</span></h3>
@@ -368,13 +594,50 @@
         </div>
       </div>
 
+      <!-- ADVANCED -->
+      <div class="tab-content" data-tab="advanced">
+        <div class="section-block">
+          <h3><span>🎨 الخلفية المتحركة</span></h3>
+          <div class="form-group"><label>نوع الخلفية</label>
+            <select id="bgAnimation">
+              <option value="none">بدون</option>
+              <option value="particles" selected>جزيئات</option>
+              <option value="gradient">تدرج</option>
+              <option value="grid">شبكة</option>
+            </select>
+          </div>
+        </div>
+        <div class="section-block">
+          <h3><span>🎭 التأثيرات</span></h3>
+          <div class="switch-row"><label>مؤشر القراءة</label><div class="switch on" id="progressToggle" onclick="toggleSwitch(this,'readingProgress')"></div></div>
+          <div class="switch-row"><label>زر العودة للأعلى</label><div class="switch on" id="topToggle" onclick="toggleSwitch(this,'backToTop')"></div></div>
+          <div class="switch-row"><label>Cursor مخصص</label><div class="switch" id="cursorToggle" onclick="toggleSwitch(this,'customCursor')"></div></div>
+        </div>
+        <div class="section-block">
+          <h3><span>🌐 اللغة</span></h3>
+          <div class="form-group"><label>اللغة الافتراضية</label>
+            <select id="defaultLang">
+              <option value="ar" selected>العربية</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <div class="switch-row"><label>زر تبديل اللغة</label><div class="switch" id="langToggle" onclick="toggleSwitch(this,'langSwitcher')"></div></div>
+        </div>
+        <div class="section-block">
+          <h3><span>🔔 الإشعارات</span></h3>
+          <div class="switch-row"><label>شريط إشعار</label><div class="switch" id="noticeToggle" onclick="toggleSwitch(this,'noticeBar')"></div></div>
+          <div class="form-group"><label>نص الإشعار</label><input type="text" id="noticeText" value="🎉 خصم 20% هذا الشهر!"></div>
+        </div>
+      </div>
+
+      <!-- DESIGN -->
       <div class="tab-content" data-tab="design">
         <div class="section-block">
           <h3><span>🎨 الثيمات</span></h3>
           <div class="theme-grid" id="themeGrid"></div>
         </div>
         <div class="section-block">
-          <h3><span>🎯 الألوان</span></h3>
+          <h3><span>🎯 ألوان مخصصة</span></h3>
           <div class="color-grid">
             <div class="color-item"><label>Primary</label><input type="color" id="cPrimary" value="#6366f1"></div>
             <div class="color-item"><label>Secondary</label><input type="color" id="cSecondary" value="#8b5cf6"></div>
@@ -382,12 +645,62 @@
             <div class="color-item"><label>Background</label><input type="color" id="cBg" value="#0f172a"></div>
           </div>
         </div>
+        <div class="section-block">
+          <h3><span>🔤 الخط</span></h3>
+          <div class="font-grid" id="fontGrid"></div>
+        </div>
+        <div class="section-block">
+          <h3><span>🎭 النمط</span></h3>
+          <div class="form-group"><label>حجم الخط</label>
+            <select id="fontSize">
+              <option value="15px">صغير</option>
+              <option value="16px" selected>متوسط</option>
+              <option value="17px">كبير</option>
+            </select>
+          </div>
+          <div class="form-group"><label>الحواف</label>
+            <select id="radius">
+              <option value="8px">خفيفة</option>
+              <option value="16px" selected>متوسطة</option>
+              <option value="24px">دائرية</option>
+            </select>
+          </div>
+          <div class="form-group"><label>الوضع</label>
+            <select id="mode">
+              <option value="dark" selected>داكن</option>
+              <option value="light">فاتح</option>
+            </select>
+          </div>
+          <div class="form-group"><label>التأثيرات</label>
+            <select id="effects">
+              <option value="on" selected>مفعّلة</option>
+              <option value="off">معطّلة</option>
+            </select>
+          </div>
+          <div class="form-group"><label>نمط الكروت</label>
+            <select id="cardStyle">
+              <option value="flat">مسطح</option>
+              <option value="glass" selected>زجاجي</option>
+              <option value="neon">نيون</option>
+              <option value="outline">محدد</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTIONS -->
+      <div class="tab-content" data-tab="sections">
+        <div class="section-block">
+          <h3><span>📋 ترتيب الأقسام</span></h3>
+          <p class="hint" style="margin-bottom:10px">استخدم أزرار ↑↓ لترتيب الأقسام</p>
+          <div class="sections-list" id="sectionsOrderList"></div>
+        </div>
       </div>
     </div>
 
     <div class="bottom-nav">
-      <div class="bn-item active" onclick="switchTab('basic')"><div class="ic">👤</div><div>أساسي</div></div>
-      <div class="bn-item" onclick="switchTab('design')"><div class="ic">🎨</div><div>تصميم</div></div>
+      <div class="bn-item active" onclick="switchPanelTab('basic')"><div class="ic">👤</div><div>أساسي</div></div>
+      <div class="bn-item" onclick="switchPanelTab('design')"><div class="ic">🎨</div><div>تصميم</div></div>
       <div class="bn-item" onclick="generateLink()"><div class="ic">🔗</div><div>رابط</div></div>
       <div class="bn-item" onclick="openMobilePreview()"><div class="ic">👁️</div><div>معاينة</div></div>
       <div class="bn-item" onclick="downloadSite()"><div class="ic">⬇️</div><div>تحميل</div></div>
@@ -400,10 +713,15 @@
         <span style="font-size:.85rem;font-weight:700">👁️ معاينة</span>
         <span class="badge" id="statusBadge">جاهز</span>
       </div>
+      <div class="device-btns">
+        <button class="device-btn active" data-device="desktop">🖥️</button>
+        <button class="device-btn" data-device="tablet">📱</button>
+        <button class="device-btn" data-device="mobile">📲</button>
+      </div>
     </div>
     <div class="preview-container">
-      <div class="preview-frame-wrap">
-        <iframe id="previewFrame"></iframe>
+      <div class="preview-frame-wrap" id="previewWrap">
+        <iframe id="previewFrame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
       </div>
     </div>
   </div>
@@ -411,14 +729,23 @@
 
 <div class="mobile-preview" id="mobilePreview">
   <div class="preview-toolbar">
-    <button class="btn btn-ghost btn-icon" onclick="closeMobilePreview()">✕</button>
-    <span style="font-size:.85rem;font-weight:700">👁️ معاينة</span>
-    <div></div>
+    <button class="btn btn-ghost btn-icon" onclick="closeMobilePreview()" style="font-size:1.15rem">✕</button>
+    <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:center">
+      <span style="font-size:.8rem;font-weight:700;color:var(--muted)">👁️ معاينة حية</span>
+    </div>
+    <div class="device-btns">
+      <button class="device-btn active" data-device="mobile" onclick="setMobileDevice('mobile',this)">📲</button>
+      <button class="device-btn" data-device="desktop" onclick="setMobileDevice('desktop',this)">🖥️</button>
+    </div>
   </div>
   <div class="mobile-preview-body">
-    <iframe id="mobilePreviewFrame"></iframe>
+    <div class="preview-frame-wrap mobile" id="mobilePreviewWrap">
+      <iframe id="mobilePreviewFrame" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+    </div>
   </div>
 </div>
+
+<button class="preview-fab" id="previewFab" onclick="openMobilePreview()">👁️</button>
 
 <div class="modal" id="linkModal">
   <div class="modal-box" style="text-align:center">
@@ -448,11 +775,9 @@
   </div>
 </div>
 
-<div class="toast" id="toast">✅ تم!</div>
-
-<script type="module">
+<div class="toast" id="toast">✅ تم!</div><script type="module">
 /* ============================================================
-   🔥 Firebase Configuration
+   🔥 Firebase Config
    ============================================================ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -501,14 +826,29 @@ const defaultState = {
     {title:'متجر إلكتروني', category:'ويب', desc:'متجر متكامل.', img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600'},
     {title:'منصة تعليمية', category:'ويب', desc:'منصة تعليم عن بعد.', img:'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600'}
   ],
+  gallery:[
+    {img:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600', caption:'تصميم واجهة'},
+    {img:'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600', caption:'تطبيق جوال'}
+  ],
   experience:[
     {role:'مطور ويب أول', company:'شركة التقنية', period:'2022 - الآن', desc:'قيادة فريق التطوير.'}
   ],
   education:[
     {degree:'بكالوريوس علوم الحاسب', school:'جامعة الملك سعود', period:'2016 - 2020', desc:'تخرجت بمرتبة الشرف.'}
   ],
+  certs:[
+    {icon:'🏆', title:'أفضل مطور', issuer:'نقابة المبرمجين', year:'2024'}
+  ],
   testimonials:[
     {name:'محمد العلي', role:'مدير تنفيذي', text:'عمل احترافي ومتميز.'}
+  ],
+  pricing:[
+    {name:'أساسية', price:'500', currency:'$', period:'مشروع', features:'صفحة واحدة\nتصميم متجاوب', popular:false},
+    {name:'احترافية', price:'1200', currency:'$', period:'مشروع', features:'5 صفحات\nتصميم مخصص\nSEO', popular:true}
+  ],
+  faq:[
+    {q:'كم يستغرق التنفيذ؟', a:'من 7 إلى 14 يوم.'},
+    {q:'هل يمكن التعديل؟', a:'نعم مع ضمان 30 يوم.'}
   ],
   email:'ahmed@example.com', phone:'+966 555 123 456',
   whatsapp:'', location:'الرياض',
@@ -517,7 +857,18 @@ const defaultState = {
     {icon:'💼', name:'LinkedIn', url:'https://linkedin.com'}
   ],
   theme:'indigo',
-  colors:{primary:'#6366f1', secondary:'#8b5cf6', accent:'#ec4899', bg:'#0f172a'}
+  colors:{primary:'#6366f1', secondary:'#8b5cf6', accent:'#ec4899', bg:'#0f172a'},
+  font:'Cairo', fontSize:'16px', radius:'16px', mode:'dark',
+  effects:'on', cardStyle:'glass', bgAnimation:'particles',
+  readingProgress:true, backToTop:true, customCursor:false,
+  defaultLang:'ar', langSwitcher:false, noticeBar:false,
+  noticeText:'🎉 خصم 20% هذا الشهر!',
+  sectionsOrder:['hero','about','skills','services','projects','gallery','experience','education','certs','testimonials','pricing','faq','contact'],
+  sectionsVisible:{
+    hero:true, about:true, skills:true, services:true,
+    projects:true, gallery:true, experience:true, education:true,
+    certs:true, testimonials:true, pricing:true, faq:true, contact:true
+  }
 };
 
 let state = JSON.parse(JSON.stringify(defaultState));
@@ -534,10 +885,24 @@ const themes = {
   blue:{name:'أزرق', c:{primary:'#3b82f6',secondary:'#2563eb',accent:'#60a5fa',bg:'#0c1e3e'}}
 };
 
-function saveToStorage(){ try{ localStorage.setItem('builder_v12', JSON.stringify(state)); }catch(e){} }
+const fonts = {Cairo:'القاهرة', Tajawal:'تجوال', 'IBM Plex Sans Arabic':'IBM', Almarai:'المراعي'};
+
+const sectionNames = {
+  hero:'🏠 الرئيسية', about:'📖 عني', skills:'💡 مهارات',
+  services:'🛠️ خدمات', projects:'📁 أعمال', gallery:'🖼️ معرض',
+  experience:'💼 خبرات', education:'🎓 تعليم', certs:'🏆 شهادات',
+  testimonials:'💬 آراء', pricing:'💰 أسعار', faq:'❓ أسئلة', contact:'📞 تواصل'
+};
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+function saveToStorage(){
+  try{ localStorage.setItem('builder_v13', JSON.stringify(state)); }catch(e){}
+}
 function loadFromStorage(){
   try{
-    const s = localStorage.getItem('builder_v12') || localStorage.getItem('builder_v11');
+    const s = localStorage.getItem('builder_v13');
     if(s){
       const p = JSON.parse(s);
       state = {...defaultState, ...p};
@@ -550,15 +915,34 @@ function loadFromStorage(){
   }catch(e){}
 }
 
-window.switchTab = function(name){
+/* ============================================================
+   TABS
+   ============================================================ */
+window.switchPanelTab = function(name){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab === name));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.toggle('active', c.dataset.tab === name));
   document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
+  const tc = document.getElementById('tabContents');
+  if(tc) tc.scrollTop = 0;
+  const tab = document.querySelector(`.tab[data-tab="${name}"]`);
+  if(tab) tab.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
 };
 document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click', ()=>switchTab(t.dataset.tab));
+  t.addEventListener('click', ()=>switchPanelTab(t.dataset.tab));
+});
+document.querySelectorAll('.preview-area .device-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.preview-area .device-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    const wrap = document.getElementById('previewWrap');
+    wrap.classList.remove('desktop','tablet','mobile');
+    wrap.classList.add(b.dataset.device);
+  });
 });
 
+/* ============================================================
+   LIST HELPERS
+   ============================================================ */
 function renderList(containerId, badgeId, arr, templateFn, emptyMsg){
   const c = document.getElementById(containerId);
   if(!c) return;
@@ -569,7 +953,6 @@ function renderList(containerId, badgeId, arr, templateFn, emptyMsg){
   if(!arr.length){ c.innerHTML = `<div class="empty">${emptyMsg}</div>`; return; }
   c.innerHTML = arr.map((item,i)=>templateFn(item,i)).join('');
 }
-
 window.updateItem = function(arr, idx, key, val, rerender){
   state[arr][idx][key] = val;
   if(rerender){
@@ -586,10 +969,14 @@ window.removeItem = function(arr, idx){
 };
 function getRendererFor(arr){
   return {highlights:renderHighlights,skills:renderSkills,services:renderServices,
-    projects:renderProjects,experience:renderExperience,education:renderEducation,
-    testimonials:renderTestimonials,socials:renderSocials}[arr];
+    projects:renderProjects,gallery:renderGallery,experience:renderExperience,
+    education:renderEducation,certs:renderCerts,testimonials:renderTestimonials,
+    pricing:renderPricing,faq:renderFaq,socials:renderSocials}[arr];
 }
 
+/* ============================================================
+   RENDERERS - Lists
+   ============================================================ */
 function renderHighlights(){
   renderList('highlightsList','highlightCount', state.highlights, (h,i)=>`
     <div class="item-card">
@@ -644,6 +1031,17 @@ function renderProjects(){
       <div class="form-group"><textarea onchange="updateItem('projects',${i},'desc',this.value)" placeholder="الوصف" rows="2">${p.desc}</textarea></div>
     </div>`, 'لا توجد مشاريع');
 }
+function renderGallery(){
+  renderList('galleryList','galleryCount', state.gallery, (g,i)=>`
+    <div class="item-card">
+      <div class="item-head">
+        <span class="item-title">صورة ${i+1}</span>
+        <div class="item-actions"><button onclick="removeItem('gallery',${i})">🗑️</button></div>
+      </div>
+      <div class="form-group"><input type="text" value="${g.img}" onchange="updateItem('gallery',${i},'img',this.value)" placeholder="رابط الصورة"></div>
+      <div class="form-group"><input type="text" value="${g.caption}" onchange="updateItem('gallery',${i},'caption',this.value)" placeholder="الوصف"></div>
+    </div>`, 'لا توجد صور');
+}
 function renderExperience(){
   renderList('experienceList','expCount', state.experience, (e,i)=>`
     <div class="item-card">
@@ -656,7 +1054,6 @@ function renderExperience(){
         <input type="text" value="${e.company}" onchange="updateItem('experience',${i},'company',this.value)" placeholder="الشركة">
         <input type="text" value="${e.period}" onchange="updateItem('experience',${i},'period',this.value)" placeholder="الفترة">
       </div>
-      <div class="form-group" style="margin-top:8px"><textarea onchange="updateItem('experience',${i},'desc',this.value)" placeholder="الوصف" rows="2">${e.desc}</textarea></div>
     </div>`, 'لا توجد خبرات');
 }
 function renderEducation(){
@@ -673,6 +1070,21 @@ function renderEducation(){
       </div>
     </div>`, 'لا توجد مؤهلات');
 }
+function renderCerts(){
+  renderList('certsList','certCount', state.certs, (c,i)=>`
+    <div class="item-card">
+      <div class="item-head">
+        <span class="item-title">${c.icon} ${c.title}</span>
+        <div class="item-actions"><button onclick="removeItem('certs',${i})">🗑️</button></div>
+      </div>
+      <div class="row-2">
+        <input type="text" value="${c.icon}" onchange="updateItem('certs',${i},'icon',this.value,1)" placeholder="أيقونة">
+        <input type="text" value="${c.year}" onchange="updateItem('certs',${i},'year',this.value)" placeholder="السنة">
+      </div>
+      <div class="form-group" style="margin-top:8px"><input type="text" value="${c.title}" onchange="updateItem('certs',${i},'title',this.value,1)" placeholder="العنوان"></div>
+      <div class="form-group"><input type="text" value="${c.issuer}" onchange="updateItem('certs',${i},'issuer',this.value)" placeholder="الجهة"></div>
+    </div>`, 'لا توجد شهادات');
+}
 function renderTestimonials(){
   renderList('testimonialsList','testCount', state.testimonials, (t,i)=>`
     <div class="item-card">
@@ -686,6 +1098,31 @@ function renderTestimonials(){
       </div>
       <div class="form-group" style="margin-top:8px"><textarea onchange="updateItem('testimonials',${i},'text',this.value)" placeholder="الرأي" rows="2">${t.text}</textarea></div>
     </div>`, 'لا توجد آراء');
+}
+function renderPricing(){
+  renderList('pricingList','priceCount', state.pricing, (p,i)=>`
+    <div class="item-card">
+      <div class="item-head">
+        <span class="item-title">${p.name}</span>
+        <div class="item-actions"><button onclick="removeItem('pricing',${i})">🗑️</button></div>
+      </div>
+      <div class="row-2">
+        <input type="text" value="${p.name}" onchange="updateItem('pricing',${i},'name',this.value,1)" placeholder="الاسم">
+        <input type="text" value="${p.price}" onchange="updateItem('pricing',${i},'price',this.value)" placeholder="السعر">
+      </div>
+      <div class="form-group" style="margin-top:8px"><textarea onchange="updateItem('pricing',${i},'features',this.value)" placeholder="المزايا" rows="3">${p.features}</textarea></div>
+    </div>`, 'لا توجد خطط');
+}
+function renderFaq(){
+  renderList('faqList','faqCount', state.faq, (f,i)=>`
+    <div class="item-card">
+      <div class="item-head">
+        <span class="item-title">سؤال ${i+1}</span>
+        <div class="item-actions"><button onclick="removeItem('faq',${i})">🗑️</button></div>
+      </div>
+      <div class="form-group"><input type="text" value="${f.q}" onchange="updateItem('faq',${i},'q',this.value)" placeholder="السؤال"></div>
+      <div class="form-group"><textarea onchange="updateItem('faq',${i},'a',this.value)" placeholder="الجواب" rows="2">${f.a}</textarea></div>
+    </div>`, 'لا توجد أسئلة');
 }
 function renderSocials(){
   renderList('socialsList','socialCount', state.socials, (s,i)=>`
@@ -702,15 +1139,21 @@ function renderSocials(){
     </div>`, 'لا توجد روابط');
 }
 
+/* Add functions */
 window.addHighlight = function(){ state.highlights.push({icon:'✅',text:'نقطة'}); renderHighlights(); refresh(); };
 window.addSkill = function(){ state.skills.push({name:'مهارة',level:80,icon:'⭐'}); renderSkills(); refresh(); };
 window.addService = function(){ state.services.push({icon:'✨',title:'خدمة',desc:'وصف'}); renderServices(); refresh(); };
 window.addProject = function(){ state.projects.push({title:'مشروع',category:'عام',desc:'وصف',img:'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=600'}); renderProjects(); refresh(); };
+window.addGallery = function(){ state.gallery.push({img:'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600',caption:'صورة'}); renderGallery(); refresh(); };
 window.addExperience = function(){ state.experience.push({role:'مسمى',company:'شركة',period:'2020 - 2022',desc:'وصف'}); renderExperience(); refresh(); };
 window.addEducation = function(){ state.education.push({degree:'مؤهل',school:'جامعة',period:'2016 - 2020',desc:'وصف'}); renderEducation(); refresh(); };
+window.addCert = function(){ state.certs.push({icon:'🏆',title:'شهادة',issuer:'جهة',year:'2024'}); renderCerts(); refresh(); };
 window.addTestimonial = function(){ state.testimonials.push({name:'عميل',role:'وظيفة',text:'رأي'}); renderTestimonials(); refresh(); };
+window.addPricing = function(){ state.pricing.push({name:'خطة',price:'999',currency:'$',period:'مشروع',features:'ميزة 1\nميزة 2',popular:false}); renderPricing(); refresh(); };
+window.addFaq = function(){ state.faq.push({q:'سؤال؟',a:'الجواب.'}); renderFaq(); refresh(); };
 window.addSocial = function(){ state.socials.push({icon:'🔗',name:'رابط',url:'https://'}); renderSocials(); refresh(); };
 
+/* Themes */
 function renderThemes(){
   const g = document.getElementById('themeGrid');
   if(!g) return;
@@ -729,13 +1172,55 @@ window.applyTheme = function(k){
   });
   renderThemes(); refresh();
 };
+function renderFonts(){
+  const g = document.getElementById('fontGrid');
+  if(!g) return;
+  g.innerHTML = Object.entries(fonts).map(([k,name])=>`
+    <div class="font-opt ${state.font===k?'active':''}" onclick="applyFont('${k}')" style="font-family:'${k}',sans-serif">${name}</div>
+  `).join('');
+}
+window.applyFont = function(f){ state.font = f; renderFonts(); refresh(); };
 
+/* Sections Order */
+function renderSectionsOrder(){
+  const c = document.getElementById('sectionsOrderList');
+  if(!c) return;
+  c.innerHTML = state.sectionsOrder.map((k,i)=>`
+    <div class="section-item" data-key="${k}">
+      <span class="drag-icon">☰</span>
+      <span class="sec-name">${sectionNames[k]}</span>
+      <div class="move-btns">
+        <button onclick="moveSection(${i},-1)" ${i===0?'disabled':''}>↑</button>
+        <button onclick="moveSection(${i},1)" ${i===state.sectionsOrder.length-1?'disabled':''}>↓</button>
+      </div>
+      <div class="toggle ${state.sectionsVisible[k]?'on':''}" onclick="toggleSection('${k}')"></div>
+    </div>
+  `).join('');
+}
+window.moveSection = function(i, dir){
+  const ni = i + dir;
+  if(ni < 0 || ni >= state.sectionsOrder.length) return;
+  [state.sectionsOrder[i], state.sectionsOrder[ni]] = [state.sectionsOrder[ni], state.sectionsOrder[i]];
+  renderSectionsOrder(); refresh();
+};
+window.toggleSection = function(k){
+  state.sectionsVisible[k] = !state.sectionsVisible[k];
+  renderSectionsOrder(); refresh();
+};
+window.toggleSwitch = function(el, key){
+  el.classList.toggle('on');
+  state[key] = el.classList.contains('on');
+  refresh();
+};
+
+/* Input bindings */
 const bindings = {
   fullName:'fullName', jobTitle:'jobTitle', heroBio:'heroBio',
   typewriterText:'typewriterText', avatarUrl:'avatarUrl',
   btn1Text:'btn1Text', btn1Link:'btn1Link', btn2Text:'btn2Text', btn2Link:'btn2Link',
   aboutTitle:'aboutTitle', aboutText:'aboutText',
-  email:'email', phone:'phone', whatsapp:'whatsapp', location:'location'
+  email:'email', phone:'phone', whatsapp:'whatsapp', location:'location',
+  noticeText:'noticeText'
 };
 Object.keys(bindings).forEach(id => {
   const el = document.getElementById(id);
@@ -749,144 +1234,60 @@ Object.keys(bindings).forEach(id => {
   const el = document.getElementById(id);
   if(el) el.addEventListener('input', e => {
     state.colors[id.replace('c','').toLowerCase()] = e.target.value;
-    refresh();
+    state.theme = 'custom'; refresh();
+  });
+});
+['fontSize','radius','mode','effects','cardStyle','bgAnimation','defaultLang'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('change', e => {
+    state[id] = e.target.value; refresh();
   });
 });
 
-function buildHTML(){
-  const c = state.colors;
-  const avatarSrc = state.avatarUrl || '';
+/* Preview */
+let previewOpen = false;
+window.openMobilePreview = function(){
+  if(previewOpen) return;
+  previewOpen = true;
+  const fab = document.getElementById('previewFab');
+  if(fab) fab.classList.add('hidden');
+  const overlay = document.getElementById('mobilePreview');
+  overlay.classList.add('show');
+  document.body.classList.add('preview-locked');
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(()=>{
+    const frame = document.getElementById('mobilePreviewFrame');
+    if(frame) frame.srcdoc = buildHTML();
+  });
+};
+window.closeMobilePreview = function(){
+  if(!previewOpen) return;
+  previewOpen = false;
+  const overlay = document.getElementById('mobilePreview');
+  overlay.classList.remove('show');
+  document.body.classList.remove('preview-locked');
+  document.body.style.overflow = '';
+  const fab = document.getElementById('previewFab');
+  if(fab) fab.classList.remove('hidden');
+};
+window.setMobileDevice = function(device, btn){
+  document.querySelectorAll('.mobile-preview .device-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const wrap = document.getElementById('mobilePreviewWrap');
+  wrap.classList.remove('mobile','tablet','desktop');
+  wrap.classList.add(device);
+};
 
-  return `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${state.fullName} — ${state.jobTitle}</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
-  html{scroll-behavior:smooth}
-  body{background:${c.bg};color:#e5e7eb;line-height:1.7}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-  .container{max-width:1100px;margin:0 auto;padding:0 20px}
-  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:${c.bg}dd;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff10;padding:12px 20px}
-  .nav-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-  .nav-brand{font-weight:900;display:flex;align-items:center;gap:10px}
-  .nav-brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 0 15px ${c.primary}}
-  .nav-links{display:flex;gap:20px;list-style:none}
-  .nav-links a{font-size:.85rem;opacity:.75;transition:all .2s}
-  .nav-links a:hover{opacity:1;color:${c.accent}}
-  @media(max-width:768px){.nav-links{display:none}}
-  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;background:radial-gradient(circle at 20% 30%,${c.primary}22 0%,transparent 45%),radial-gradient(circle at 80% 70%,${c.accent}22 0%,transparent 45%)}
-  .hero-inner{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;align-items:center;max-width:1100px;width:100%}
-  @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;gap:30px}}
-  .hero-text h2{font-size:1.1rem;color:${c.accent};font-weight:700;margin-bottom:10px}
-  .hero-text h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:900;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .typewriter{font-size:clamp(1rem,2.5vw,1.3rem);color:${c.accent};font-weight:700;margin-bottom:14px;min-height:1.6em}
-  .bio{color:#94a3b8;margin-bottom:28px}
-  @media(max-width:900px){.bio{margin:0 auto 28px}}
-  .hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-  @media(max-width:900px){.hero-btns{justify-content:center}}
-  .btn{padding:14px 28px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:all .3s;cursor:pointer;border:2px solid transparent}
-  .btn-primary{background:linear-gradient(135deg,${c.primary},${c.secondary});color:#fff;box-shadow:0 10px 28px ${c.primary}55}
-  .btn-primary:hover{transform:translateY(-3px)}
-  .btn-outline{border-color:${c.primary};color:${c.primary}}
-  .btn-outline:hover{background:${c.primary};color:#fff}
-  .hero-visual{display:flex;justify-content:center}
-  .avatar{width:min(300px,70vw);aspect-ratio:1;border-radius:50%;padding:6px;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 30px 80px ${c.primary}55;animation:float 4s ease-in-out infinite}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
-  .avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:${c.bg};display:flex;align-items:center;justify-content:center}
-  .avatar-inner img{width:100%;height:100%;object-fit:cover}
-  .avatar-initial{font-size:clamp(4rem,10vw,7rem);font-weight:900;color:${c.primary}}
-  section{padding:90px 0;position:relative}
-  .section-head{text-align:center;margin-bottom:60px}
-  .section-head h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;margin-bottom:12px}
-  .section-head h2 span{background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .line{width:60px;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});margin:14px auto;border-radius:4px}
-  .card{background:${c.bg}88;border:1px solid #ffffff10;border-radius:18px;padding:28px;backdrop-filter:blur(10px);transition:all .3s}
-  .card:hover{transform:translateY(-8px);border-color:${c.primary}66}
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
-  @media(max-width:900px){.about-grid{grid-template-columns:1fr}}
-  .about-text h3{font-size:1.5rem;margin-bottom:16px;color:${c.accent}}
-  .about-text p{color:#94a3b8;margin-bottom:24px}
-  .highlights{display:grid;gap:12px}
-  .highlight{display:flex;gap:12px;align-items:center;padding:14px 16px;background:#ffffff08;border:1px solid #ffffff10;border-radius:14px}
-  .highlight .ic{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,${c.primary},${c.secondary});display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
-  .highlight span{font-weight:600}
-  .stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center}
-  .stat-num{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-  .stat-label{color:#94a3b8;font-weight:600;font-size:.9rem}
-  .skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-  .skill-item{background:#ffffff08;border:1px solid #ffffff10;border-radius:14px;padding:20px}
-  .skill-head{display:flex;justify-content:space-between;margin-bottom:14px}
-  .skill-name{display:flex;align-items:center;gap:10px;font-weight:700}
-  .skill-pct{color:${c.accent};font-weight:800}
-  .skill-bar{height:8px;background:#1e293b;border-radius:8px;overflow:hidden}
-  .skill-fill{height:100%;background:linear-gradient(90deg,${c.primary},${c.accent});border-radius:8px}
-  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-  .service-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;padding:32px;position:relative;overflow:hidden;transition:all .3s}
-  .service-card::before{content:'';position:absolute;top:0;right:0;width:100%;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});transform:scaleX(0);transition:transform .4s}
-  .service-card:hover::before{transform:scaleX(1)}
-  .service-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px ${c.primary}33}
-  .service-icon{width:64px;height:64px;border-radius:16px;font-size:1.8rem;background:linear-gradient(135deg,${c.primary},${c.accent});display:flex;align-items:center;justify-content:center;margin-bottom:20px}
-  .service-card h3{font-size:1.2rem;margin-bottom:10px}
-  .service-card p{color:#94a3b8;font-size:.95rem}
-  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px}
-  .project-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;overflow:hidden;transition:all .3s}
-  .project-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px ${c.primary}33}
-  .project-img{height:220px;background-size:cover;background-position:center;position:relative}
-  .project-cat{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;padding:6px 16px;border-radius:20px;font-size:.78rem;font-weight:700}
-  .project-body{padding:24px}
-  .project-body h3{font-size:1.15rem;margin-bottom:8px}
-  .project-body p{color:#94a3b8;font-size:.92rem}
-  .timeline{position:relative;max-width:820px;margin:0 auto;padding-right:32px}
-  .timeline::before{content:'';position:absolute;top:0;bottom:0;right:10px;width:2px;background:linear-gradient(180deg,${c.primary},${c.accent})}
-  .tl-item{position:relative;margin-bottom:38px}
-  .tl-item::before{content:'';position:absolute;right:-28px;top:6px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});border:4px solid ${c.bg}}
-  .tl-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;padding:26px}
-  .tl-period{color:${c.accent};font-weight:700;font-size:.88rem;margin-bottom:6px}
-  .tl-card h4{color:#94a3b8;margin:6px 0 10px;font-size:.95rem}
-  .tl-card p{color:#94a3b8;font-size:.92rem}
-  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-  .testi-card{background:#ffffff08;border:1px solid #ffffff10;border-radius:18px;padding:30px;position:relative}
-  .testi-card::before{content:'"';position:absolute;top:10px;left:20px;font-size:5rem;line-height:1;color:${c.primary}44;font-family:serif}
-  .testi-text{color:#94a3b8;margin-bottom:20px;position:relative;z-index:1}
-  .testi-user h4{font-size:1rem}
-  .testi-user span{color:#94a3b8;font-size:.85rem}
-  .contact-box{background:linear-gradient(135deg,${c.primary}22,${c.accent}22);border:1px solid ${c.primary}44;border-radius:24px;padding:60px 40px;text-align:center}
-  .contact-box h2{font-size:clamp(1.6rem,4vw,2.3rem);margin-bottom:12px}
-  .contact-box h2 span{color:${c.accent}}
-  .contact-box > p{color:#94a3b8;margin-bottom:32px}
-  .contact-info{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
-  .contact-chip{padding:12px 22px;background:#ffffff0d;border:1px solid #ffffff15;border-radius:50px;font-weight:600}
-  .socials{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-  .social-link{width:52px;height:52px;border-radius:50%;background:#ffffff0d;border:1px solid #ffffff15;display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:all .3s}
-  .social-link:hover{background:linear-gradient(135deg,${c.primary},${c.accent});transform:translateY(-6px)}
-  .whatsapp{position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;font-size:1.7rem;color:#fff;box-shadow:0 12px 32px rgba(37,211,102,.5);z-index:100}
-  footer{padding:30px;text-align:center;color:#64748b;border-top:1px solid #ffffff10}
-</style>
-</head>
-<body>
-<nav class="nav">
-  <div class="nav-inner">
-    <div class="nav-brand"><span class="dot"></span>${state.fullName}</div>
-    <ul class="nav-links">
-      <li><a href="#about">عني</a></li>
-      <li><a href="#skills">مهارات</a></li>
-      <li><a href="#services">خدمات</a></li>
-      <li><a href="#projects">أعمال</a></li>
-      <li><a href="#contact">تواصل</a></li>
-    </ul>
-  </div>
-</nav>
-<section class="hero">
+/* Build HTML - Site Generator */
+function renderHero(c, avatarSrc){
+  const typeLines = (state.typewriterText||'').split('\n').filter(l=>l.trim());
+  return `
+<section id="hero" class="hero">
   <div class="hero-inner">
     <div class="hero-text">
       <h2>👋 مرحباً، أنا</h2>
       <h1>${state.fullName}</h1>
-      <div class="typewriter" id="tw"></div>
+      <div class="typewriter-wrap"><span class="typewriter" data-lines='${JSON.stringify(typeLines)}'></span><span class="cursor-blink">|</span></div>
       <p class="bio">${state.heroBio}</p>
       <div class="hero-btns">
         ${state.btn1Text?`<a href="${state.btn1Link}" class="btn btn-primary">${state.btn1Text}</a>`:''}
@@ -894,14 +1295,13 @@ function buildHTML(){
       </div>
     </div>
     <div class="hero-visual">
-      <div class="avatar">
-        <div class="avatar-inner">
-          ${avatarSrc?`<img src="${avatarSrc}" alt="${state.fullName}">`:`<div class="avatar-initial">${state.fullName.charAt(0)}</div>`}
-        </div>
-      </div>
+      <div class="avatar-box"><div class="avatar-inner">${avatarSrc?`<img src="${avatarSrc}">`:`<div class="avatar-initial">${state.fullName.charAt(0)}</div>`}</div></div>
     </div>
   </div>
-</section>
+</section>`;
+}
+function renderAbout(c){
+  return `
 <section id="about">
   <div class="container">
     <div class="section-head"><h2>عن <span>نفسي</span></h2><div class="line"></div></div>
@@ -909,12 +1309,10 @@ function buildHTML(){
       <div class="about-text">
         <h3>${state.aboutTitle}</h3>
         <p>${state.aboutText}</p>
-        <div class="highlights">
-          ${state.highlights.map(h=>`<div class="highlight"><div class="ic">${h.icon}</div><span>${h.text}</span></div>`).join('')}
-        </div>
+        <div class="highlights">${state.highlights.map(h=>`<div class="highlight"><div class="ic">${h.icon}</div><span>${h.text}</span></div>`).join('')}</div>
       </div>
-      <div class="card">
-        <div class="stats">
+      <div class="card" style="padding:28px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center">
           <div><div class="stat-num">5+</div><div class="stat-label">سنوات خبرة</div></div>
           <div><div class="stat-num">80+</div><div class="stat-label">مشروع</div></div>
           <div><div class="stat-num">50+</div><div class="stat-label">عميل</div></div>
@@ -923,98 +1321,166 @@ function buildHTML(){
       </div>
     </div>
   </div>
-</section>
-<section id="skills" style="background:#ffffff05">
+</section>`;
+}
+function renderSkillsSection(c){
+  if(!state.skills.length) return '';
+  const words = state.skillsTitle?state.skillsTitle.split(' '):['مهاراتي','الاحترافية'];
+  const last = words.pop();
+  return `
+<section id="skills">
   <div class="container">
-    <div class="section-head"><h2>مهاراتي <span>الاحترافية</span></h2><div class="line"></div></div>
-    <div class="skills-grid">
-      ${state.skills.map(s=>`
-        <div class="skill-item">
-          <div class="skill-head">
-            <div class="skill-name"><span>${s.icon}</span>${s.name}</div>
-            <div class="skill-pct">${s.level}%</div>
-          </div>
-          <div class="skill-bar"><div class="skill-fill" style="width:${s.level}%"></div></div>
-        </div>
-      `).join('')}
-    </div>
+    <div class="section-head"><h2>${words.join(' ')} <span>${last}</span></h2><div class="line"></div></div>
+    <div class="skills-grid">${state.skills.map(s=>`
+      <div class="skill-item">
+        <div class="skill-head"><div class="skill-name"><span class="ic">${s.icon}</span>${s.name}</div><div class="skill-pct">${s.level}%</div></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:${s.level}%"></div></div>
+      </div>`).join('')}</div>
   </div>
-</section>
-<section id="services">
+</section>`;
+}
+function renderServicesSection(c){
+  if(!state.services.length) return '';
+  return `
+<section id="services" class="alt-bg">
   <div class="container">
     <div class="section-head"><h2>خدماتي <span>المميزة</span></h2><div class="line"></div></div>
-    <div class="services-grid">
-      ${state.services.map(s=>`
-        <div class="service-card">
-          <div class="service-icon">${s.icon}</div>
-          <h3>${s.title}</h3>
-          <p>${s.desc}</p>
-        </div>
-      `).join('')}
-    </div>
+    <div class="services-grid">${state.services.map(s=>`
+      <div class="service-card">
+        <div class="service-icon">${s.icon}</div>
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+      </div>`).join('')}</div>
   </div>
-</section>
-<section id="projects" style="background:#ffffff05">
+</section>`;
+}
+function renderProjectsSection(c){
+  if(!state.projects.length) return '';
+  return `
+<section id="projects">
   <div class="container">
     <div class="section-head"><h2>أعمالي <span>الأخيرة</span></h2><div class="line"></div></div>
-    <div class="projects-grid">
-      ${state.projects.map(p=>`
-        <div class="project-card">
-          <div class="project-img" style="background-image:url('${p.img}')"><span class="project-cat">${p.category}</span></div>
-          <div class="project-body"><h3>${p.title}</h3><p>${p.desc}</p></div>
-        </div>
-      `).join('')}
-    </div>
+    <div class="projects-grid">${state.projects.map(p=>`
+      <div class="project-card">
+        <div class="project-img" style="background-image:url('${p.img}')"><span class="project-cat">${p.category||'عام'}</span></div>
+        <div class="project-body"><h3>${p.title}</h3><p>${p.desc}</p></div>
+      </div>`).join('')}</div>
   </div>
-</section>
+</section>`;
+}
+function renderGallerySection(c){
+  if(!state.gallery.length) return '';
+  return `
+<section id="gallery" class="alt-bg">
+  <div class="container">
+    <div class="section-head"><h2>معرض <span>أعمالي</span></h2><div class="line"></div></div>
+    <div class="gallery-grid">${state.gallery.map(g=>`
+      <div class="gallery-item">
+        <img src="${g.img}" alt="${g.caption}" loading="lazy">
+        <div class="gallery-overlay"><span>${g.caption}</span></div>
+      </div>`).join('')}</div>
+  </div>
+</section>`;
+}
+function renderExperienceSection(c){
+  if(!state.experience.length) return '';
+  return `
 <section id="experience">
   <div class="container">
     <div class="section-head"><h2>مسيرتي <span>المهنية</span></h2><div class="line"></div></div>
-    <div class="timeline">
-      ${state.experience.map(e=>`
-        <div class="tl-item">
-          <div class="tl-card">
-            <div class="tl-period">${e.period}</div>
-            <h3>${e.role}</h3>
-            <h4>${e.company}</h4>
-            <p>${e.desc}</p>
-          </div>
+    <div class="timeline">${state.experience.map(e=>`
+      <div class="tl-item">
+        <div class="tl-card">
+          <div class="tl-period">${e.period}</div>
+          <h3>${e.role}</h3>
+          <h4>${e.company}</h4>
+          <p>${e.desc||''}</p>
         </div>
-      `).join('')}
-    </div>
+      </div>`).join('')}</div>
   </div>
-</section>
-<section id="education" style="background:#ffffff05">
+</section>`;
+}
+function renderEducationSection(c){
+  if(!state.education.length) return '';
+  return `
+<section id="education" class="alt-bg">
   <div class="container">
     <div class="section-head"><h2>المؤهلات <span>العلمية</span></h2><div class="line"></div></div>
-    <div class="timeline">
-      ${state.education.map(e=>`
-        <div class="tl-item">
-          <div class="tl-card">
-            <div class="tl-period">${e.period}</div>
-            <h3>${e.degree}</h3>
-            <h4>${e.school}</h4>
-            <p>${e.desc}</p>
-          </div>
+    <div class="timeline">${state.education.map(e=>`
+      <div class="tl-item">
+        <div class="tl-card">
+          <div class="tl-period">${e.period}</div>
+          <h3>${e.degree}</h3>
+          <h4>${e.school}</h4>
+          <p>${e.desc||''}</p>
         </div>
-      `).join('')}
-    </div>
+      </div>`).join('')}</div>
   </div>
-</section>
-<section id="testimonials">
+</section>`;
+}
+function renderCertsSection(c){
+  if(!state.certs.length) return '';
+  return `
+<section id="certs">
+  <div class="container">
+    <div class="section-head"><h2>الشهادات <span>والجوائز</span></h2><div class="line"></div></div>
+    <div class="certs-grid">${state.certs.map(cert=>`
+      <div class="cert-card">
+        <div class="cert-icon">${cert.icon}</div>
+        <h3>${cert.title}</h3>
+        <p>${cert.issuer} • ${cert.year}</p>
+      </div>`).join('')}</div>
+  </div>
+</section>`;
+}
+function renderTestimonialsSection(c){
+  if(!state.testimonials.length) return '';
+  return `
+<section id="testimonials" class="alt-bg">
   <div class="container">
     <div class="section-head"><h2>ماذا يقول <span>العملاء</span></h2><div class="line"></div></div>
-    <div class="testi-grid">
-      ${state.testimonials.map(t=>`
-        <div class="testi-card">
-          <p class="testi-text">${t.text}</p>
-          <div class="testi-user"><h4>${t.name}</h4><span>${t.role}</span></div>
-        </div>
-      `).join('')}
-    </div>
+    <div class="testi-grid">${state.testimonials.map(t=>`
+      <div class="testi-card">
+        <p class="testi-text">${t.text}</p>
+        <div class="testi-user"><h4>${t.name}</h4><span>${t.role}</span></div>
+      </div>`).join('')}</div>
   </div>
-</section>
-<section id="contact" style="background:#ffffff05">
+</section>`;
+}
+function renderPricingSection(c){
+  if(!state.pricing.length) return '';
+  return `
+<section id="pricing">
+  <div class="container">
+    <div class="section-head"><h2>خطط <span>الأسعار</span></h2><div class="line"></div></div>
+    <div class="pricing-grid">${state.pricing.map(p=>`
+      <div class="price-card ${p.popular?'popular':''}">
+        ${p.popular?'<div class="popular-badge">⭐ الأكثر طلباً</div>':''}
+        <h3>${p.name}</h3>
+        <div class="price-tag"><span class="currency">${p.currency}</span><span class="amount">${p.price}</span><span class="period">/${p.period}</span></div>
+        <ul class="price-features">${p.features.split('\n').map(f=>`<li>✓ ${f}</li>`).join('')}</ul>
+        <a href="#contact" class="btn ${p.popular?'btn-primary':'btn-outline'}">اطلب الآن</a>
+      </div>`).join('')}</div>
+  </div>
+</section>`;
+}
+function renderFaqSection(c){
+  if(!state.faq.length) return '';
+  return `
+<section id="faq" class="alt-bg">
+  <div class="container">
+    <div class="section-head"><h2>الأسئلة <span>الشائعة</span></h2><div class="line"></div></div>
+    <div class="faq-list">${state.faq.map(f=>`
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q"><span>${f.q}</span><span class="faq-icon">+</span></div>
+        <div class="faq-a"><p>${f.a}</p></div>
+      </div>`).join('')}</div>
+  </div>
+</section>`;
+}
+function renderContactSection(c){
+  return `
+<section id="contact">
   <div class="container">
     <div class="contact-box">
       <h2>لنعمل <span>معاً</span></h2>
@@ -1024,31 +1490,275 @@ function buildHTML(){
         ${state.phone?`<div class="contact-chip">📱 ${state.phone}</div>`:''}
         ${state.location?`<div class="contact-chip">📍 ${state.location}</div>`:''}
       </div>
-      <div class="socials">
-        ${state.socials.map(s=>`<a href="${s.url}" target="_blank" class="social-link">${s.icon}</a>`).join('')}
-      </div>
+      <div class="socials">${state.socials.map(s=>`<a href="${s.url}" target="_blank" class="social-link">${s.icon}</a>`).join('')}</div>
     </div>
   </div>
-</section>
-<footer>© ${new Date().getFullYear()} ${state.fullName} — جميع الحقوق محفوظة</footer>
-${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" class="whatsapp">💬</a>`:''}
+</section>`;
+}
+
+function getBgAnimationCSS(type, c){
+  if(type === 'particles'){
+    return `.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(${c.primary}33 1px, transparent 1px),radial-gradient(${c.accent}22 1px, transparent 1px);background-size:34px 34px,52px 52px;background-position:0 0,17px 17px;opacity:.6;animation:bgmove 40s linear infinite}
+    @keyframes bgmove{0%{background-position:0 0,17px 17px}100%{background-position:340px 340px,357px 357px}}`;
+  }
+  if(type === 'gradient'){
+    return `body{background:linear-gradient(-45deg,${c.bg},${c.primary}22,${c.accent}22,${c.bg});background-size:400% 400%;animation:gradientmove 15s ease infinite}
+    @keyframes gradientmove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}`;
+  }
+  if(type === 'grid'){
+    return `.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(${c.primary}15 1px,transparent 1px),linear-gradient(90deg,${c.primary}15 1px,transparent 1px);background-size:50px 50px;animation:gridmove 20s linear infinite}
+    @keyframes gridmove{0%{background-position:0 0}100%{background-position:50px 50px}}`;
+  }
+  return `.hero{background:radial-gradient(circle at 20% 30%,${c.primary}22 0%,transparent 45%),radial-gradient(circle at 80% 70%,${c.accent}22 0%,transparent 45%)}`;
+}
+
+function buildHTML(){
+  const c = state.colors;
+  const isDark = state.mode === 'dark';
+  const bg = isDark ? c.bg : '#f8fafc';
+  const text = isDark ? '#e5e7eb' : '#1e293b';
+  const cardBg = state.cardStyle === 'glass' 
+    ? (isDark?'rgba(255,255,255,0.05)':'rgba(255,255,255,0.7)')
+    : (isDark?'rgba(255,255,255,0.03)':'#ffffff');
+  const cardBorder = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+  const muted = isDark ? '#94a3b8' : '#64748b';
+  const effects = state.effects === 'on';
+  const avatarSrc = state.avatarUrl || '';
+  const dir = state.defaultLang === 'ar' ? 'rtl' : 'ltr';
+  const lang = state.defaultLang;
+
+  const renderers = {
+    hero: ()=>renderHero(c,avatarSrc),
+    about: ()=>renderAbout(c),
+    skills: ()=>renderSkillsSection(c),
+    services: ()=>renderServicesSection(c),
+    projects: ()=>renderProjectsSection(c),
+    gallery: ()=>renderGallerySection(c),
+    experience: ()=>renderExperienceSection(c),
+    education: ()=>renderEducationSection(c),
+    certs: ()=>renderCertsSection(c),
+    testimonials: ()=>renderTestimonialsSection(c),
+    pricing: ()=>renderPricingSection(c),
+    faq: ()=>renderFaqSection(c),
+    contact: ()=>renderContactSection(c)
+  };
+
+  const sectionsHTML = state.sectionsOrder
+    .filter(k=>state.sectionsVisible[k])
+    .map(k => renderers[k] ? renderers[k]() : '')
+    .join('\n');
+
+  const bgAnimCSS = getBgAnimationCSS(state.bgAnimation, c);
+
+  return `<!DOCTYPE html>
+<html lang="${lang}" dir="${dir}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>${state.fullName} — ${state.jobTitle}</title>
+<meta name="description" content="${state.heroBio}">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'${state.font}',sans-serif}
+  html{scroll-behavior:smooth}
+  body{background:${bg};color:${text};font-size:${state.fontSize};line-height:1.7;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block;height:auto}
+  .container{max-width:1200px;margin:0 auto;padding:0 20px}
+  ${bgAnimCSS}
+  ${state.noticeBar?`.notice-bar{background:linear-gradient(90deg,${c.primary},${c.accent});color:#fff;text-align:center;padding:8px 12px;font-weight:600;font-size:.85rem}`:''}
+  .nav{position:fixed;top:${state.noticeBar?'34px':'0'};left:0;right:0;z-index:1000;
+    background:${isDark?'rgba(15,23,42,0.85)':'rgba(255,255,255,0.9)'};
+    backdrop-filter:blur(16px);border-bottom:1px solid ${cardBorder};padding:12px 0}
+  .nav-inner{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .nav-brand{font-weight:900;font-size:1rem;display:flex;align-items:center;gap:8px}
+  .nav-brand .dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 0 12px ${c.primary}}
+  .nav-links{display:flex;gap:18px;list-style:none}
+  .nav-links a{font-size:.85rem;font-weight:600;opacity:.75;transition:all .2s}
+  .nav-links a:hover{opacity:1;color:${c.accent}}
+  @media(max-width:900px){.nav-links{display:none}}
+  ${state.readingProgress?`.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,${c.primary},${c.accent});z-index:1002;transition:width .1s;width:0}`:''}
+  .hero{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:100px 20px 60px;position:relative;overflow:hidden}
+  .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;max-width:1200px;width:100%}
+  @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;gap:30px}}
+  .hero-text h2{font-size:1.15rem;color:${c.accent};font-weight:700;margin-bottom:10px}
+  .hero-text h1{font-size:clamp(1.8rem,6vw,3.6rem);font-weight:900;line-height:1.15;margin-bottom:12px;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .typewriter-wrap{font-size:clamp(1rem,2.5vw,1.3rem);color:${c.accent};font-weight:700;margin-bottom:12px;min-height:1.6em}
+  .cursor-blink{animation:blink 1s infinite}
+  @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+  .hero-text .bio{color:${muted};margin-bottom:26px;max-width:560px}
+  @media(max-width:900px){.hero-text .bio{margin:0 auto 26px}}
+  .hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+  @media(max-width:900px){.hero-btns{justify-content:center}}
+  .btn{padding:12px 24px;border-radius:${state.radius};font-weight:700;font-size:.92rem;display:inline-flex;align-items:center;gap:6px;transition:all .3s;cursor:pointer;border:2px solid transparent}
+  .btn-primary{background:linear-gradient(135deg,${c.primary},${c.secondary});color:#fff;box-shadow:0 10px 28px ${c.primary}55}
+  .btn-outline{border-color:${c.primary};color:${c.primary}}
+  .btn-outline:hover{background:${c.primary};color:#fff}
+  .hero-visual{display:flex;justify-content:center}
+  .avatar-box{width:min(300px,70vw);aspect-ratio:1;border-radius:50%;padding:6px;background:linear-gradient(135deg,${c.primary},${c.accent});box-shadow:0 30px 80px ${c.primary}55;position:relative;${effects?'animation:float 4s ease-in-out infinite':''}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .avatar-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:${bg};display:flex;align-items:center;justify-content:center}
+  .avatar-inner img{width:100%;height:100%;object-fit:cover}
+  .avatar-initial{font-size:clamp(3.5rem,10vw,6.5rem);font-weight:900;color:${c.primary}}
+  section{padding:80px 0;position:relative}
+  @media(min-width:768px){section{padding:100px 0}}
+  .alt-bg{background:${isDark?'rgba(255,255,255,.015)':'rgba(0,0,0,.02)'}}
+  .section-head{text-align:center;margin-bottom:50px}
+  .section-head h2{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:900;margin-bottom:10px}
+  .section-head h2 span{background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .section-head .line{width:54px;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});border-radius:4px;margin:14px auto 0}
+  .card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:24px;backdrop-filter:blur(10px)}
+  .about-grid{display:grid;grid-template-columns:1fr;gap:30px}
+  @media(min-width:900px){.about-grid{grid-template-columns:1.1fr 1fr;gap:50px;align-items:center}}
+  .about-text h3{font-size:1.35rem;margin-bottom:14px;color:${c.accent}}
+  .about-text p{color:${muted};margin-bottom:20px}
+  .highlights{display:grid;gap:10px}
+  .highlight{display:flex;gap:10px;align-items:center;padding:12px 14px;background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius}}
+  .highlight .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${c.primary},${c.secondary});font-size:1rem;flex-shrink:0}
+  .highlight span{font-weight:600;font-size:.92rem}
+  .stat-num{font-size:2rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stat-label{color:${muted};font-weight:600;font-size:.85rem}
+  .skills-grid{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:640px){.skills-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}}
+  .skill-item{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:18px}
+  .skill-head{display:flex;justify-content:space-between;margin-bottom:12px}
+  .skill-name{display:flex;align-items:center;gap:8px;font-weight:700}
+  .skill-name .ic{font-size:1.2rem}
+  .skill-pct{color:${c.accent};font-weight:800}
+  .skill-bar{height:7px;background:${isDark?'#1e293b':'#e2e8f0'};border-radius:8px;overflow:hidden}
+  .skill-fill{height:100%;background:linear-gradient(90deg,${c.primary},${c.accent});border-radius:8px}
+  .services-grid{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:640px){.services-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}}
+  .service-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:26px;position:relative;overflow:hidden;transition:all .35s}
+  .service-card::before{content:'';position:absolute;top:0;right:0;width:100%;height:4px;background:linear-gradient(90deg,${c.primary},${c.accent});transform:scaleX(0);transition:transform .4s}
+  .service-card:hover::before{transform:scaleX(1)}
+  .service-card:hover{transform:translateY(-6px);box-shadow:0 25px 60px ${c.primary}33}
+  .service-icon{width:56px;height:56px;border-radius:14px;font-size:1.5rem;background:linear-gradient(135deg,${c.primary},${c.accent});display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#fff}
+  .service-card h3{font-size:1.1rem;margin-bottom:8px}
+  .service-card p{color:${muted};font-size:.9rem}
+  .projects-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:640px){.projects-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}}
+  .project-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};overflow:hidden;transition:all .4s}
+  .project-card:hover{transform:translateY(-6px);box-shadow:0 25px 60px ${c.primary}33}
+  .project-img{height:200px;background-size:cover;background-position:center;position:relative}
+  .project-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.75));opacity:.9}
+  .project-cat{position:absolute;top:12px;right:12px;z-index:2;background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700}
+  .project-body{padding:18px}
+  .project-body h3{font-size:1.05rem;margin-bottom:6px}
+  .project-body p{color:${muted};font-size:.88rem}
+  .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(min-width:640px){.gallery-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}}
+  .gallery-item{position:relative;border-radius:${state.radius};overflow:hidden;aspect-ratio:1}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .gallery-item:hover img{transform:scale(1.08)}
+  .gallery-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.85));display:flex;align-items:flex-end;padding:12px;color:#fff}
+  .gallery-overlay span{font-weight:700;font-size:.85rem}
+  .timeline{position:relative;max-width:820px;margin:0 auto;padding-${dir==='rtl'?'right':'left'}:28px}
+  .timeline::before{content:'';position:absolute;top:0;bottom:0;${dir==='rtl'?'right':'left'}:8px;width:2px;background:linear-gradient(180deg,${c.primary},${c.accent})}
+  .tl-item{position:relative;margin-bottom:26px}
+  .tl-item::before{content:'';position:absolute;${dir==='rtl'?'right':'left'}:-26px;top:6px;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});border:3px solid ${bg}}
+  .tl-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:20px}
+  .tl-period{color:${c.accent};font-weight:700;font-size:.8rem;margin-bottom:5px}
+  .tl-card h3{font-size:1.05rem;margin-bottom:3px}
+  .tl-card h4{color:${muted};font-weight:600;font-size:.88rem;margin-bottom:8px}
+  .tl-card p{color:${muted};font-size:.86rem}
+  .certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(min-width:640px){.certs-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}}
+  .cert-card{text-align:center;padding:24px 16px;background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius}}
+  .cert-icon{font-size:2.4rem;margin-bottom:10px;color:${c.accent}}
+  .cert-card h3{font-size:.98rem;margin-bottom:4px}
+  .cert-card p{color:${muted};font-size:.8rem}
+  .testi-grid{display:grid;grid-template-columns:1fr;gap:18px}
+  @media(min-width:640px){.testi-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}}
+  .testi-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:24px;position:relative}
+  .testi-card::before{content:'"';position:absolute;top:8px;${dir==='rtl'?'left':'right'}:18px;font-size:4rem;line-height:1;color:${c.primary}33;font-family:serif;font-weight:900}
+  .testi-text{color:${muted};margin-bottom:18px;position:relative;z-index:1}
+  .testi-user h4{font-size:.92rem}
+  .testi-user span{color:${muted};font-size:.78rem}
+  .pricing-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:640px){.pricing-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}}
+  .price-card{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};padding:30px 22px;position:relative;display:flex;flex-direction:column}
+  .price-card.popular{border:2px solid ${c.primary}}
+  .popular-badge{position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;padding:4px 14px;border-radius:20px;font-size:.72rem;font-weight:700}
+  .price-card h3{font-size:1.1rem;margin-bottom:16px;text-align:center}
+  .price-tag{display:flex;align-items:baseline;justify-content:center;gap:3px;margin-bottom:20px}
+  .currency{font-size:1.1rem;color:${c.accent};font-weight:700}
+  .amount{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,${c.primary},${c.accent});-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .period{color:${muted};font-size:.82rem}
+  .price-features{list-style:none;margin-bottom:22px;flex:1}
+  .price-features li{padding:7px 0;border-bottom:1px solid ${cardBorder};color:${muted};font-size:.86rem}
+  .faq-list{max-width:780px;margin:0 auto;display:grid;gap:12px}
+  .faq-item{background:${cardBg};border:1px solid ${cardBorder};border-radius:${state.radius};overflow:hidden;cursor:pointer}
+  .faq-q{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;font-weight:700;font-size:.92rem;gap:10px}
+  .faq-icon{font-size:1.3rem;color:${c.accent};transition:transform .3s}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 18px}
+  .faq-a p{color:${muted};padding-bottom:16px;font-size:.88rem}
+  .faq-item.open .faq-a{max-height:400px}
+  .faq-item.open .faq-icon{transform:rotate(45deg)}
+  .contact-box{background:linear-gradient(135deg,${c.primary}22,${c.accent}22);border:1px solid ${c.primary}44;border-radius:${state.radius};padding:40px 20px;text-align:center;backdrop-filter:blur(10px)}
+  @media(min-width:640px){.contact-box{padding:56px 36px}}
+  .contact-box h2{font-size:clamp(1.3rem,4vw,2.1rem);margin-bottom:10px;font-weight:900}
+  .contact-box h2 span{color:${c.accent}}
+  .contact-box > p{color:${muted};margin-bottom:24px;font-size:.92rem}
+  .contact-info{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+  .contact-chip{padding:8px 16px;background:${cardBg};border:1px solid ${cardBorder};border-radius:50px;font-weight:600;font-size:.84rem}
+  .socials{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .social-link{width:46px;height:46px;border-radius:50%;background:${cardBg};border:1px solid ${cardBorder};display:flex;align-items:center;justify-content:center;font-size:1.15rem;transition:all .3s}
+  .social-link:hover{background:linear-gradient(135deg,${c.primary},${c.accent});transform:translateY(-5px)}
+  footer{padding:24px 20px;text-align:center;color:${muted};font-size:.82rem;border-top:1px solid ${cardBorder}}
+  footer strong{color:${c.accent}}
+  ${state.backToTop?`.back-to-top{position:fixed;bottom:20px;${dir==='rtl'?'left':'right'}:20px;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,${c.primary},${c.accent});color:#fff;border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .3s;z-index:900}
+  .back-to-top.show{opacity:1;visibility:visible}`:''}
+  ${state.whatsapp?`.whatsapp-btn{position:fixed;bottom:20px;${dir==='rtl'?'right':'left'}:20px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:900}`:''}
+  ${effects?`.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.4,0,.2,1)}.reveal.visible{opacity:1;transform:translateY(0)}`:'  .reveal{opacity:1}'}
+</style>
+</head>
+<body>
+${state.noticeBar?`<div class="notice-bar">${state.noticeText}</div>`:''}
+${state.readingProgress?`<div class="progress-bar" id="progressBar"></div>`:''}
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand"><span class="dot"></span><span>${state.fullName}</span></div>
+    <ul class="nav-links">
+      ${state.sectionsOrder.filter(k=>state.sectionsVisible[k]).map(k=>{
+        const links = {hero:'الرئيسية',about:'عني',skills:'مهارات',services:'خدمات',projects:'أعمال',gallery:'معرض',experience:'خبرات',education:'تعليم',certs:'شهادات',testimonials:'آراء',pricing:'أسعار',faq:'أسئلة',contact:'تواصل'};
+        return `<li><a href="#${k}">${links[k]||k}</a></li>`;
+      }).join('')}
+    </ul>
+  </div>
+</nav>
+${sectionsHTML}
+<footer>
+  © <span id="year"></span> <strong>${state.fullName}</strong> — جميع الحقوق محفوظة
+</footer>
+${state.backToTop?`<button class="back-to-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>`:''}
+${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" class="whatsapp-btn">💬</a>`:''}
 <script>
-  const tw = document.getElementById('tw');
-  const lines = ${JSON.stringify((state.typewriterText||'').split('\n').filter(l=>l.trim()))};
-  if(tw && lines.length){
-    let li = 0, ci = 0, del = false;
-    const tick = () => {
-      const line = lines[li];
-      if(!del){
-        tw.textContent = line.substring(0, ++ci);
-        if(ci === line.length){ del = true; setTimeout(tick, 1600); return; }
-      } else {
-        tw.textContent = line.substring(0, --ci);
-        if(ci === 0){ del = false; li = (li+1)%lines.length; }
-      }
-      setTimeout(tick, del?40:80);
-    };
-    tick();
+  document.getElementById('year').textContent = new Date().getFullYear();
+  ${effects?`
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }});
+  },{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  `:''}
+  const tw = document.querySelector('.typewriter');
+  if(tw){
+    const lines = JSON.parse(tw.dataset.lines || '[]');
+    if(lines.length){
+      let li = 0, ci = 0, deleting = false;
+      const tick = ()=>{
+        const line = lines[li];
+        if(!deleting){
+          tw.textContent = line.substring(0, ++ci);
+          if(ci === line.length){ deleting = true; setTimeout(tick, 1600); return; }
+        } else {
+          tw.textContent = line.substring(0, --ci);
+          if(ci === 0){ deleting = false; li = (li+1)%lines.length; }
+        }
+        setTimeout(tick, deleting?40:80);
+      };
+      tick();
+    }
   }
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', e=>{
@@ -1056,13 +1766,53 @@ ${state.whatsapp?`<a href="https://wa.me/${state.whatsapp}" target="_blank" clas
       if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
     });
   });
+  let ticking = false;
+  window.addEventListener('scroll', ()=>{
+    if(!ticking){
+      requestAnimationFrame(()=>{
+        const btn = document.getElementById('backTop');
+        if(btn) btn.classList.toggle('show', window.scrollY>400);
+        const pb = document.getElementById('progressBar');
+        if(pb){
+          const h = document.documentElement.scrollHeight - window.innerHeight;
+          pb.style.width = (window.scrollY/h*100)+'%';
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive:true});
 <\/script>
 </body>
 </html>`;
 }
 
 /* ============================================================
-   🎯 توليد الرابط عبر Firebase
+   🎯 Firebase Upload / Load
+   ============================================================ */
+async function uploadToFirebase(html){
+  const siteId = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
+  await set(ref(db, 'sites/' + siteId), {
+    html: html,
+    createdAt: Date.now(),
+    name: state.fullName
+  });
+  return siteId;
+}
+
+async function loadFromFirebase(siteId){
+  try{
+    const snapshot = await get(child(ref(db), 'sites/' + siteId));
+    if(snapshot.exists()) return snapshot.val().html;
+    return null;
+  }catch(e){
+    console.error('Load error:', e);
+    return null;
+  }
+}
+
+/* ============================================================
+   🎯 Generate Link
    ============================================================ */
 window.generateLink = async function(){
   openModal('linkModal');
@@ -1086,39 +1836,13 @@ window.generateLink = async function(){
   }catch(e){
     console.error(e);
     document.getElementById('generatedUrl').textContent = '❌ فشل: ' + e.message;
-    showToast('فشل الإنشاء: ' + e.message, true);
+    showToast('فشل الإنشاء', true);
   }
   indicator.style.display = 'none';
 };
 
-async function uploadToFirebase(html){
-  // توليد ID فريد
-  const siteId = Date.now().toString(36) + Math.random().toString(36).substring(2, 6);
-  
-  await set(ref(db, 'sites/' + siteId), {
-    html: html,
-    createdAt: Date.now(),
-    name: state.fullName || 'site'
-  });
-  
-  return siteId;
-}
-
-async function loadFromFirebase(siteId){
-  try{
-    const snapshot = await get(child(ref(db), 'sites/' + siteId));
-    if(snapshot.exists()){
-      return snapshot.val().html;
-    }
-    return null;
-  }catch(e){
-    console.error('Load Firebase error:', e);
-    return null;
-  }
-}
-
 window.copyLink = async function(){
-  const url = window._shortLink || window._generatedLink;
+  const url = window._shortLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
   try{
     if(navigator.clipboard && window.isSecureContext){
@@ -1144,7 +1868,7 @@ window.copyLink = async function(){
 };
 
 window.shareLink = async function(){
-  const url = window._shortLink || window._generatedLink;
+  const url = window._shortLink;
   if(!url){ showToast('لا يوجد رابط', true); return; }
   if(navigator.share){
     try{
@@ -1170,14 +1894,19 @@ window.downloadSite = function(){
   showToast('⬇️ تم التحميل!');
 };
 
-window.openMobilePreview = function(){
-  const overlay = document.getElementById('mobilePreview');
-  overlay.classList.add('show');
-  const frame = document.getElementById('mobilePreviewFrame');
-  frame.srcdoc = buildHTML();
+window.resetAll = function(){
+  if(!confirm('إعادة التعيين؟')) return;
+  localStorage.removeItem('builder_v13');
+  location.reload();
 };
-window.closeMobilePreview = function(){
-  document.getElementById('mobilePreview').classList.remove('show');
+
+window.showToast = function(msg, isError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
 };
 
 let timer = null;
@@ -1197,23 +1926,8 @@ function refresh(){
   }, 400);
 }
 
-window.resetAll = function(){
-  if(!confirm('إعادة التعيين؟')) return;
-  localStorage.removeItem('builder_v12');
-  location.reload();
-};
-
-window.showToast = function(msg, isError){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.toggle('error', !!isError);
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
-};
-
 /* ============================================================
-   🎯 عرض الموقع المنشور
+   🎯 Check for Published Site
    ============================================================ */
 async function checkForPublishedSite(){
   const hash = window.location.hash;
@@ -1225,7 +1939,6 @@ async function checkForPublishedSite(){
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#0a0e1a;color:#e5e7eb;font-family:'Cairo',sans-serif;text-align:center;padding:20px">
         <div style="font-size:4rem;animation:spin 1s linear infinite;display:inline-block">⏳</div>
         <h2 style="margin-top:20px;font-weight:700">جاري تحميل الموقع...</h2>
-        <p style="color:#94a3b8;margin-top:10px">يستغرق لحظات فقط</p>
       </div>
       <style>@keyframes spin{to{transform:rotate(360deg)}}*{margin:0;padding:0;box-sizing:border-box}</style>
     `;
@@ -1265,9 +1978,24 @@ async function init(){
     const el = document.getElementById('c'+p);
     if(el) el.value = state.colors[p.toLowerCase()];
   });
+  ['fontSize','radius','mode','effects','cardStyle','bgAnimation','defaultLang'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = state[id];
+  });
+  const switchMap = {
+    progressToggle:'readingProgress', topToggle:'backToTop',
+    cursorToggle:'customCursor', langToggle:'langSwitcher', noticeToggle:'noticeBar'
+  };
+  Object.entries(switchMap).forEach(([id,key])=>{
+    const el = document.getElementById(id);
+    if(el) el.classList.toggle('on', !!state[key]);
+  });
+  
   renderHighlights(); renderSkills(); renderServices(); renderProjects();
-  renderExperience(); renderEducation(); renderTestimonials(); renderSocials();
-  renderThemes();
+  renderGallery(); renderExperience(); renderEducation(); renderCerts();
+  renderTestimonials(); renderPricing(); renderFaq(); renderSocials();
+  renderThemes(); renderFonts(); renderSectionsOrder();
+  
   if(window.innerWidth >= 1024){
     const f = document.getElementById('previewFrame');
     if(f) f.srcdoc = buildHTML();
@@ -1275,6 +2003,5 @@ async function init(){
 }
 init();
 </script>
-
 </body>
 </html>
